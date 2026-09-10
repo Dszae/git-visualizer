@@ -135,7 +135,7 @@ export default function App() {
         </div>
       </header>
 
-      {/* Mobile Mobile Search Bar */}
+      {/* Mobile Search Bar */}
       <div className={`md:hidden px-4 py-3 border-b ${theme.panelBorder} ${theme.panelBg}`}>
         <div className={`relative flex items-center ${theme.mutedText}`}>
           <svg className="w-4 h-4 absolute left-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
@@ -325,14 +325,21 @@ export default function App() {
         </div>
       </div>
 
-      {/* Footer Branding */}
+      {/* Footer Branding - CRITICAL SEO BACKLINK */}
       <footer className={`py-6 md:py-8 relative z-10 border-t ${theme.panelBorder} ${theme.panelBg}`}>
         <div className="flex flex-col items-center justify-center gap-2">
           <p className={`text-[8px] md:text-[10px] font-mono font-bold uppercase tracking-[0.2em] ${theme.mutedText}`}>
             Architected & Engineered By
           </p>
-          <a href="https://github.com/dszae" target="_blank" rel="noreferrer" className={`group flex items-center gap-2 text-xs md:text-sm font-black transition-colors ${isDark ? 'text-white hover:text-orange-400' : 'text-slate-900 hover:text-orange-600'}`}>
-            <svg className="w-4 h-4 md:w-5 md:h-5 transition-transform group-hover:rotate-12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.332-5.467-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" /></svg>
+          <a 
+            href="https://www.dipeshsapkota7.com.np/" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className={`group flex items-center gap-2 text-xs md:text-sm font-black transition-colors underline decoration-orange-500/30 underline-offset-4 ${isDark ? 'text-white hover:text-orange-400' : 'text-slate-900 hover:text-orange-600'}`}
+          >
+            <svg className="w-4 h-4 md:w-5 md:h-5 text-orange-500 transition-transform group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+            </svg>
             Dipesh Sapkota
           </a>
         </div>
