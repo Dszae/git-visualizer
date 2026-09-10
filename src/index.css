@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom scrollbar for the terminal */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent; 
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1; 
+  border-radius: 10px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #334155; 
+}
+
+/* Glowing Data Flow Animations */
+@keyframes dataFlowLtr {
+  0% { left: -10%; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { left: 100%; opacity: 0; }
+}
+
+@keyframes dataFlowRtl {
+  0% { right: -10%; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { right: 100%; opacity: 0; }
+}
+
+.animate-data-ltr {
+  animation: dataFlowLtr 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.animate-data-rtl {
+  animation: dataFlowRtl 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
