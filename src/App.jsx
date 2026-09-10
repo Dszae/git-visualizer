@@ -106,7 +106,7 @@ export default function App() {
             <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
           </div>
           <div className="flex flex-col">
-            <h1 className="text-lg sm:text-2xl font-black tracking-tight leading-none">Git Visualizer</h1>
+            <h1 className="text-lg sm:text-2xl font-black tracking-tight leading-none">Git Visualize</h1>
             <p className={`text-[8px] sm:text-[10px] font-mono uppercase tracking-widest font-bold ${isDark ? 'text-orange-400' : 'text-orange-600'} mt-0.5 sm:mt-1`}>Pro Edition</p>
           </div>
         </div>
