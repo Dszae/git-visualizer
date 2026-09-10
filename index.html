@@ -2,11 +2,72 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>git-visualizer</title>
+    
+    <!-- Primary Meta Tags -->
+    <title>Git Visualizer — Interactive Git Flowchart & Command Map</title>
+    <meta name="title" content="Git Visualizer — Interactive Git Flowchart & Command Map" />
+    <meta name="description" content="An interactive, visual Git workflow explorer. Understand how Git commands move code between Stash, Workspace, Staging, Local Repo, and Remote Repo." />
+    <meta name="keywords" content="git visualizer, interactive git, git cheat sheet, git commands flowchart, git workflow diagram, learn git visually, git staging area explained" />
+    <meta name="author" content="Dipesh Sapkota" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://git-visualize.vercel.app/" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://git-visualize.vercel.app/" />
+    <meta property="og:title" content="Git Visualizer — Interactive Git Flowchart & Command Map" />
+    <meta property="og:description" content="Master Git version control visually. Explore interactive data flows between Stash, Workspace, Index, Local Repo, and GitHub." />
+    <meta property="og:image" content="https://git-visualize.vercel.app/git-logo.svg" />
+
+    <!-- Twitter Card -->
+    <meta property="twitter:card" content="summary" />
+    <meta property="twitter:url" content="https://git-visualize.vercel.app/" />
+    <meta property="twitter:title" content="Git Visualizer — Interactive Git Flowchart & Command Map" />
+    <meta property="twitter:description" content="Master Git version control visually. Explore interactive data flows across all 5 Git stages." />
+    <meta property="twitter:image" content="https://git-visualize.vercel.app/git-logo.svg" />
+
+    <!-- Favicon & Mobile UI Theme -->
+    <link rel="icon" type="image/svg+xml" href="/git-logo.svg" />
+    <meta name="theme-color" content="#faf9f8" />
+
+    <!-- Structured Data (JSON-LD) for Google Rich Snippets -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Git Visualizer",
+        "url": "https://git-visualize.vercel.app/",
+        "description": "An interactive, hover-driven Git workflow flowchart illustrating data movement between Stash, Workspace, Staging, Local Repo, and Remote Repository.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript. Requires HTML5.",
+        "author": {
+          "@type": "Person",
+          "name": "Dipesh Sapkota",
+          "url": "https://github.com/dszae"
+        }
+      }
+    </script>
   </head>
   <body>
+    <!-- Fallback for search bots and non-JS clients to guarantee keyword indexing -->
+    <noscript>
+      <div style="padding: 2rem; font-family: sans-serif;">
+        <h1>Git Visualizer — Interactive Git Architecture & Workflow</h1>
+        <p>A visual flowchart mapping data movement across Git version control stages: Stash, Workspace, Staging Area, Local Repository, and Remote Repository.</p>
+        <h2>Included Commands</h2>
+        <ul>
+          <li><strong>Inspect:</strong> git status, git diff, git diff --staged, git log</li>
+          <li><strong>Stage:</strong> git add, git add -u, git rm, git mv, git restore</li>
+          <li><strong>Commit:</strong> git commit, git commit -a</li>
+          <li><strong>Undo & Branch:</strong> git reset, git reset --hard, git revert, git switch, git merge, git rebase, git cherry-pick</li>
+          <li><strong>Sync:</strong> git fetch, git pull, git push, git clone</li>
+          <li><strong>Stash:</strong> git stash, git stash pop, git stash apply</li>
+        </ul>
+      </div>
+    </noscript>
+
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
