@@ -1,16 +1,31 @@
-# React + Vite
+# Git Visualizer 🌿
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A minimalist, interactive web application designed to help developers visualize how standard Git commands move data across different stages of version control. 
 
-Currently, two official plugins are available:
+**Live Demo:** [git-visualize.vercel.app](https://git-visualize.vercel.app/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Overview
+Git can be conceptually difficult for beginners to map out mentally. This tool provides a clean, hover-driven flowchart that maps exact commands to their specific data paths across five core Git areas:
+* **Stash** (Temporary Clipboard)
+* **Workspace** (Local Files)
+* **Staging** (Index)
+* **Local Repo** (HEAD / Local History)
+* **Remote Repo** (GitHub / GitLab)
 
-## React Compiler
+## Features
+* **Hover-Driven Discovery:** Clean interface that reveals detailed tooltips and data paths only when a command is focused.
+* **Path Differentiation:** Visually separates commands that *move data* (solid arrows) from commands that are *read-only* (dashed lines).
+* **Cross-Stage Mapping:** Accurate start and end nodes for complex commands like `git pull` or `git commit -a`.
+* **Zero-Clutter UI:** Built with a stark, distraction-free aesthetic focusing purely on the data flow.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
+* **Framework:** React.js (Vite)
+* **Styling:** Tailwind CSS
+* **Deployment:** Vercel
 
-## Expanding the Oxlint configuration
+## Local Development
+To run this project locally:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+1. Clone the repository:
+   ```bash
+   git clone [https://github.com/dszae/git-visualizer.git](https://github.com/dszae/git-visualizer.git)
