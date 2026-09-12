@@ -23,9 +23,5 @@ Git can be conceptually difficult for beginners to map out mentally. This tool p
 * **Styling:** Tailwind CSS
 * **Deployment:** Vercel
 
-## Local Development
-To run this project locally:
 
-1. Clone the repository:
-   ```bash
    git clone [https://github.com/dszae/git-visualizer.git](https://github.com/dszae/git-visualizer.git)
