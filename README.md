@@ -2,7 +2,7 @@
 
 A minimalist, interactive web application designed to help developers visualize how standard Git commands move data across different stages of version control. 
 
-**Live Demo:** [git-visualize.vercel.app](https://git-visualize.vercel.app/)
+**Live Demo:** [git-visualize.vercel.app](https://git-visualizer.dipeshsapkota7.com.np/)
 
 ## Overview
 Git can be conceptually difficult for beginners to map out mentally. This tool provides a clean, hover-driven flowchart that maps exact commands to their specific data paths across five core Git areas:
