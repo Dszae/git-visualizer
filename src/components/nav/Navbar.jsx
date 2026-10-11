@@ -50,8 +50,8 @@ export default function Navbar({
       <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between gap-3 sm:gap-4">
         
         {/* Internal Clickable Brand: Navigates to Git Visualizer Sandbox */}
-        <button
-          type="button"
+        <a
+          href="/"
           onClick={handleBrandClick}
           aria-label="Git Visualizer Home (Sandbox)"
           className="flex items-center gap-3 shrink-0 text-left cursor-pointer group focus:outline-none"
@@ -73,15 +73,16 @@ export default function Navbar({
               Interactive Git Simulator
             </span>
           </div>
-        </button>
+        </a>
 
         {/* Center Desktop Navigation Tabs */}
         <nav className="hidden lg:flex items-center gap-1.5" aria-label="Main Navigation">
           {tabs.map(t => {
             const isActive = activeTab === t.id;
             return (
-              <button
+              <a
                 key={t.id}
+                href={t.id === 'sandbox' ? '/' : `/?tab=${t.id}`}
                 onClick={() => onSelectTab(t.id)}
                 className={`h-10 px-4 rounded-lg text-sm font-medium transition-colors cursor-pointer ${
                   isActive
@@ -90,7 +91,7 @@ export default function Navbar({
                 }`}
               >
                 {t.label}
-              </button>
+              </a>
             );
           })}
         </nav>
@@ -206,8 +207,9 @@ export default function Navbar({
               Navigation
             </span>
             {tabs.map(t => (
-              <button
+              <a
                 key={t.id}
+                href={t.id === 'sandbox' ? '/' : `/?tab=${t.id}`}
                 onClick={() => {
                   onSelectTab(t.id);
                   setMobileMenuOpen(false);
@@ -219,7 +221,7 @@ export default function Navbar({
                 }`}
               >
                 {t.label}
-              </button>
+              </a>
             ))}
           </div>
 
