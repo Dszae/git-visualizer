@@ -90,6 +90,24 @@ kbd,
   }
 }
 
+@keyframes flow-data-travel-forward {
+  from {
+    left: -0.35rem;
+  }
+  to {
+    left: calc(100% - 0.35rem);
+  }
+}
+
+@keyframes flow-data-travel-reverse {
+  from {
+    right: -0.35rem;
+  }
+  to {
+    right: calc(100% - 0.35rem);
+  }
+}
+
 @keyframes flow-description-enter {
   from {
     opacity: 0;
@@ -111,6 +129,27 @@ kbd,
   animation: flow-arrow-pulse 900ms ease-in-out infinite;
 }
 
+.flow-traveler {
+  position: absolute;
+  top: 50%;
+  width: 0.7rem;
+  height: 0.7rem;
+  margin-top: -0.35rem;
+  border: 2px solid #fff;
+  border-radius: 9999px;
+  background: #fb923c;
+  box-shadow: 0 0 0 3px rgb(251 146 60 / 25%), 0 0 12px rgb(251 146 60 / 85%);
+  z-index: 2;
+}
+
+.flow-traveler-forward {
+  animation: flow-data-travel-forward 1.15s linear infinite;
+}
+
+.flow-traveler-reverse {
+  animation: flow-data-travel-reverse 1.15s linear infinite;
+}
+
 .flow-description-enter {
   animation: flow-description-enter 180ms ease-out both;
 }
@@ -119,6 +158,7 @@ kbd,
   .flow-line-active,
   .flow-node-active,
   .flow-arrow-active,
+  .flow-traveler,
   .flow-description-enter {
     animation: none;
   }

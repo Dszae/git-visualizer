@@ -189,6 +189,9 @@ export default function StageFlowchartView({ onRunCommand, isDark = true }) {
                     {!isSameCol && (
                       <div className="absolute inset-x-0 h-0.5 top-1/2 -translate-y-1/2 pointer-events-none">
                         <div className={`w-full h-full transition-colors duration-200 ${lineColor} ${isHovered ? 'flow-line-active' : ''}`}></div>
+                        {isHovered && (
+                          <span className={`flow-traveler ${isLtr ? 'flow-traveler-forward' : 'flow-traveler-reverse'}`} aria-hidden="true" />
+                        )}
                         
                         <div className={`absolute top-1/2 -translate-y-1/2 w-2 h-2 rounded-full transition-colors duration-200 ${lineColor} ${isLtr ? '-left-1' : '-right-1'} ${isHovered ? 'flow-node-active' : ''}`}></div>
                         
@@ -223,22 +226,20 @@ export default function StageFlowchartView({ onRunCommand, isDark = true }) {
               isDark ? 'border-zinc-800 bg-zinc-900/80' : 'border-zinc-200 bg-white'
             }`} role="status" aria-live="polite">
               <div className="flex flex-col sm:flex-row sm:items-baseline gap-1.5 sm:gap-3">
-                <span className="text-[10px] font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-                  Command flow
-                </span>
-                <span className="text-[10px] font-mono font-semibold uppercase tracking-wide text-orange-700 dark:text-orange-300">
-                  {getFlowLabel(hoveredCommand)}
-                </span>
                 <span className="text-sm font-mono font-semibold text-zinc-900 dark:text-zinc-100 break-words">
                   {hoveredCommand.cmd}
                 </span>
               </div>
               <p className="mt-2 text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-                What this command does
+                What it is used for
               </p>
               <p className="mt-0.5 text-sm leading-relaxed text-zinc-700 dark:text-zinc-300 break-words">
                 {hoveredCommand.desc}
               </p>
+              <div className="mt-3 flex flex-wrap items-center gap-2 text-[10px] font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+                <span>Data flow</span>
+                <span className="font-mono text-orange-700 dark:text-orange-300">{getFlowLabel(hoveredCommand)}</span>
+              </div>
             </div>
           ) : null;
         })()}
