@@ -14,27 +14,27 @@ Because every commit hash is computed deterministically from its contents and it
     content: `In Git, a branch is simply a lightweight text pointer referencing a commit hash. Creating a branch is instantaneous because it requires zero copying of file contents.
 
 When merging branches:
-• Fast-Forward Merge: Occurs when the target branch has no diverged commits. Git simply moves the current branch pointer forward to the target tip. No merge commit is created.
-• 3-Way Merge: Occurs when both branches have diverged with independent commits. Git finds the common ancestor commit and combines both change sets into a new merge commit having two parents.`
+- Fast-Forward Merge: Occurs when the target branch has no diverged commits. Git simply moves the current branch pointer forward to the target tip. No merge commit is created.
+- 3-Way Merge: Occurs when both branches have diverged with independent commits. Git finds the common ancestor commit and combines both change sets into a new merge commit having two parents.`
   },
   {
     id: 'merge-vs-rebase',
     title: 'Git Merge vs. Git Rebase',
     content: `Both 'git merge' and 'git rebase' integrate changes from one branch into another, but they treat history differently:
 
-• 'git merge' preserves historical context, showing exactly when and where features branched and joined. It never alters existing commit hashes.
-• 'git rebase' rewrites commits by lifting them and reapplying them onto the tip of the upstream branch. Because each replayed commit has a different parent hash, its commit ID changes. Rebase produces a clean linear history, but should never be used on shared public branches.`
+- 'git merge' preserves historical context, showing exactly when and where features branched and joined. It never alters existing commit hashes.
+- 'git rebase' rewrites commits by lifting them and reapplying them onto the tip of the upstream branch. Because each replayed commit has a different parent hash, its commit ID changes. Rebase produces a clean linear history, but should never be used on shared public branches.`
   },
   {
     id: 'reset-vs-revert',
     title: 'Safe Undos: Reset vs. Revert',
     content: `Choosing the right undo command depends on whether your changes are private or already shared:
 
-• 'git restore <file>': Reverts working directory changes back to the index or HEAD.
-• 'git reset --soft': Moves HEAD back without modifying index or working directory.
-• 'git reset --mixed': Moves HEAD back and resets index, keeping changes in working directory.
-• 'git reset --hard': Overwrites both index and working directory. Destructive for uncommitted work.
-• 'git revert <commit>': Safe public undo. Records a brand-new commit that inverts the targeted commit.`
+- 'git restore <file>': Reverts working directory changes back to the index or HEAD.
+- 'git reset --soft': Moves HEAD back without modifying index or working directory.
+- 'git reset --mixed': Moves HEAD back and resets index, keeping changes in working directory.
+- 'git reset --hard': Overwrites both index and working directory. Destructive for uncommitted work.
+- 'git revert <commit>': Safe public undo. Records a brand-new commit that inverts the targeted commit.`
   }
 ];
 
@@ -80,9 +80,12 @@ export default function SEOContent({ isDark = true }) {
         <button
           onClick={() => setIsOpen(!isOpen)}
           aria-expanded={isOpen}
-          className="text-xs font-medium text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors px-2.5 py-1 rounded-md border border-zinc-200 dark:border-zinc-800"
+          className="text-xs font-medium text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors px-2.5 py-1 rounded-md border border-zinc-200 dark:border-zinc-800 inline-flex items-center gap-1"
         >
-          {isOpen ? 'Collapse guides ▴' : 'Read guides ▾'}
+          <span>{isOpen ? 'Collapse guides' : 'Read guides'}</span>
+          <svg aria-hidden="true" className={`w-3.5 h-3.5 transition-transform ${isOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
+          </svg>
         </button>
       </div>
 

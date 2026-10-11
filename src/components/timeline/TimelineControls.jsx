@@ -52,9 +52,12 @@ export default function TimelineControls({
             onClick={() => onGoToStep(currentStepIndex - 1)}
             disabled={!canGoBack}
             aria-label="Previous step"
-            className="px-2.5 py-1.5 rounded-lg border transition-all disabled:opacity-30 disabled:cursor-not-allowed bg-slate-800 hover:bg-slate-700 text-white border-slate-700 flex items-center gap-1 focus-visible:ring-2 focus-visible:ring-orange-500"
+            className="px-2.5 py-1.5 rounded-lg border transition-all disabled:opacity-30 disabled:cursor-not-allowed bg-slate-800 hover:bg-slate-700 text-white border-slate-700 flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-orange-500"
           >
-            <span>◀</span> Prev
+            <svg aria-hidden="true" className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 19l-7-7 7-7" />
+            </svg>
+            <span>Prev</span>
           </button>
 
           <button
@@ -62,16 +65,33 @@ export default function TimelineControls({
             aria-label={isPlaying ? "Pause playback" : "Play step-by-step history"}
             className="px-3 py-1.5 rounded-lg border transition-all bg-orange-600 hover:bg-orange-500 text-white font-bold border-orange-500 flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-orange-500"
           >
-            {isPlaying ? <span>⏸ Pause</span> : <span>▶ Play</span>}
+            {isPlaying ? (
+              <>
+                <svg aria-hidden="true" className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 9v6m4-6v6" />
+                </svg>
+                <span>Pause</span>
+              </>
+            ) : (
+              <>
+                <svg aria-hidden="true" className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+                <span>Play</span>
+              </>
+            )}
           </button>
 
           <button
             onClick={() => onGoToStep(currentStepIndex + 1)}
             disabled={!canGoForward}
             aria-label="Next step"
-            className="px-2.5 py-1.5 rounded-lg border transition-all disabled:opacity-30 disabled:cursor-not-allowed bg-slate-800 hover:bg-slate-700 text-white border-slate-700 flex items-center gap-1 focus-visible:ring-2 focus-visible:ring-orange-500"
+            className="px-2.5 py-1.5 rounded-lg border transition-all disabled:opacity-30 disabled:cursor-not-allowed bg-slate-800 hover:bg-slate-700 text-white border-slate-700 flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-orange-500"
           >
-            Next <span>▶</span>
+            <span>Next</span>
+            <svg aria-hidden="true" className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" />
+            </svg>
           </button>
 
           {onResetSession && (
@@ -103,8 +123,13 @@ export default function TimelineControls({
         })}
       </div>
 
-      <p className="text-[10px] text-slate-400 italic">
-        ℹ️ <strong>Educational Time-Travel:</strong> This timeline navigates through your simulation steps. It is independent of Git's internal commands like <code className="text-orange-400 font-mono">git reset</code> or <code className="text-orange-400 font-mono">git revert</code>.
+      <p className="text-[10px] text-slate-400 italic flex items-center gap-1.5">
+        <svg aria-hidden="true" className="w-3.5 h-3.5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span>
+          <strong>Educational Time-Travel:</strong> This timeline navigates through your simulation steps. It is independent of Git's internal commands like <code className="text-orange-400 font-mono">git reset</code> or <code className="text-orange-400 font-mono">git revert</code>.
+        </span>
       </p>
     </div>
   );

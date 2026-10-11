@@ -155,8 +155,10 @@ export default function LessonsView({
                   </div>
 
                   {isDone ? (
-                    <span className="w-4 h-4 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">
-                      ✓
+                    <span className="w-4 h-4 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 mt-0.5">
+                      <svg aria-hidden="true" className="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                      </svg>
                     </span>
                   ) : (
                     <span className="text-[11px] font-mono text-zinc-400 shrink-0 mt-0.5">{idx + 1}</span>
@@ -221,7 +223,11 @@ export default function LessonsView({
                         <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5 ${
                           isStepDone ? 'bg-emerald-600 text-white' : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-500'
                         }`}>
-                          {isStepDone ? '✓' : sIdx + 1}
+                          {isStepDone ? (
+                            <svg aria-hidden="true" className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                            </svg>
+                          ) : sIdx + 1}
                         </span>
                         <div className="space-y-1">
                           <p className="font-semibold text-sm text-zinc-900 dark:text-zinc-100">{step.instruction}</p>
@@ -264,9 +270,12 @@ export default function LessonsView({
                       handleStartLesson(LESSONS[currIdx + 1]);
                     }
                   }}
-                  className="px-3.5 py-1.5 rounded-lg text-xs font-medium bg-orange-600 hover:bg-orange-500 text-white transition-colors"
+                  className="px-3.5 py-1.5 rounded-lg text-xs font-medium bg-orange-600 hover:bg-orange-500 text-white transition-colors inline-flex items-center gap-1.5"
                 >
-                  Next Lesson →
+                  <span>Next Lesson</span>
+                  <svg aria-hidden="true" className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
                 </button>
               )}
             </div>
@@ -299,8 +308,10 @@ export default function LessonsView({
                     <p className="text-xs font-semibold text-zinc-900 dark:text-zinc-100 truncate">{ch.title}</p>
                   </div>
                   {isDone && (
-                    <span className="w-4 h-4 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">
-                      ✓
+                    <span className="w-4 h-4 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 mt-0.5">
+                      <svg aria-hidden="true" className="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                      </svg>
                     </span>
                   )}
                 </button>
@@ -347,9 +358,12 @@ export default function LessonsView({
             <div className="pt-2 border-t border-zinc-200 dark:border-zinc-800">
               <button
                 onClick={() => setChallengeHintsOpen(!challengeHintsOpen)}
-                className="text-xs font-medium text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
+                className="text-xs font-medium text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors inline-flex items-center gap-1"
               >
-                {challengeHintsOpen ? 'Hide hint ▴' : 'Show hint ▾'}
+                <span>{challengeHintsOpen ? 'Hide hint' : 'Show hint'}</span>
+                <svg aria-hidden="true" className={`w-3.5 h-3.5 transition-transform ${challengeHintsOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
+                </svg>
               </button>
               {challengeHintsOpen && (
                 <div className="mt-2.5 p-3 rounded-lg bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 text-xs font-mono space-y-1.5 text-zinc-600 dark:text-zinc-400">

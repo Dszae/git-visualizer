@@ -73,7 +73,7 @@ export const COMMAND_REFERENCE = [
     expectedEffect: 'Overwrites working tree file with the staged index version.',
     commonErrors: ['fatal: pathspec did not match any file known to git.'],
     relatedCommands: ['git restore --staged', 'git checkout -- <file>'],
-    safetyWarning: '⚠️ Destructive: Unstaged edits in the working file will be permanently discarded.',
+    safetyWarning: 'Destructive: Unstaged edits in the working file will be permanently discarded.',
     sandboxCommand: 'git restore index.js'
   },
 
@@ -191,7 +191,7 @@ export const COMMAND_REFERENCE = [
     expectedEffect: 'Replays each commit onto target tip. Generates NEW commit hashes because parent hashes change. Yields linear history.',
     commonErrors: ['Never rebase public shared commits pushed to team branches!'],
     relatedCommands: ['git merge', 'git cherry-pick'],
-    safetyWarning: '⚠️ Rewrites commit hashes. Do not rebase branches that have already been pushed to a public shared remote.',
+    safetyWarning: 'Caution: Rewrites commit hashes. Do not rebase branches that have already been pushed to a public shared remote.',
     sandboxCommand: 'git rebase main'
   },
 
@@ -235,7 +235,7 @@ export const COMMAND_REFERENCE = [
     expectedEffect: 'Moves branch pointer and forcibly discards all uncommitted working tree and staged index changes.',
     commonErrors: ['Accidentally losing uncommitted work that was not stashed or committed.'],
     relatedCommands: ['git reflog', 'git stash'],
-    safetyWarning: '🚨 DANGER: Uncommitted work in the working directory will be permanently destroyed!',
+    safetyWarning: 'Danger: Uncommitted work in the working directory will be permanently destroyed!',
     sandboxCommand: 'git reset --hard HEAD~1'
   },
   {

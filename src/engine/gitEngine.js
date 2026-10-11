@@ -2184,7 +2184,7 @@ function handleReset(state, args, rawCommand) {
         command: rawCommand,
         success: true,
         summary: `git reset --hard: DESTRUCTIVE reset to ${targetCommit.slice(0, 7)}`,
-        details: '⚠️ DANGER: Moved branch pointer AND completely overwritten both the Staging Area and Working Directory to match the target commit snapshot. Any uncommitted work was permanently discarded.',
+        details: 'DANGER: Moved branch pointer AND completely overwritten both the Staging Area and Working Directory to match the target commit snapshot. Any uncommitted work was permanently discarded.',
         changes: [
           { type: 'BRANCH', description: `Moved ${state.HEAD.name} -> ${targetCommit}` },
           { type: 'INDEX', description: 'Reset index' },

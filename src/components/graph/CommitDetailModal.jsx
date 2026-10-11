@@ -120,9 +120,12 @@ export default function CommitDetailModal({ commit, onClose, onSelectCommit }) {
                     key={p}
                     onClick={() => onSelectCommit && onSelectCommit(p)}
                     aria-label={`Jump to parent commit ${p.slice(0, 7)}`}
-                    className="px-2 py-1 rounded bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-800 dark:text-zinc-200 font-mono text-xs border border-zinc-200 dark:border-zinc-700 transition-colors"
+                    className="px-2 py-1 rounded bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-800 dark:text-zinc-200 font-mono text-xs border border-zinc-200 dark:border-zinc-700 transition-colors inline-flex items-center gap-1"
                   >
-                    ← {p.slice(0, 7)}
+                    <svg aria-hidden="true" className="w-3 h-3 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 19l-7-7 7-7" />
+                    </svg>
+                    <span>{p.slice(0, 7)}</span>
                   </button>
                 ))}
               </div>

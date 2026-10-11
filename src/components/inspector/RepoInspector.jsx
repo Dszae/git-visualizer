@@ -34,9 +34,12 @@ export default function RepoInspector({
         <div className="flex items-center gap-1">
           <button
             onClick={() => setActiveTab('files')}
-            className={`px-3 py-1 rounded-lg font-bold text-[11px] transition-colors flex items-center gap-1.5 ${activeTab === 'files' ? (isDark ? 'bg-orange-500/20 text-orange-400 border border-orange-500/30' : 'bg-white text-orange-600 shadow-sm border border-slate-200') : (isDark ? 'text-slate-400 hover:text-white' : 'text-slate-600 hover:text-black')}`}
+            className={`px-3 py-1.5 rounded-lg font-bold text-[11px] transition-colors flex items-center gap-1.5 ${activeTab === 'files' ? (isDark ? 'bg-orange-500/20 text-orange-400 border border-orange-500/30' : 'bg-white text-orange-600 shadow-sm border border-slate-200') : (isDark ? 'text-slate-400 hover:text-white' : 'text-slate-600 hover:text-black')}`}
           >
-            <span>📁 Files & Index</span>
+            <svg aria-hidden="true" className="w-3.5 h-3.5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+            </svg>
+            <span>Files & Index</span>
             <span className="px-1.5 py-0.2 rounded-full text-[9px] bg-slate-800 text-slate-300 font-mono">
               {workingFiles.length + indexFiles.length}
             </span>
@@ -44,9 +47,15 @@ export default function RepoInspector({
 
           <button
             onClick={() => setActiveTab('branches')}
-            className={`px-3 py-1 rounded-lg font-bold text-[11px] transition-colors flex items-center gap-1.5 ${activeTab === 'branches' ? (isDark ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-white text-emerald-600 shadow-sm border border-slate-200') : (isDark ? 'text-slate-400 hover:text-white' : 'text-slate-600 hover:text-black')}`}
+            className={`px-3 py-1.5 rounded-lg font-bold text-[11px] transition-colors flex items-center gap-1.5 ${activeTab === 'branches' ? (isDark ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-white text-emerald-600 shadow-sm border border-slate-200') : (isDark ? 'text-slate-400 hover:text-white' : 'text-slate-600 hover:text-black')}`}
           >
-            <span>🌿 Branches & HEAD</span>
+            <svg aria-hidden="true" className="w-3.5 h-3.5 opacity-70" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="6" y1="3" x2="6" y2="15"></line>
+              <circle cx="18" cy="6" r="3"></circle>
+              <circle cx="6" cy="18" r="3"></circle>
+              <path d="M18 9a9 9 0 0 1-9 9"></path>
+            </svg>
+            <span>Branches & HEAD</span>
             <span className="px-1.5 py-0.2 rounded-full text-[9px] bg-slate-800 text-slate-300 font-mono">
               {branchList.length}
             </span>
@@ -54,9 +63,12 @@ export default function RepoInspector({
 
           <button
             onClick={() => setActiveTab('stash')}
-            className={`px-3 py-1 rounded-lg font-bold text-[11px] transition-colors flex items-center gap-1.5 ${activeTab === 'stash' ? (isDark ? 'bg-purple-500/20 text-purple-400 border border-purple-500/30' : 'bg-white text-purple-600 shadow-sm border border-slate-200') : (isDark ? 'text-slate-400 hover:text-white' : 'text-slate-600 hover:text-black')}`}
+            className={`px-3 py-1.5 rounded-lg font-bold text-[11px] transition-colors flex items-center gap-1.5 ${activeTab === 'stash' ? (isDark ? 'bg-purple-500/20 text-purple-400 border border-purple-500/30' : 'bg-white text-purple-600 shadow-sm border border-slate-200') : (isDark ? 'text-slate-400 hover:text-white' : 'text-slate-600 hover:text-black')}`}
           >
-            <span>📦 Stash</span>
+            <svg aria-hidden="true" className="w-3.5 h-3.5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+            </svg>
+            <span>Stash</span>
             {stashList.length > 0 && (
               <span className="px-1.5 py-0.2 rounded-full text-[9px] bg-purple-500/40 text-purple-300 font-mono">
                 {stashList.length}
@@ -66,9 +78,12 @@ export default function RepoInspector({
 
           <button
             onClick={() => setActiveTab('remotes')}
-            className={`px-3 py-1 rounded-lg font-bold text-[11px] transition-colors flex items-center gap-1.5 ${activeTab === 'remotes' ? (isDark ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/30' : 'bg-white text-cyan-600 shadow-sm border border-slate-200') : (isDark ? 'text-slate-400 hover:text-white' : 'text-slate-600 hover:text-black')}`}
+            className={`px-3 py-1.5 rounded-lg font-bold text-[11px] transition-colors flex items-center gap-1.5 ${activeTab === 'remotes' ? (isDark ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/30' : 'bg-white text-cyan-600 shadow-sm border border-slate-200') : (isDark ? 'text-slate-400 hover:text-white' : 'text-slate-600 hover:text-black')}`}
           >
-            <span>🌐 Remotes</span>
+            <svg aria-hidden="true" className="w-3.5 h-3.5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>Remotes</span>
           </button>
         </div>
       </div>
@@ -83,7 +98,10 @@ export default function RepoInspector({
               <div className="p-3.5 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 space-y-2 animate-[pulse_2s_infinite]">
                 <div className="flex items-center justify-between">
                   <span className="font-bold flex items-center gap-1.5 text-xs text-rose-400">
-                    ⚠️ Merge Conflict in Progress!
+                    <svg aria-hidden="true" className="w-4 h-4 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                    <span>Merge Conflict in Progress</span>
                   </span>
                   <button
                     onClick={() => onRunCommand && onRunCommand('git merge --abort')}
@@ -191,8 +209,11 @@ export default function RepoInspector({
             <div className={`p-3 rounded-xl border ${isDark ? 'bg-slate-900/50 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
               <span className="text-slate-400 uppercase text-[10px] font-bold block mb-1">HEAD State</span>
               {state.HEAD.type === 'detached' ? (
-                <div className="text-amber-400 font-bold">
-                  ⚠️ Detached HEAD at commit {state.HEAD.name.slice(0, 7)}
+                <div className="text-amber-400 font-bold flex items-center gap-1.5">
+                  <svg aria-hidden="true" className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                  </svg>
+                  <span>Detached HEAD at commit {state.HEAD.name.slice(0, 7)}</span>
                 </div>
               ) : (
                 <div className="text-emerald-400 font-bold">
@@ -213,8 +234,13 @@ export default function RepoInspector({
                       className={`px-3 py-2 rounded-lg border flex items-center justify-between ${isActive ? 'bg-emerald-500/10 border-emerald-500/40' : (isDark ? 'bg-slate-950 border-slate-800' : 'bg-white border-slate-200')}`}
                     >
                       <div className="flex items-center gap-2">
-                        {isActive && <span className="text-emerald-400 font-black">★</span>}
+                        {isActive && (
+                          <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block" aria-hidden="true"></span>
+                        )}
                         <span className={`font-bold ${isActive ? 'text-emerald-400' : 'text-slate-200'}`}>{name}</span>
+                        {isActive && (
+                          <span className="px-1.5 py-0.2 rounded text-[9px] bg-emerald-500/20 text-emerald-400 font-mono">HEAD</span>
+                        )}
                       </div>
                       <span className="text-orange-400 font-mono text-[11px]">{commitHash ? commitHash.slice(0, 7) : 'empty'}</span>
                     </div>
@@ -229,8 +255,13 @@ export default function RepoInspector({
                 <span className="text-amber-400 uppercase text-[10px] font-bold block mb-2">Release Tags</span>
                 <div className="space-y-1">
                   {tagList.map(([name, hash]) => (
-                    <div key={name} className="px-2.5 py-1 rounded bg-slate-950 border border-slate-800 flex justify-between">
-                      <span className="text-amber-400 font-bold">🏷️ {name}</span>
+                    <div key={name} className="px-2.5 py-1 rounded bg-slate-950 border border-slate-800 flex justify-between items-center">
+                      <span className="text-amber-400 font-bold flex items-center gap-1.5">
+                        <svg aria-hidden="true" className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                        </svg>
+                        <span>{name}</span>
+                      </span>
                       <span className="text-slate-400 font-mono">{hash.slice(0, 7)}</span>
                     </div>
                   ))}

@@ -142,7 +142,12 @@ export default function UndoLabView({ onRunCommand, isDark = true }) {
       {/* Comparison Matrix Table */}
       <div className="space-y-1.5">
         <div className="sm:hidden text-[11px] text-zinc-400 font-sans flex items-center justify-between px-1">
-          <span>Swipe table horizontally to compare all 5 columns →</span>
+          <span className="inline-flex items-center gap-1">
+            <span>Swipe table horizontally to compare all 5 columns</span>
+            <svg aria-hidden="true" className="w-3 h-3 opacity-60 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </span>
         </div>
         <div className="overflow-x-auto rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950">
           <table className="w-full text-left text-xs border-collapse" aria-label="Git Undo operations comparison table">

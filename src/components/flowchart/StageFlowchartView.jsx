@@ -100,7 +100,12 @@ export default function StageFlowchartView({ onRunCommand, isDark = true }) {
       {/* Main Visualizer Area */}
       <div className="space-y-2">
         <div className="sm:hidden text-[11px] text-zinc-400 font-sans flex items-center justify-between px-1">
-          <span>Swipe horizontally to view all 5 Git stages (Stash → Workspace → Staging → Local → Remote) →</span>
+          <span className="inline-flex items-center gap-1">
+            <span>Swipe horizontally across all 5 Git stages (Stash / Workspace / Staging / Local / Remote)</span>
+            <svg aria-hidden="true" className="w-3 h-3 opacity-60 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </span>
         </div>
         <div className="overflow-x-auto flex justify-start sm:justify-center py-2 no-scrollbar">
           <div className={`relative flex w-[900px] md:w-[1000px] shrink-0 rounded-xl border p-6 md:p-8 overflow-hidden ${

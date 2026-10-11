@@ -253,9 +253,12 @@ export default function CommandConsole({
             <button
               onClick={() => setShowAdvanced(!showAdvanced)}
               aria-expanded={showAdvanced}
-              className="text-xs font-medium text-orange-600 dark:text-orange-400 hover:underline"
+              className="text-xs font-medium text-orange-600 dark:text-orange-400 hover:underline inline-flex items-center gap-1"
             >
-              {showAdvanced ? 'Show Fewer Actions ▴' : 'Show Advanced Commands (Rebase, Stash, Reset) ▾'}
+              <span>{showAdvanced ? 'Show Fewer Actions' : 'Show Advanced Commands'}</span>
+              <svg aria-hidden="true" className={`w-3.5 h-3.5 transition-transform ${showAdvanced ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
+              </svg>
             </button>
           </div>
 
@@ -418,9 +421,12 @@ export default function CommandConsole({
             )}
             <button
               onClick={() => setDetailsOpen(!detailsOpen)}
-              className="text-xs text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 font-medium py-1 transition-colors whitespace-nowrap"
+              className="text-xs text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 font-medium py-1 transition-colors whitespace-nowrap inline-flex items-center gap-1"
             >
-              {detailsOpen ? 'Hide ▴' : 'Show ▾'}
+              <span>{detailsOpen ? 'Hide' : 'Show'}</span>
+              <svg aria-hidden="true" className={`w-3.5 h-3.5 transition-transform ${detailsOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
+              </svg>
             </button>
           </div>
         </div>
@@ -572,7 +578,11 @@ export default function CommandConsole({
                               : 'border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200'
                           }`}>
                             <div className="flex items-center gap-2">
-                              {isCurrent && <span className="text-orange-500 font-bold">★ (current)</span>}
+                              {isCurrent && (
+                                <span className="px-1.5 py-0.5 rounded text-[10px] font-mono bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-500/20 font-semibold">
+                                  current
+                                </span>
+                              )}
                               <span>{name}</span>
                             </div>
                             <span className="text-zinc-400 text-xs">{hash ? hash.slice(0, 7) : 'empty'}</span>

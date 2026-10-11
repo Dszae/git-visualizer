@@ -227,8 +227,12 @@ export default function CommitGraph({ state, isDark = true }) {
               HEAD detached at {state.HEAD.name.slice(0, 7)}
             </span>
           ) : (
-            <span className="px-2 py-0.5 rounded text-xs font-mono font-medium bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-700 truncate max-w-[140px] sm:max-w-none">
-              HEAD → {state.HEAD.name}
+            <span className="px-2 py-0.5 rounded text-xs font-mono font-medium bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-700 truncate max-w-[140px] sm:max-w-none inline-flex items-center gap-1">
+              <span>HEAD</span>
+              <svg aria-hidden="true" className="w-3 h-3 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" />
+              </svg>
+              <span>{state.HEAD.name}</span>
             </span>
           )}
         </div>
@@ -259,7 +263,9 @@ export default function CommitGraph({ state, isDark = true }) {
             title="Pan left"
             className="w-7 h-7 sm:w-6 sm:h-6 rounded flex items-center justify-center hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-zinc-600 dark:text-zinc-400"
           >
-            ←
+            <svg aria-hidden="true" className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 19l-7-7 7-7" />
+            </svg>
           </button>
           <button
             onClick={handlePanRight}
@@ -267,7 +273,9 @@ export default function CommitGraph({ state, isDark = true }) {
             title="Pan right"
             className="w-7 h-7 sm:w-6 sm:h-6 rounded flex items-center justify-center hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-zinc-600 dark:text-zinc-400"
           >
-            →
+            <svg aria-hidden="true" className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" />
+            </svg>
           </button>
 
           <span className="text-zinc-300 dark:text-zinc-700 mx-0.5">·</span>
@@ -285,9 +293,11 @@ export default function CommitGraph({ state, isDark = true }) {
           <button
             onClick={handleZoomOut}
             aria-label="Zoom out commit graph"
-            className="w-7 h-7 sm:w-6 sm:h-6 rounded flex items-center justify-center hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-zinc-600 dark:text-zinc-400 font-bold"
+            className="w-7 h-7 sm:w-6 sm:h-6 rounded flex items-center justify-center hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-zinc-600 dark:text-zinc-400"
           >
-            −
+            <svg aria-hidden="true" className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M20 12H4" />
+            </svg>
           </button>
           <span className="text-xs text-zinc-500 dark:text-zinc-400 w-9 text-center font-mono">
             {Math.round(zoom * 100)}%
@@ -295,9 +305,11 @@ export default function CommitGraph({ state, isDark = true }) {
           <button
             onClick={handleZoomIn}
             aria-label="Zoom in commit graph"
-            className="w-7 h-7 sm:w-6 sm:h-6 rounded flex items-center justify-center hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-zinc-600 dark:text-zinc-400 font-bold"
+            className="w-7 h-7 sm:w-6 sm:h-6 rounded flex items-center justify-center hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-zinc-600 dark:text-zinc-400"
           >
-            +
+            <svg aria-hidden="true" className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 4v16m8-8H4" />
+            </svg>
           </button>
           <button
             onClick={handleResetZoom}
@@ -336,7 +348,7 @@ export default function CommitGraph({ state, isDark = true }) {
                     <div className="flex flex-wrap gap-1">
                       {node.branches.map(b => (
                         <span key={b.name} className="px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 text-xs font-bold border border-zinc-200 dark:border-zinc-700">
-                          {b.isHead ? 'HEAD → ' : ''}{b.name}
+                          {b.isHead ? 'HEAD / ' : ''}{b.name}
                         </span>
                       ))}
                       {node.tags.map(t => (
@@ -501,7 +513,7 @@ export default function CommitGraph({ state, isDark = true }) {
                                 b.isHead ? 'fill-white' : (isDark ? 'fill-zinc-200' : 'fill-zinc-800')
                               } pointer-events-none`}
                             >
-                              {b.isHead ? 'HEAD → ' : ''}{b.name}
+                              {b.isHead ? 'HEAD / ' : ''}{b.name}
                             </text>
                           </g>
                         ))}
