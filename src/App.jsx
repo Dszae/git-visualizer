@@ -1,8 +1,12 @@
-import React, { useState, useEffect, useCallback, Suspense, lazy } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Navbar from './components/nav/Navbar.jsx';
 import CommitGraph from './components/graph/CommitGraph.jsx';
 import CommandConsole from './components/workspace/CommandConsole.jsx';
 import SEOContent from './components/seo/SEOContent.jsx';
+import LessonsView from './components/lessons/LessonsView.jsx';
+import UndoLabView from './components/undoLab/UndoLabView.jsx';
+import StageFlowchartView from './components/flowchart/StageFlowchartView.jsx';
+import CommandReferenceView from './components/reference/CommandReferenceView.jsx';
 import {
   createDefaultRepo,
   executeCommand
@@ -11,12 +15,6 @@ import {
   PRESET_SCENARIOS,
   deserializeStateFromUrl
 } from './engine/scenarios.js';
-
-// Lazy-load secondary tabs to optimize bundle size and accelerate initial paint
-const LessonsView = lazy(() => import('./components/lessons/LessonsView.jsx'));
-const UndoLabView = lazy(() => import('./components/undoLab/UndoLabView.jsx'));
-const StageFlowchartView = lazy(() => import('./components/flowchart/StageFlowchartView.jsx'));
-const CommandReferenceView = lazy(() => import('./components/reference/CommandReferenceView.jsx'));
 
 export default function App() {
   const [isDark, setIsDark] = useState(() => {
@@ -199,6 +197,11 @@ export default function App() {
     handleLoadState(fresh);
   };
 
+  const handleSelectTab = (tabId) => {
+    setActiveTab(tabId);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <div className={`min-h-screen font-sans flex flex-col transition-colors duration-200 ${
       isDark ? 'bg-zinc-950 text-zinc-100' : 'bg-zinc-50 text-zinc-900'
@@ -206,7 +209,7 @@ export default function App() {
       {/* Top Navigation */}
       <Navbar
         activeTab={activeTab}
-        onSelectTab={setActiveTab}
+        onSelectTab={handleSelectTab}
         currentState={currentState}
         onLoadScenario={handleLoadState}
         onResetSession={handleResetSession}
@@ -255,76 +258,52 @@ export default function App() {
 
         {/* ================= TAB 2: GUIDED LESSONS ================= */}
         {activeTab === 'lessons' && (
-          <Suspense fallback={
-            <div className="py-20 text-center text-zinc-500 font-sans text-sm">
-              Loading lessons...
+          <div className="space-y-6">
+            <LessonsView
+              currentState={currentState}
+              onLoadState={handleLoadState}
+              onRunCommand={handleRunCommand}
+              isDark={isDark}
+            />
+            <div className="pt-4 border-t border-zinc-200 dark:border-zinc-800">
+              <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-3">
+                Live State Preview
+              </h3>
+              <CommitGraph state={currentState} isDark={isDark} />
             </div>
-          }>
-            <div className="space-y-6">
-              <LessonsView
-                currentState={currentState}
-                onLoadState={handleLoadState}
-                onRunCommand={handleRunCommand}
-                isDark={isDark}
-              />
-              <div className="pt-4 border-t border-zinc-200 dark:border-zinc-800">
-                <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-3">
-                  Live State Preview
-                </h3>
-                <CommitGraph state={currentState} isDark={isDark} />
-              </div>
-            </div>
-          </Suspense>
+          </div>
         )}
 
         {/* ================= TAB 3: SAFE UNDO LAB ================= */}
         {activeTab === 'undo-lab' && (
-          <Suspense fallback={
-            <div className="py-20 text-center text-zinc-500 font-sans text-sm">
-              Loading Undo Lab...
+          <div className="space-y-6">
+            <UndoLabView
+              onRunCommand={handleRunCommand}
+              isDark={isDark}
+            />
+            <div className="pt-4 border-t border-zinc-200 dark:border-zinc-800">
+              <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-3">
+                Live Commit Graph
+              </h3>
+              <CommitGraph state={currentState} isDark={isDark} />
             </div>
-          }>
-            <div className="space-y-6">
-              <UndoLabView
-                onRunCommand={handleRunCommand}
-                isDark={isDark}
-              />
-              <div className="pt-4 border-t border-zinc-200 dark:border-zinc-800">
-                <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-3">
-                  Live Commit Graph
-                </h3>
-                <CommitGraph state={currentState} isDark={isDark} />
-              </div>
-            </div>
-          </Suspense>
+          </div>
         )}
 
         {/* ================= TAB 4: ARCHITECTURE FLOWCHART ================= */}
         {activeTab === 'flowchart' && (
-          <Suspense fallback={
-            <div className="py-20 text-center text-zinc-500 font-sans text-sm">
-              Loading flowchart...
-            </div>
-          }>
-            <StageFlowchartView
-              onRunCommand={handleRunCommand}
-              isDark={isDark}
-            />
-          </Suspense>
+          <StageFlowchartView
+            onRunCommand={handleRunCommand}
+            isDark={isDark}
+          />
         )}
 
         {/* ================= TAB 5: COMMAND REFERENCE ================= */}
         {activeTab === 'reference' && (
-          <Suspense fallback={
-            <div className="py-20 text-center text-zinc-500 font-sans text-sm">
-              Loading reference...
-            </div>
-          }>
-            <CommandReferenceView
-              onRunCommand={handleRunCommand}
-              isDark={isDark}
-            />
-          </Suspense>
+          <CommandReferenceView
+            onRunCommand={handleRunCommand}
+            isDark={isDark}
+          />
         )}
 
         {/* Editorial SEO & Topics */}

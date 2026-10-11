@@ -75,7 +75,7 @@ export default function CommandConsole({
   const [isPlaying, setIsPlaying] = useState(false);
 
   const inputRef = useRef(null);
-  const terminalEndRef = useRef(null);
+  const drawerContentRef = useRef(null);
 
   // Playback timer for timeline
   useEffect(() => {
@@ -92,10 +92,10 @@ export default function CommandConsole({
     return () => clearInterval(timer);
   }, [isPlaying, currentStepIndex, historySteps.length, onGoToStep]);
 
-  // Auto scroll output
+  // Auto scroll output inside terminal drawer container without scrolling browser window
   useEffect(() => {
-    if (activeDetailTab === 'output') {
-      terminalEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (activeDetailTab === 'output' && drawerContentRef.current) {
+      drawerContentRef.current.scrollTop = drawerContentRef.current.scrollHeight;
     }
   }, [terminalLogs, activeDetailTab]);
 
@@ -433,7 +433,7 @@ export default function CommandConsole({
 
         {/* Drawer Contents */}
         {detailsOpen && (
-          <div className="p-4 sm:p-6 max-h-80 overflow-y-auto text-sm">
+          <div ref={drawerContentRef} className="p-4 sm:p-6 max-h-80 overflow-y-auto text-sm">
             {/* TAB: TERMINAL OUTPUT */}
             {activeDetailTab === 'output' && (
               <div className="space-y-3 font-mono">
