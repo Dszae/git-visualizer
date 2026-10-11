@@ -41,14 +41,6 @@ const COMMANDS = [
   { id: 'stash-apply', cmd: 'git stash apply', start: 1, end: 2, desc: 'Apply a single stashed state without removing it from the list.', category: 'STASH' },
 ];
 
-function getFlowLabel(command) {
-  const sourceStage = STAGES.find(stage => stage.id === command.start);
-  const targetStage = STAGES.find(stage => stage.id === command.end);
-  if (command.start === command.end) return sourceStage.name;
-  const arrow = command.bidirectional ? '<->' : command.start < command.end ? '->' : '<-';
-  return `${sourceStage.name} ${arrow} ${targetStage.name}`;
-}
-
 export default function StageFlowchartView({ onRunCommand, isDark = true }) {
   const [hoveredCmd, setHoveredCmd] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
@@ -116,7 +108,7 @@ export default function StageFlowchartView({ onRunCommand, isDark = true }) {
           </span>
         </div>
         <div className="overflow-x-auto flex justify-start sm:justify-center py-2 no-scrollbar">
-          <div className={`relative flex w-[900px] md:w-[1000px] shrink-0 rounded-2xl border p-6 md:p-8 overflow-hidden ${
+          <div className={`relative flex w-[900px] md:w-[1000px] shrink-0 rounded-2xl border p-6 md:p-8 overflow-visible ${
             isDark ? 'bg-zinc-950 border-zinc-800' : 'bg-white border-zinc-200'
           }`}>
           
@@ -211,7 +203,16 @@ export default function StageFlowchartView({ onRunCommand, isDark = true }) {
                     <div className={`relative px-3 py-1 rounded-md border text-xs font-mono font-medium whitespace-nowrap transition-colors z-10 ${bgPill} ${textColor}`}>
                       <span className="opacity-70 mr-1">$</span>
                       {cmd.cmd}
-                      
+                      {isHovered && (
+                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-56 max-w-[calc(100vw-2rem)] rounded-lg bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 p-3 text-left shadow-xl z-50 pointer-events-none flow-description-enter whitespace-normal">
+                          <p className="text-[10px] font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+                            What it is used for
+                          </p>
+                          <p className="mt-1 text-xs font-sans leading-relaxed text-zinc-700 dark:text-zinc-300 break-words">
+                            {cmd.desc}
+                          </p>
+                        </div>
+                      )}
                     </div>
                   </button>
                 );
@@ -219,33 +220,6 @@ export default function StageFlowchartView({ onRunCommand, isDark = true }) {
             </div>
           </div>
         </div>
-        {hoveredCmd && (() => {
-          const hoveredCommand = COMMANDS.find(command => command.id === hoveredCmd);
-          return hoveredCommand ? (
-            <div key={hoveredCommand.id} className={`mt-3 rounded-xl border px-4 py-3 text-left flow-description-enter ${
-              isDark ? 'border-zinc-800 bg-zinc-900/80' : 'border-zinc-200 bg-white'
-            }`} role="status" aria-live="polite">
-              <div className="flex flex-col gap-1">
-                <span className="text-[10px] font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-                  About this command
-                </span>
-                <h3 className="text-sm font-mono font-semibold text-zinc-900 dark:text-zinc-100 break-words">
-                  {hoveredCommand.cmd}
-                </h3>
-              </div>
-              <p className="mt-2 text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-                What it is used for
-              </p>
-              <p className="mt-0.5 text-sm leading-relaxed text-zinc-700 dark:text-zinc-300 break-words">
-                {hoveredCommand.desc}
-              </p>
-              <div className="mt-3 flex flex-wrap items-center gap-2 text-[10px] font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-                <span>Data flow</span>
-                <span className="font-mono text-orange-700 dark:text-orange-300">{getFlowLabel(hoveredCommand)}</span>
-              </div>
-            </div>
-          ) : null;
-        })()}
       </div>
     </div>
 
