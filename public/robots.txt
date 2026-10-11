@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://git-visualize.vercel.app/sitemap.xml
+Sitemap: https://git-visualizer.dipeshsapkota7.com.np/sitemap.xml
