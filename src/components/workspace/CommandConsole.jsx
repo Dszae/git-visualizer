@@ -76,6 +76,7 @@ export default function CommandConsole({
 
   const inputRef = useRef(null);
   const drawerContentRef = useRef(null);
+  const terminalEndRef = useRef(null);
 
   // Playback timer for timeline
   useEffect(() => {
