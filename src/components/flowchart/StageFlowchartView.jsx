@@ -188,16 +188,16 @@ export default function StageFlowchartView({ onRunCommand, isDark = true }) {
                     {/* The Line & Arrow */}
                     {!isSameCol && (
                       <div className="absolute inset-x-0 h-0.5 top-1/2 -translate-y-1/2 pointer-events-none">
-                        <div className={`w-full h-full transition-colors duration-200 ${lineColor}`}></div>
+                        <div className={`w-full h-full transition-colors duration-200 ${lineColor} ${isHovered ? 'flow-line-active' : ''}`}></div>
                         
-                        <div className={`absolute top-1/2 -translate-y-1/2 w-2 h-2 rounded-full transition-colors duration-200 ${lineColor} ${isLtr ? '-left-1' : '-right-1'}`}></div>
+                        <div className={`absolute top-1/2 -translate-y-1/2 w-2 h-2 rounded-full transition-colors duration-200 ${lineColor} ${isLtr ? '-left-1' : '-right-1'} ${isHovered ? 'flow-node-active' : ''}`}></div>
                         
-                        <svg aria-hidden="true" className={`absolute top-1/2 -translate-y-1/2 w-3.5 h-3.5 transition-colors duration-200 ${isHovered ? 'text-white' : (isDark ? 'text-zinc-600' : 'text-zinc-400')} ${isLtr ? '-right-1.5' : '-left-1.5 rotate-180'}`} fill="currentColor" viewBox="0 0 20 20">
+                        <svg aria-hidden="true" className={`absolute top-1/2 -translate-y-1/2 w-3.5 h-3.5 transition-colors duration-200 ${isHovered ? 'text-white flow-arrow-active' : (isDark ? 'text-zinc-600' : 'text-zinc-400')} ${isLtr ? '-right-1.5' : '-left-1.5 rotate-180'}`} fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd"></path>
                         </svg>
                         
                         {cmd.bidirectional && (
-                          <svg aria-hidden="true" className={`absolute top-1/2 -translate-y-1/2 w-3.5 h-3.5 transition-colors duration-200 ${isHovered ? 'text-white' : (isDark ? 'text-zinc-600' : 'text-zinc-400')} ${isLtr ? '-left-1.5 rotate-180' : '-right-1.5'}`} fill="currentColor" viewBox="0 0 20 20">
+                          <svg aria-hidden="true" className={`absolute top-1/2 -translate-y-1/2 w-3.5 h-3.5 transition-colors duration-200 ${isHovered ? 'text-white flow-arrow-active' : (isDark ? 'text-zinc-600' : 'text-zinc-400')} ${isLtr ? '-left-1.5 rotate-180' : '-right-1.5'}`} fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd"></path>
                           </svg>
                         )}
@@ -219,10 +219,13 @@ export default function StageFlowchartView({ onRunCommand, isDark = true }) {
         {hoveredCmd && (() => {
           const hoveredCommand = COMMANDS.find(command => command.id === hoveredCmd);
           return hoveredCommand ? (
-            <div className={`mt-3 rounded-xl border px-4 py-3 text-left ${
+            <div key={hoveredCommand.id} className={`mt-3 rounded-xl border px-4 py-3 text-left flow-description-enter ${
               isDark ? 'border-zinc-800 bg-zinc-900/80' : 'border-zinc-200 bg-white'
             }`} role="status" aria-live="polite">
               <div className="flex flex-col sm:flex-row sm:items-baseline gap-1.5 sm:gap-3">
+                <span className="text-[10px] font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+                  Command flow
+                </span>
                 <span className="text-[10px] font-mono font-semibold uppercase tracking-wide text-orange-700 dark:text-orange-300">
                   {getFlowLabel(hoveredCommand)}
                 </span>
@@ -230,7 +233,10 @@ export default function StageFlowchartView({ onRunCommand, isDark = true }) {
                   {hoveredCommand.cmd}
                 </span>
               </div>
-              <p className="mt-1 text-sm leading-relaxed text-zinc-700 dark:text-zinc-300 break-words">
+              <p className="mt-2 text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+                What this command does
+              </p>
+              <p className="mt-0.5 text-sm leading-relaxed text-zinc-700 dark:text-zinc-300 break-words">
                 {hoveredCommand.desc}
               </p>
             </div>

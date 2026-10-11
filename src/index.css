@@ -68,3 +68,58 @@ kbd,
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
+
+@keyframes flow-line-draw {
+  from {
+    transform: scaleX(0.08);
+    opacity: 0.45;
+  }
+  to {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+@keyframes flow-arrow-pulse {
+  0%,
+  100% {
+    transform: translateY(-50%) scale(1);
+  }
+  50% {
+    transform: translateY(-50%) scale(1.25);
+  }
+}
+
+@keyframes flow-description-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.flow-line-active {
+  transform-origin: left center;
+  animation: flow-line-draw 450ms ease-out both;
+}
+
+.flow-node-active,
+.flow-arrow-active {
+  animation: flow-arrow-pulse 900ms ease-in-out infinite;
+}
+
+.flow-description-enter {
+  animation: flow-description-enter 180ms ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flow-line-active,
+  .flow-node-active,
+  .flow-arrow-active,
+  .flow-description-enter {
+    animation: none;
+  }
+}
