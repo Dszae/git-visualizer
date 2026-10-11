@@ -37,26 +37,74 @@
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": "Git Visualizer",
-        "url": "https://git-visualizer.dipeshsapkota7.com.np/",
-        "description": "An interactive Git learning platform featuring a live SVG commit graph, deterministic command simulator, guided lessons, safe undo comparisons, and architecture flowchart.",
-        "applicationCategory": "EducationalApplication",
-        "operatingSystem": "All",
-        "browserRequirements": "Requires JavaScript. Requires HTML5.",
-        "author": {
-          "@type": "Person",
-          "name": "Dipesh Sapkota",
-          "url": "https://www.dipeshsapkota7.com.np/"
-        }
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://www.dipeshsapkota7.com.np/#website",
+            "url": "https://www.dipeshsapkota7.com.np/",
+            "name": "Dipesh Sapkota",
+            "description": "Dipesh Sapkota's official portfolio, software engineering projects, and technical web applications.",
+            "publisher": {
+              "@id": "https://www.dipeshsapkota7.com.np/#author"
+            }
+          },
+          {
+            "@type": "WebApplication",
+            "@id": "https://git-visualizer.dipeshsapkota7.com.np/#app",
+            "url": "https://git-visualizer.dipeshsapkota7.com.np/",
+            "name": "Git Visualizer — Interactive Git Commit Graph & Simulator",
+            "applicationCategory": "EducationalApplication",
+            "operatingSystem": "All",
+            "browserRequirements": "Requires JavaScript. Requires HTML5.",
+            "description": "An interactive Git learning platform featuring a live SVG commit graph, deterministic command simulator, guided lessons, safe undo comparisons, and architecture flowchart.",
+            "isPartOf": {
+              "@id": "https://www.dipeshsapkota7.com.np/#website"
+            },
+            "author": {
+              "@id": "https://www.dipeshsapkota7.com.np/#author"
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://git-visualizer.dipeshsapkota7.com.np/#breadcrumbs",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Dipesh Sapkota (Portfolio)",
+                "item": "https://www.dipeshsapkota7.com.np/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Git Visualizer",
+                "item": "https://git-visualizer.dipeshsapkota7.com.np/"
+              }
+            ]
+          },
+          {
+            "@type": "Person",
+            "@id": "https://www.dipeshsapkota7.com.np/#author",
+            "name": "Dipesh Sapkota",
+            "url": "https://www.dipeshsapkota7.com.np/",
+            "sameAs": [
+              "https://www.dipeshsapkota7.com.np/",
+              "https://github.com/Dszae"
+            ]
+          }
+        ]
       }
     </script>
   </head>
   <body>
     <noscript>
-      <div style="padding: 2.5rem; font-family: system-ui, -apple-system, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto;">
+      <div style="padding: 2.5rem; font-family: 'Manrope', system-ui, -apple-system, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto;">
+        <nav aria-label="Breadcrumb" style="margin-bottom: 1rem; font-size: 0.9rem;">
+          <a href="https://www.dipeshsapkota7.com.np/" rel="home author">Dipesh Sapkota (Home)</a> &gt; <span>Git Visualizer</span>
+        </nav>
         <h1>Git Visualizer — Interactive Git Learning Platform</h1>
-        <p>A deterministic Git repository simulator, live commit DAG visualizer, guided curriculum, safe undo laboratory, and architecture flowchart.</p>
+        <p>A deterministic Git repository simulator, live commit DAG visualizer, guided curriculum, safe undo laboratory, and architecture flowchart by <a href="https://www.dipeshsapkota7.com.np/" rel="author">Dipesh Sapkota</a>.</p>
+        <p>Main Portfolio & Projects: <a href="https://www.dipeshsapkota7.com.np/" rel="home">https://www.dipeshsapkota7.com.np/</a></p>
         
         <h2>Core Modules</h2>
         <ul>

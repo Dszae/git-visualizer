@@ -148,6 +148,21 @@ export default function Navbar({
             </button>
           )}
 
+          {/* Main Portfolio Backlink */}
+          <a
+            href="https://www.dipeshsapkota7.com.np/"
+            target="_blank"
+            rel="noopener noreferrer home author"
+            title="Visit Dipesh Sapkota's main portfolio website"
+            aria-label="Visit original website dipeshsapkota7.com.np"
+            className="h-9 sm:h-10 px-2.5 sm:px-3 rounded-lg text-xs font-medium border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:bg-zinc-50 dark:hover:bg-zinc-850 text-zinc-700 dark:text-zinc-200 transition-colors hidden sm:inline-flex items-center gap-1.5 shadow-2xs"
+          >
+            <span>dipeshsapkota7.com.np</span>
+            <svg aria-hidden="true" className="w-3 h-3 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+          </a>
+
           {/* Share Button */}
           <button
             onClick={handleShare}
@@ -275,6 +290,19 @@ export default function Navbar({
             >
               <span>🔗</span> Copy Shareable URL
             </button>
+          </div>
+
+          {/* Original Website Link in Mobile Drawer */}
+          <div className="pt-2 border-t border-zinc-200 dark:border-zinc-850">
+            <a
+              href="https://www.dipeshsapkota7.com.np/"
+              target="_blank"
+              rel="noopener noreferrer home author"
+              className="w-full text-left px-3.5 py-2.5 rounded-lg text-xs font-semibold text-orange-600 dark:text-orange-400 bg-orange-500/10 hover:bg-orange-500/15 border border-orange-500/20 min-h-[44px] flex items-center justify-between"
+            >
+              <span>Original Website: dipeshsapkota7.com.np</span>
+              <span>↗</span>
+            </a>
           </div>
         </div>
       )}

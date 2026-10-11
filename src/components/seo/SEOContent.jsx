@@ -116,6 +116,16 @@ export default function SEOContent({ isDark = true }) {
               ))}
             </div>
           </div>
+
+          {/* Author & Parent Portfolio Backlink Section */}
+          <div className="pt-6 border-t border-zinc-200 dark:border-zinc-800 space-y-2 text-xs">
+            <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">
+              Developer Profile & Original Website
+            </h3>
+            <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">
+              Git Visualizer is designed and engineered by <a href="https://www.dipeshsapkota7.com.np/" target="_blank" rel="noopener noreferrer author" className="text-orange-600 dark:text-orange-400 font-medium hover:underline">Dipesh Sapkota</a> to provide an accessible, visual, and mathematically sound Git simulator for developers and learners worldwide. This application is an official project of the <a href="https://www.dipeshsapkota7.com.np/" target="_blank" rel="noopener noreferrer home author" className="text-orange-600 dark:text-orange-400 font-medium hover:underline">dipeshsapkota7.com.np</a> developer portfolio.
+            </p>
+          </div>
         </div>
       )}
     </section>

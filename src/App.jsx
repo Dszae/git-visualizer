@@ -331,28 +331,77 @@ export default function App() {
         <SEOContent isDark={isDark} />
       </main>
 
-      {/* Clean, Tasteful Footer */}
-      <footer className={`py-8 border-t text-xs transition-colors duration-200 ${
-        isDark ? 'border-zinc-800/80 text-zinc-500' : 'border-zinc-200 text-zinc-500'
+      {/* Clean, Tasteful Footer with Sitelink Backlinks */}
+      <footer className={`py-10 border-t text-xs transition-colors duration-200 ${
+        isDark ? 'border-zinc-800/80 text-zinc-500 bg-zinc-950/80' : 'border-zinc-200 text-zinc-500 bg-white'
       }`}>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
-          <div>
-            <p className="font-medium text-zinc-700 dark:text-zinc-300">
-              Git Visualizer
-            </p>
-            <p className="text-xs text-zinc-500 mt-0.5">
-              An interactive visualizer to master branching, merging, rebasing, and commits.
-            </p>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-6">
+          <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-6 text-center md:text-left">
+            {/* Project Identity */}
+            <div className="space-y-1.5 max-w-sm">
+              <div className="flex items-center justify-center md:justify-start gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-orange-600 inline-block" aria-hidden="true"></span>
+                <span className="font-bold text-sm text-zinc-900 dark:text-zinc-100">
+                  Git Visualizer
+                </span>
+              </div>
+              <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                An interactive Git learning platform with a live commit graph, deterministic CLI simulator, safe undo lab, and architecture flowchart.
+              </p>
+            </div>
+
+            {/* Sitelink Breadcrumb & Original Website Links */}
+            <div className="space-y-2">
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 block">
+                Part of Dipesh Sapkota Portfolio
+              </span>
+              <nav aria-label="Breadcrumb Navigation" className="flex items-center justify-center md:justify-start gap-1.5 text-xs">
+                <a
+                  href="https://www.dipeshsapkota7.com.np/"
+                  target="_blank"
+                  rel="noopener noreferrer home author"
+                  title="Dipesh Sapkota Official Website"
+                  className="font-medium text-orange-600 dark:text-orange-400 hover:underline"
+                >
+                  dipeshsapkota7.com.np
+                </a>
+                <span className="text-zinc-400 dark:text-zinc-600">/</span>
+                <span className="text-zinc-800 dark:text-zinc-200 font-semibold">
+                  git-visualizer
+                </span>
+              </nav>
+              <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 pt-1 text-xs">
+                <a
+                  href="https://www.dipeshsapkota7.com.np/"
+                  target="_blank"
+                  rel="noopener noreferrer home author"
+                  className="text-zinc-600 dark:text-zinc-400 hover:text-orange-600 dark:hover:text-orange-400 transition-colors font-medium"
+                >
+                  Original Website ↗
+                </a>
+                <a
+                  href="https://github.com/Dszae"
+                  target="_blank"
+                  rel="noopener noreferrer me"
+                  className="text-zinc-600 dark:text-zinc-400 hover:text-orange-600 dark:hover:text-orange-400 transition-colors"
+                >
+                  GitHub Profile ↗
+                </a>
+                <a
+                  href="https://github.com/Dszae/git-visualizer"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-zinc-600 dark:text-zinc-400 hover:text-orange-600 dark:hover:text-orange-400 transition-colors"
+                >
+                  Source Repository ↗
+                </a>
+              </div>
+            </div>
           </div>
-          <div>
-            <a
-              href="https://www.dipeshsapkota7.com.np/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-zinc-600 dark:text-zinc-400 hover:text-orange-600 dark:hover:text-orange-400 font-medium transition-colors"
-            >
-              Created by Dipesh Sapkota →
-            </a>
+
+          <div className="pt-4 border-t border-zinc-200 dark:border-zinc-850 flex flex-col sm:flex-row items-center justify-between gap-2 text-center text-[11px] text-zinc-400 dark:text-zinc-500">
+            <p>© {new Date().getFullYear()} Git Visualizer. Created by Dipesh Sapkota.</p>
+            <p>Designed for engineers, students, and educators.</p>
           </div>
         </div>
       </footer>
