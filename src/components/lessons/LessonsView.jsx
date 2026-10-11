@@ -204,24 +204,39 @@ export default function LessonsView({
                 </span>
                 {activeLesson.steps.map((step, sIdx) => {
                   const isStepDone = step.verify(currentState);
+                  // Extract command from backticks or quotes
+                  const cmdMatch = step.instruction.match(/`([^`]+)`/) || step.hint.match(/"([^"]+)"/);
+                  const suggestedCmd = cmdMatch ? cmdMatch[1] : null;
+
                   return (
                     <div 
                       key={sIdx}
-                      className={`p-3 rounded-lg border flex items-start gap-2.5 text-xs transition-colors ${
+                      className={`p-3.5 rounded-xl border flex items-start justify-between gap-3 text-xs transition-colors ${
                         isStepDone 
                           ? 'border-emerald-500/30 bg-emerald-500/5 text-emerald-800 dark:text-emerald-300' 
                           : 'border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 text-zinc-700 dark:text-zinc-300'
                       }`}
                     >
-                      <span className={`w-4 h-4 rounded-full flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5 ${
-                        isStepDone ? 'bg-emerald-600 text-white' : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-500'
-                      }`}>
-                        {isStepDone ? '✓' : sIdx + 1}
-                      </span>
-                      <div className="space-y-0.5">
-                        <p className="font-medium text-zinc-900 dark:text-zinc-100">{step.instruction}</p>
-                        <p className="text-[11px] text-zinc-500 font-mono">Hint: {step.hint}</p>
+                      <div className="flex items-start gap-2.5">
+                        <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5 ${
+                          isStepDone ? 'bg-emerald-600 text-white' : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-500'
+                        }`}>
+                          {isStepDone ? '✓' : sIdx + 1}
+                        </span>
+                        <div className="space-y-1">
+                          <p className="font-semibold text-sm text-zinc-900 dark:text-zinc-100">{step.instruction}</p>
+                          <p className="text-xs text-zinc-500 font-mono">Hint: {step.hint}</p>
+                        </div>
                       </div>
+
+                      {suggestedCmd && !isStepDone && onRunCommand && (
+                        <button
+                          onClick={() => onRunCommand(suggestedCmd)}
+                          className="px-3 py-1.5 rounded-lg bg-orange-600 hover:bg-orange-500 text-white font-mono text-xs font-semibold transition-colors shrink-0 flex items-center gap-1 shadow-2xs"
+                        >
+                          Run: {suggestedCmd}
+                        </button>
+                      )}
                     </div>
                   );
                 })}

@@ -215,7 +215,7 @@ export default function App() {
       />
 
       {/* Main Container */}
-      <main className="flex-1 w-full max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-6">
+      <main className="flex-1 w-full max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-6">
         
         {/* ================= TAB 1: SANDBOX ================= */}
         {activeTab === 'sandbox' && (
@@ -335,7 +335,7 @@ export default function App() {
       <footer className={`py-8 border-t text-xs transition-colors duration-200 ${
         isDark ? 'border-zinc-800/80 text-zinc-500' : 'border-zinc-200 text-zinc-500'
       }`}>
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
           <div>
             <p className="font-medium text-zinc-700 dark:text-zinc-300">
               Git Visualizer

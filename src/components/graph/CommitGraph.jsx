@@ -207,6 +207,24 @@ export default function CommitGraph({ state, isDark = true }) {
           )}
         </div>
 
+        {/* Center: Friendly Legend for Absolute Beginners */}
+        <div className="hidden lg:flex items-center gap-3 text-[11px] text-zinc-500 font-medium">
+          <span className="flex items-center gap-1">
+            <span className="w-2 h-2 rounded-full bg-zinc-400 dark:bg-zinc-600 inline-block"></span>
+            <span>Commit</span>
+          </span>
+          <span className="flex items-center gap-1">
+            <span className="w-2 h-2 rounded-full bg-orange-600 inline-block"></span>
+            <span>HEAD</span>
+          </span>
+          <span className="flex items-center gap-1">
+            <span className="px-1 py-0.2 rounded text-[9px] bg-zinc-200 dark:bg-zinc-700 font-mono text-zinc-800 dark:text-zinc-200 font-bold">
+              branch
+            </span>
+            <span>Branch Pointer</span>
+          </span>
+        </div>
+
         {/* Right: Unobtrusive Zoom & View Controls */}
         <div className="flex items-center gap-1 font-mono">
           <button
@@ -538,6 +556,19 @@ export default function CommitGraph({ state, isDark = true }) {
           )}
         </div>
       )}
+
+      {/* Bottom Guidance Strip for Absolute Beginners */}
+      <div className={`px-4 py-2 border-t flex items-center justify-between text-xs text-zinc-500 z-10 ${
+        isDark ? 'bg-zinc-900/40 border-zinc-800' : 'bg-zinc-50 border-zinc-200'
+      }`}>
+        <span className="flex items-center gap-1.5">
+          <span className="text-orange-500 font-bold">Tip:</span>
+          <span>Click any commit circle to inspect its file snapshots. Drag canvas to pan.</span>
+        </span>
+        <span className="hidden sm:inline font-mono text-[11px] text-zinc-400">
+          Scroll to zoom
+        </span>
+      </div>
 
       {/* Modal for commit inspection */}
       {selectedCommit && (
