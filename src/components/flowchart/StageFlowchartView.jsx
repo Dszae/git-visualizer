@@ -225,10 +225,13 @@ export default function StageFlowchartView({ onRunCommand, isDark = true }) {
             <div key={hoveredCommand.id} className={`mt-3 rounded-xl border px-4 py-3 text-left flow-description-enter ${
               isDark ? 'border-zinc-800 bg-zinc-900/80' : 'border-zinc-200 bg-white'
             }`} role="status" aria-live="polite">
-              <div className="flex flex-col sm:flex-row sm:items-baseline gap-1.5 sm:gap-3">
-                <span className="text-sm font-mono font-semibold text-zinc-900 dark:text-zinc-100 break-words">
-                  {hoveredCommand.cmd}
+              <div className="flex flex-col gap-1">
+                <span className="text-[10px] font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+                  About this command
                 </span>
+                <h3 className="text-sm font-mono font-semibold text-zinc-900 dark:text-zinc-100 break-words">
+                  {hoveredCommand.cmd}
+                </h3>
               </div>
               <p className="mt-2 text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
                 What it is used for
