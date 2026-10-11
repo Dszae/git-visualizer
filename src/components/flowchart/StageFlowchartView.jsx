@@ -41,6 +41,14 @@ const COMMANDS = [
   { id: 'stash-apply', cmd: 'git stash apply', start: 1, end: 2, desc: 'Apply a single stashed state without removing it from the list.', category: 'STASH' },
 ];
 
+function getFlowLabel(command) {
+  const sourceStage = STAGES.find(stage => stage.id === command.start);
+  const targetStage = STAGES.find(stage => stage.id === command.end);
+  if (command.start === command.end) return sourceStage.name;
+  const arrow = command.bidirectional ? '<->' : command.start < command.end ? '->' : '<-';
+  return `${sourceStage.name} ${arrow} ${targetStage.name}`;
+}
+
 export default function StageFlowchartView({ onRunCommand, isDark = true }) {
   const [hoveredCmd, setHoveredCmd] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
@@ -165,24 +173,17 @@ export default function StageFlowchartView({ onRunCommand, isDark = true }) {
                   : (isDark ? 'bg-zinc-900 border-zinc-700' : 'bg-white border-zinc-300');
 
                 return (
-                  <div 
+                  <button 
                     key={cmd.id}
-                    role="button"
-                    tabIndex={0}
+                    type="button"
                     aria-label={`Run ${cmd.cmd}: ${cmd.desc}`}
                     onMouseEnter={() => setHoveredCmd(cmd.id)}
                     onMouseLeave={() => setHoveredCmd(null)}
                     onFocus={() => setHoveredCmd(cmd.id)}
                     onBlur={() => setHoveredCmd(null)}
                     onClick={() => handleCommandClick(cmd)}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        handleCommandClick(cmd);
-                      }
-                    }}
                     style={{ gridColumn: `${colStart} / span ${colSpan}` }}
-                    className={`relative flex items-center justify-center group cursor-pointer transition-all duration-200 h-8 rounded-lg focus:outline-none ${isFaded ? 'opacity-20' : 'opacity-100'}`}
+                    className={`relative flex items-center justify-center group cursor-pointer transition-all duration-200 h-8 rounded-lg bg-transparent p-0 focus:outline-none ${isFaded ? 'opacity-20' : 'opacity-100'}`}
                   >
                     {/* The Line & Arrow */}
                     {!isSameCol && (
@@ -208,22 +209,33 @@ export default function StageFlowchartView({ onRunCommand, isDark = true }) {
                       <span className="opacity-70 mr-1">$</span>
                       {cmd.cmd}
                       
-                      {/* Tooltip on Hover/Focus */}
-                      {isHovered && (
-                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-56 p-3 rounded-lg bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 shadow-xl z-50 pointer-events-none text-zinc-900 dark:text-zinc-100">
-                          <p className="text-xs font-sans leading-relaxed text-center mb-1.5 text-zinc-700 dark:text-zinc-300">{cmd.desc}</p>
-                          <div className="text-[10px] font-mono text-orange-600 dark:text-orange-400 text-center font-medium">
-                            Click or Enter to run
-                          </div>
-                        </div>
-                      )}
                     </div>
-                  </div>
+                  </button>
                 );
               })}
             </div>
           </div>
         </div>
+        {hoveredCmd && (() => {
+          const hoveredCommand = COMMANDS.find(command => command.id === hoveredCmd);
+          return hoveredCommand ? (
+            <div className={`mt-3 rounded-xl border px-4 py-3 text-left ${
+              isDark ? 'border-zinc-800 bg-zinc-900/80' : 'border-zinc-200 bg-white'
+            }`} role="status" aria-live="polite">
+              <div className="flex flex-col sm:flex-row sm:items-baseline gap-1.5 sm:gap-3">
+                <span className="text-[10px] font-mono font-semibold uppercase tracking-wide text-orange-700 dark:text-orange-300">
+                  {getFlowLabel(hoveredCommand)}
+                </span>
+                <span className="text-sm font-mono font-semibold text-zinc-900 dark:text-zinc-100 break-words">
+                  {hoveredCommand.cmd}
+                </span>
+              </div>
+              <p className="mt-1 text-sm leading-relaxed text-zinc-700 dark:text-zinc-300 break-words">
+                {hoveredCommand.desc}
+              </p>
+            </div>
+          ) : null;
+        })()}
       </div>
     </div>
 
