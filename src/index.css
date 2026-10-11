@@ -83,10 +83,10 @@ kbd,
 @keyframes flow-arrow-pulse {
   0%,
   100% {
-    transform: translateY(-50%) scale(1);
+    transform: translateY(-50%) rotate(var(--flow-arrow-rotation, 0deg)) scale(1);
   }
   50% {
-    transform: translateY(-50%) scale(1.25);
+    transform: translateY(-50%) rotate(var(--flow-arrow-rotation, 0deg)) scale(1.25);
   }
 }
 
