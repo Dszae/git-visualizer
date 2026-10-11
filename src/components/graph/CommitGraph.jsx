@@ -170,6 +170,29 @@ export default function CommitGraph({ state, isDark = true }) {
 
   const handleMouseUp = () => setIsPanning(false);
 
+  // Touch Panning for Mobile & Tablet Devices
+  const [isTouchPanning, setIsTouchPanning] = useState(false);
+  const [startTouchPan, setStartTouchPan] = useState({ x: 0, y: 0 });
+
+  const handleTouchStart = (e) => {
+    if (e.touches.length === 1) {
+      setIsTouchPanning(true);
+      const touch = e.touches[0];
+      setStartTouchPan({ x: touch.clientX - pan.x, y: touch.clientY - pan.y });
+    }
+  };
+
+  const handleTouchMove = (e) => {
+    if (!isTouchPanning || e.touches.length !== 1) return;
+    const touch = e.touches[0];
+    setPan({
+      x: touch.clientX - startTouchPan.x,
+      y: touch.clientY - startTouchPan.y
+    });
+  };
+
+  const handleTouchEnd = () => setIsTouchPanning(false);
+
   const handleZoomIn = () => setZoom(z => Math.min(z + 0.15, 1.8));
   const handleZoomOut = () => setZoom(z => Math.max(z - 0.15, 0.5));
   const handleResetZoom = () => {
@@ -177,31 +200,34 @@ export default function CommitGraph({ state, isDark = true }) {
     setPan({ x: 0, y: 0 });
   };
 
+  const handlePanLeft = () => setPan(p => ({ ...p, x: p.x + 80 }));
+  const handlePanRight = () => setPan(p => ({ ...p, x: p.x - 80 }));
+
   const activeCommitObj = selectedCommit ? state.commits[selectedCommit] : null;
 
   return (
     <section 
       aria-label="Git Commit Graph"
-      className={`relative w-full h-[400px] sm:h-[460px] rounded-xl border flex flex-col overflow-hidden select-none transition-colors duration-200 ${
+      className={`relative w-full h-[330px] sm:h-[400px] lg:h-[460px] rounded-xl border flex flex-col overflow-hidden select-none transition-colors duration-200 ${
         isDark ? 'bg-zinc-950 border-zinc-800' : 'bg-white border-zinc-200'
       }`}
     >
       {/* Top Toolbar */}
-      <div className={`px-4 py-2 border-b flex items-center justify-between text-xs z-20 ${
+      <div className={`px-3 sm:px-4 py-2 border-b flex flex-wrap sm:flex-nowrap items-center justify-between gap-2 text-xs z-20 ${
         isDark ? 'bg-zinc-900/60 border-zinc-800 text-zinc-300' : 'bg-zinc-50 border-zinc-200 text-zinc-700'
       }`}>
         {/* Left: Clear Status */}
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-2">
           <span className="font-semibold text-zinc-900 dark:text-zinc-100">
             {nodes.length} {nodes.length === 1 ? 'commit' : 'commits'}
           </span>
           <span className="text-zinc-300 dark:text-zinc-700">·</span>
           {state.HEAD.type === 'detached' ? (
-            <span className="px-2 py-0.5 rounded text-xs font-mono font-medium bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/30">
+            <span className="px-2 py-0.5 rounded text-xs font-mono font-medium bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/30 truncate max-w-[140px] sm:max-w-none">
               HEAD detached at {state.HEAD.name.slice(0, 7)}
             </span>
           ) : (
-            <span className="px-2 py-0.5 rounded text-xs font-mono font-medium bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-700">
+            <span className="px-2 py-0.5 rounded text-xs font-mono font-medium bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-700 truncate max-w-[140px] sm:max-w-none">
               HEAD → {state.HEAD.name}
             </span>
           )}
@@ -225,32 +251,51 @@ export default function CommitGraph({ state, isDark = true }) {
           </span>
         </div>
 
-        {/* Right: Unobtrusive Zoom & View Controls */}
-        <div className="flex items-center gap-1 font-mono">
+        {/* Right: Unobtrusive Zoom, Pan & View Controls */}
+        <div className="flex items-center gap-1 font-mono ml-auto sm:ml-0">
+          <button
+            onClick={handlePanLeft}
+            aria-label="Pan graph left"
+            title="Pan left"
+            className="w-7 h-7 sm:w-6 sm:h-6 rounded flex items-center justify-center hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-zinc-600 dark:text-zinc-400"
+          >
+            ←
+          </button>
+          <button
+            onClick={handlePanRight}
+            aria-label="Pan graph right"
+            title="Pan right"
+            className="w-7 h-7 sm:w-6 sm:h-6 rounded flex items-center justify-center hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-zinc-600 dark:text-zinc-400"
+          >
+            →
+          </button>
+
+          <span className="text-zinc-300 dark:text-zinc-700 mx-0.5">·</span>
+
           <button
             onClick={() => setShowTableView(!showTableView)}
             aria-label={showTableView ? "Switch to graph view" : "Switch to accessible table view"}
             className="px-2 py-1 rounded text-xs font-sans font-medium hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
           >
-            {showTableView ? 'Graph View' : 'Table View'}
+            {showTableView ? 'Graph' : 'Table'}
           </button>
           
-          <span className="text-zinc-300 dark:text-zinc-700 mx-1">·</span>
+          <span className="text-zinc-300 dark:text-zinc-700 mx-0.5">·</span>
 
           <button
             onClick={handleZoomOut}
             aria-label="Zoom out commit graph"
-            className="w-6 h-6 rounded flex items-center justify-center hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-zinc-600 dark:text-zinc-400"
+            className="w-7 h-7 sm:w-6 sm:h-6 rounded flex items-center justify-center hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-zinc-600 dark:text-zinc-400 font-bold"
           >
             −
           </button>
-          <span className="text-xs text-zinc-500 dark:text-zinc-400 w-10 text-center font-mono">
+          <span className="text-xs text-zinc-500 dark:text-zinc-400 w-9 text-center font-mono">
             {Math.round(zoom * 100)}%
           </span>
           <button
             onClick={handleZoomIn}
             aria-label="Zoom in commit graph"
-            className="w-6 h-6 rounded flex items-center justify-center hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-zinc-600 dark:text-zinc-400"
+            className="w-7 h-7 sm:w-6 sm:h-6 rounded flex items-center justify-center hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-zinc-600 dark:text-zinc-400 font-bold"
           >
             +
           </button>
@@ -325,7 +370,11 @@ export default function CommitGraph({ state, isDark = true }) {
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
           onMouseLeave={handleMouseUp}
-          className={`flex-1 overflow-hidden relative cursor-grab active:cursor-grabbing ${
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+          onTouchCancel={handleTouchEnd}
+          className={`flex-1 overflow-hidden relative cursor-grab active:cursor-grabbing touch-none select-none ${
             isDark ? 'bg-zinc-950' : 'bg-zinc-50/50'
           }`}
         >

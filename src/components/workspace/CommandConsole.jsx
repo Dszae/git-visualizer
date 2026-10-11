@@ -189,11 +189,11 @@ export default function CommandConsole({
           <label htmlFor="git-command-input" className="block text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-2">
             Git Command Input
           </label>
-          <div className="flex items-center gap-2">
-            <div className="relative flex-1">
-              <div className="absolute left-3.5 top-1/2 -translate-y-1/2 flex items-center gap-1.5 font-mono text-xs text-zinc-400 select-none pointer-events-none">
-                <span className="text-zinc-500 font-bold">git</span>
-                <span className="text-orange-500">({activeBranch})</span>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+            <div className="relative flex-1 flex items-stretch rounded-xl border border-zinc-300 dark:border-zinc-700/80 bg-zinc-50 dark:bg-zinc-900 overflow-hidden focus-within:ring-2 focus-within:ring-orange-500/50 focus-within:border-orange-500 transition-all">
+              <div className="px-3 py-2.5 sm:py-3 bg-zinc-100/90 dark:bg-zinc-800/80 border-r border-zinc-200 dark:border-zinc-750 flex items-center gap-1.5 font-mono text-xs select-none shrink-0">
+                <span className="text-zinc-500 font-bold hidden xs:inline">git</span>
+                <span className="text-orange-600 dark:text-orange-400 font-semibold max-w-[100px] sm:max-w-[150px] truncate">({activeBranch})</span>
                 <span className="text-zinc-400 font-bold">$</span>
               </div>
               <input
@@ -203,38 +203,45 @@ export default function CommandConsole({
                 value={inputVal}
                 onChange={handleInputChange}
                 onKeyDown={handleKeyDown}
-                placeholder="type a command (e.g. git commit, git branch, git status)..."
+                placeholder="git commit, branch, switch..."
                 aria-label="Git command input"
-                className={`w-full pl-26 sm:pl-28 pr-4 py-3 rounded-xl text-sm font-mono border transition-all focus:outline-none focus:ring-2 focus:ring-orange-500/50 ${
-                  isDark 
-                    ? 'bg-zinc-900 border-zinc-700/80 text-white placeholder:text-zinc-500' 
-                    : 'bg-zinc-50 border-zinc-300 text-zinc-900 placeholder:text-zinc-400'
-                }`}
+                className="w-full px-3 py-2.5 sm:py-3 text-base sm:text-sm font-mono bg-transparent text-zinc-900 dark:text-white placeholder:text-zinc-400 dark:placeholder:text-zinc-500 focus:outline-none"
                 autoCapitalize="off"
                 autoCorrect="off"
                 spellCheck="false"
               />
-
-              {/* Tab Autocomplete */}
-              {suggestions.length > 0 && (
-                <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5 pointer-events-none">
-                  <span className="text-xs font-mono text-zinc-400 hidden sm:inline">Tab to complete:</span>
-                  <span className="text-xs font-mono font-medium text-orange-600 dark:text-orange-400 bg-orange-500/10 px-2 py-0.5 rounded border border-orange-500/20">
-                    {suggestions[0]}
-                  </span>
-                </div>
-              )}
             </div>
 
             <button
               onClick={executeCurrentInput}
               disabled={!inputVal.trim()}
               aria-label="Execute entered git command"
-              className="h-11 px-5 rounded-xl bg-orange-600 hover:bg-orange-500 disabled:opacity-40 disabled:hover:bg-orange-600 text-white text-sm font-semibold transition-colors shrink-0 shadow-xs"
+              className="h-11 px-5 rounded-xl bg-orange-600 hover:bg-orange-500 active:scale-[0.98] disabled:opacity-40 disabled:hover:bg-orange-600 text-white text-sm font-semibold transition-all shrink-0 shadow-xs flex items-center justify-center min-h-[44px]"
             >
-              Run
+              Run Command
             </button>
           </div>
+
+          {/* Touch-Friendly Autocomplete Suggestions Pills */}
+          {suggestions.length > 0 && (
+            <div className="flex items-center gap-1.5 flex-wrap pt-2 text-xs">
+              <span className="text-zinc-400 text-[11px] font-sans">Tap to use:</span>
+              {suggestions.map(s => (
+                <button
+                  key={s}
+                  type="button"
+                  onClick={() => {
+                    setInputVal(s);
+                    setSuggestions([]);
+                    inputRef.current?.focus();
+                  }}
+                  className="px-2.5 py-1 rounded-md text-xs font-mono font-medium text-orange-600 dark:text-orange-400 bg-orange-500/10 hover:bg-orange-500/20 active:scale-95 border border-orange-500/20 transition-all cursor-pointer"
+                >
+                  {s}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* 2. Common Action Buttons (Friendly for Beginners) */}
