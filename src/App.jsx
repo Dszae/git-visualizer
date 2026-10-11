@@ -329,26 +329,7 @@ export default function App() {
               </p>
             </div>
 
-            {/* Sitelink Breadcrumb & Original Website Links */}
             <div className="space-y-3">
-              <span className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 block">
-                Part of Dipesh Sapkota Portfolio
-              </span>
-              <nav aria-label="Breadcrumb Navigation" className="flex items-center justify-center md:justify-start gap-2 text-sm">
-                <a
-                  href="https://www.dipeshsapkota7.com.np/"
-                  target="_blank"
-                  rel="noopener noreferrer home author"
-                  title="Dipesh Sapkota Official Website"
-                  className="font-semibold text-orange-600 dark:text-orange-400 hover:underline"
-                >
-                  dipeshsapkota7.com.np
-                </a>
-                <span className="text-zinc-400 dark:text-zinc-600" aria-hidden="true">/</span>
-                <span className="text-zinc-800 dark:text-zinc-200 font-semibold">
-                  git-visualizer
-                </span>
-              </nav>
               <div className="flex flex-wrap items-center justify-center md:justify-start gap-2.5 pt-1" aria-label="Dipesh Sapkota links">
                 {/* Original Website Link with Globe Icon */}
                 <a
@@ -381,22 +362,32 @@ export default function App() {
                   <span className="sr-only">GitHub profile</span>
                 </a>
 
-                {/* Source Repository with Git Fork/Branch Icon */}
                 <a
-                  href="https://github.com/Dszae/git-visualizer"
+                  href="https://instagram.com/dsz.ae"
                   target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="View the Git Visualizer source code"
-                  title="Git Visualizer source code"
+                  rel="noopener noreferrer me"
+                  aria-label="Visit Dipesh Sapkota on Instagram"
+                  title="Dipesh Sapkota on Instagram"
                   className="text-zinc-700 dark:text-zinc-300 hover:text-orange-600 dark:hover:text-orange-400 transition-colors font-medium inline-flex items-center gap-2 group"
                 >
-                  <svg className="w-5 h-5 text-zinc-500 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <line x1="6" y1="3" x2="6" y2="15" strokeWidth="2" strokeLinecap="round"></line>
-                    <circle cx="18" cy="6" r="3" strokeWidth="2"></circle>
-                    <circle cx="6" cy="18" r="3" strokeWidth="2"></circle>
-                    <path d="M18 9a9 9 0 0 1-9 9" strokeWidth="2" strokeLinecap="round"></path>
+                  <svg className="w-5 h-5 fill-current text-zinc-500 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M7.5 2h9A5.5 5.5 0 0122 7.5v9a5.5 5.5 0 01-5.5 5.5h-9A5.5 5.5 0 012 16.5v-9A5.5 5.5 0 017.5 2zm0 2A3.5 3.5 0 004 7.5v9A3.5 3.5 0 007.5 20h9a3.5 3.5 0 003.5-3.5v-9A3.5 3.5 0 0016.5 4h-9zm9.75 1.5a1.25 1.25 0 110 2.5 1.25 1.25 0 010-2.5zM12 7a5 5 0 110 10 5 5 0 010-10zm0 2a3 3 0 100 6 3 3 0 000-6z"></path>
                   </svg>
-                  <span className="sr-only">Source code</span>
+                  <span className="sr-only">Instagram profile</span>
+                </a>
+
+                <a
+                  href="https://facebook.com/dsz.ae"
+                  target="_blank"
+                  rel="noopener noreferrer me"
+                  aria-label="Visit Dipesh Sapkota on Facebook"
+                  title="Dipesh Sapkota on Facebook"
+                  className="text-zinc-700 dark:text-zinc-300 hover:text-orange-600 dark:hover:text-orange-400 transition-colors font-medium inline-flex items-center gap-2 group"
+                >
+                  <svg className="w-5 h-5 fill-current text-zinc-500 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M13.5 21v-8h2.75l.5-3h-3.25V8.05c0-.87.28-1.55 1.6-1.55h1.8V3.82A24.2 24.2 0 0014.77 3c-2.63 0-4.27 1.6-4.27 4.4V10H7.75v3h2.75v8h3z"></path>
+                  </svg>
+                  <span className="sr-only">Facebook profile</span>
                 </a>
               </div>
             </div>

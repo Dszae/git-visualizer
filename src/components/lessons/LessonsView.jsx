@@ -4,6 +4,7 @@ import { LESSONS, CHALLENGES } from '../../data/lessonsData.js';
 export default function LessonsView({
   currentState,
   onLoadState,
+  onRunCommand,
   isDark = true
 }) {
   const [activeTab, setActiveTab] = useState('lessons'); // 'lessons' | 'challenges'
