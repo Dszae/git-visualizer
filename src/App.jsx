@@ -335,6 +335,19 @@ export default function App() {
               </p>
             </div>
 
+            <nav className="space-y-2" aria-label="Git Visualizer features">
+              <h2 className="text-xs font-semibold uppercase tracking-wider text-zinc-600 dark:text-zinc-400">
+                Explore Git Visualizer
+              </h2>
+              <div className="grid grid-cols-2 gap-x-5 gap-y-1.5 text-xs">
+                <a href="/" className="text-zinc-700 dark:text-zinc-300 hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Interactive Sandbox</a>
+                <a href="/?tab=lessons" className="text-zinc-700 dark:text-zinc-300 hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Guided Lessons</a>
+                <a href="/?tab=undo-lab" className="text-zinc-700 dark:text-zinc-300 hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Undo Lab</a>
+                <a href="/?tab=flowchart" className="text-zinc-700 dark:text-zinc-300 hover:text-orange-600 dark:hover:text-orange-400 transition-colors">How Git Works</a>
+                <a href="/?tab=reference" className="text-zinc-700 dark:text-zinc-300 hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Command Reference</a>
+              </div>
+            </nav>
+
             <div className="space-y-3">
               <div className="flex flex-wrap items-center justify-center md:justify-start gap-2.5 pt-1" aria-label="Dipesh Sapkota links">
                 {/* Original Website Link with Globe Icon */}
