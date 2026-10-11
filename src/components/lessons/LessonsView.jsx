@@ -127,9 +127,9 @@ export default function LessonsView({
 
       {/* ================= TAB 1: LESSONS ================= */}
       {activeTab === 'lessons' && (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          {/* Lessons List Sidebar */}
-          <div className="lg:col-span-4 space-y-1.5 max-h-[520px] overflow-y-auto pr-1">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6">
+          {/* Lessons List: Swipeable row on mobile, sidebar on desktop */}
+          <div className="lg:col-span-4 flex lg:flex-col gap-1.5 overflow-x-auto lg:overflow-y-auto no-scrollbar pb-2 lg:pb-0 max-h-none lg:max-h-[520px] pr-0 lg:pr-1">
             {LESSONS.map((lesson, idx) => {
               const isSelected = lesson.id === activeLesson.id;
               const isDone = effectiveCompletedLessons.includes(lesson.id);
@@ -138,7 +138,7 @@ export default function LessonsView({
                 <button
                   key={lesson.id}
                   onClick={() => handleStartLesson(lesson)}
-                  className={`w-full text-left p-3 rounded-lg border transition-colors flex items-start justify-between gap-2 ${
+                  className={`min-w-[220px] lg:min-w-0 w-full text-left p-2.5 sm:p-3 rounded-lg border transition-colors flex items-start justify-between gap-2 shrink-0 lg:shrink ${
                     isSelected
                       ? 'border-orange-500/50 bg-orange-500/5 text-zinc-900 dark:text-white'
                       : 'border-zinc-200 dark:border-zinc-800/80 bg-white dark:bg-zinc-900/60 hover:bg-zinc-50 dark:hover:bg-zinc-900 text-zinc-700 dark:text-zinc-300'
@@ -151,7 +151,7 @@ export default function LessonsView({
                       </span>
                       <span className="text-xs font-semibold truncate text-zinc-900 dark:text-zinc-100">{lesson.title}</span>
                     </div>
-                    <p className="text-[11px] text-zinc-500 truncate">{lesson.subtitle}</p>
+                    <p className="text-[11px] text-zinc-500 dark:text-zinc-400 truncate">{lesson.subtitle}</p>
                   </div>
 
                   {isDone ? (
@@ -167,7 +167,7 @@ export default function LessonsView({
           </div>
 
           {/* Active Lesson Panel */}
-          <div className="lg:col-span-8 p-5 sm:p-6 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 flex flex-col justify-between space-y-5">
+          <div className="lg:col-span-8 p-4 sm:p-6 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 flex flex-col justify-between space-y-5">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-mono font-medium text-zinc-500">
@@ -211,7 +211,7 @@ export default function LessonsView({
                   return (
                     <div 
                       key={sIdx}
-                      className={`p-3.5 rounded-xl border flex items-start justify-between gap-3 text-xs transition-colors ${
+                      className={`p-3 sm:p-3.5 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs transition-colors ${
                         isStepDone 
                           ? 'border-emerald-500/30 bg-emerald-500/5 text-emerald-800 dark:text-emerald-300' 
                           : 'border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 text-zinc-700 dark:text-zinc-300'
@@ -232,7 +232,7 @@ export default function LessonsView({
                       {suggestedCmd && !isStepDone && onRunCommand && (
                         <button
                           onClick={() => onRunCommand(suggestedCmd)}
-                          className="px-3 py-1.5 rounded-lg bg-orange-600 hover:bg-orange-500 text-white font-mono text-xs font-semibold transition-colors shrink-0 flex items-center gap-1 shadow-2xs"
+                          className="w-full sm:w-auto px-3.5 py-2 sm:py-1.5 rounded-lg bg-orange-600 hover:bg-orange-500 active:scale-[0.98] text-white font-mono text-xs font-semibold transition-all shrink-0 flex items-center justify-center gap-1 shadow-2xs min-h-[40px] sm:min-h-0"
                         >
                           Run: {suggestedCmd}
                         </button>
@@ -276,8 +276,8 @@ export default function LessonsView({
 
       {/* ================= TAB 2: CHALLENGES ================= */}
       {activeTab === 'challenges' && (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          <div className="lg:col-span-4 space-y-1.5">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6">
+          <div className="lg:col-span-4 flex lg:flex-col gap-1.5 overflow-x-auto lg:overflow-y-auto no-scrollbar pb-2 lg:pb-0 pr-0 lg:pr-1">
             {CHALLENGES.map(ch => {
               const isSelected = ch.id === activeChallenge.id;
               const isDone = effectiveCompletedChallenges.includes(ch.id);
@@ -286,20 +286,20 @@ export default function LessonsView({
                 <button
                   key={ch.id}
                   onClick={() => handleStartChallenge(ch)}
-                  className={`w-full text-left p-3 rounded-lg border transition-colors flex items-start justify-between ${
+                  className={`min-w-[200px] lg:min-w-0 w-full text-left p-2.5 sm:p-3 rounded-lg border transition-colors flex items-start justify-between shrink-0 lg:shrink ${
                     isSelected
                       ? 'border-orange-500/50 bg-orange-500/5 text-zinc-900 dark:text-white'
                       : 'border-zinc-200 dark:border-zinc-800/80 bg-white dark:bg-zinc-900/60 hover:bg-zinc-50 dark:hover:bg-zinc-900 text-zinc-700 dark:text-zinc-300'
                   }`}
                 >
-                  <div>
+                  <div className="truncate">
                     <span className="text-[10px] font-mono px-1.5 py-0.2 rounded font-medium bg-zinc-100 dark:bg-zinc-800 text-zinc-500 block w-max mb-1">
                       {ch.difficulty}
                     </span>
-                    <p className="text-xs font-semibold text-zinc-900 dark:text-zinc-100">{ch.title}</p>
+                    <p className="text-xs font-semibold text-zinc-900 dark:text-zinc-100 truncate">{ch.title}</p>
                   </div>
                   {isDone && (
-                    <span className="w-4 h-4 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-[10px] font-bold shrink-0">
+                    <span className="w-4 h-4 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">
                       ✓
                     </span>
                   )}

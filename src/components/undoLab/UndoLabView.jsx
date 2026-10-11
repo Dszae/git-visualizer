@@ -117,51 +117,78 @@ export default function UndoLabView({ onRunCommand, isDark = true }) {
         </p>
       </div>
 
+      {/* Quick Mobile Selector Pills */}
+      <div className="sm:hidden space-y-1.5">
+        <span className="text-[11px] font-semibold text-zinc-500 uppercase tracking-wider block">
+          Select Undo Command
+        </span>
+        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1 text-xs font-mono">
+          {UNDO_METHODS.map((m) => (
+            <button
+              key={m.id}
+              onClick={() => setSelectedMethod(m)}
+              className={`px-3 py-2 rounded-lg border whitespace-nowrap transition-colors min-h-[40px] flex items-center gap-1 ${
+                selectedMethod.id === m.id
+                  ? 'border-orange-500 bg-orange-500/10 text-orange-600 dark:text-orange-400 font-bold'
+                  : 'border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300'
+              }`}
+            >
+              {m.name}
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* Comparison Matrix Table */}
-      <div className="overflow-x-auto rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950">
-        <table className="w-full text-left text-xs border-collapse" aria-label="Git Undo operations comparison table">
-          <thead>
-            <tr className="border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/60 text-zinc-600 dark:text-zinc-400">
-              <th className="py-2.5 px-4 font-semibold">Command</th>
-              <th className="py-2.5 px-3 font-semibold">Safety</th>
-              <th className="py-2.5 px-3 font-semibold">Working Directory</th>
-              <th className="py-2.5 px-3 font-semibold">Index (Staging)</th>
-              <th className="py-2.5 px-3 font-semibold">History</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800/80">
-            {UNDO_METHODS.map((method) => {
-              const isSelected = selectedMethod.id === method.id;
-              return (
-                <tr 
-                  key={method.id}
-                  onClick={() => setSelectedMethod(method)}
-                  className={`cursor-pointer transition-colors ${
-                    isSelected 
-                      ? 'bg-orange-500/10 dark:bg-orange-500/10' 
-                      : 'hover:bg-zinc-50 dark:hover:bg-zinc-900/60'
-                  }`}
-                >
-                  <td className="py-2.5 px-4 font-mono font-medium text-zinc-900 dark:text-zinc-100 whitespace-nowrap">
-                    {method.name}
-                  </td>
-                  <td className="py-2.5 px-3">
-                    <span className={`px-2 py-0.5 rounded text-[11px] font-medium border ${method.safetyBadge}`}>
-                      {method.safety}
-                    </span>
-                  </td>
-                  <td className="py-2.5 px-3 text-zinc-600 dark:text-zinc-400 whitespace-nowrap">{method.workingTree}</td>
-                  <td className="py-2.5 px-3 text-zinc-600 dark:text-zinc-400 whitespace-nowrap">{method.index}</td>
-                  <td className="py-2.5 px-3 text-zinc-600 dark:text-zinc-400 whitespace-nowrap">{method.history}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+      <div className="space-y-1.5">
+        <div className="sm:hidden text-[11px] text-zinc-400 font-sans flex items-center justify-between px-1">
+          <span>Swipe table horizontally to compare all 5 columns →</span>
+        </div>
+        <div className="overflow-x-auto rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950">
+          <table className="w-full text-left text-xs border-collapse" aria-label="Git Undo operations comparison table">
+            <thead>
+              <tr className="border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/60 text-zinc-600 dark:text-zinc-400">
+                <th className="py-2.5 px-4 font-semibold">Command</th>
+                <th className="py-2.5 px-3 font-semibold">Safety</th>
+                <th className="py-2.5 px-3 font-semibold">Working Directory</th>
+                <th className="py-2.5 px-3 font-semibold">Index (Staging)</th>
+                <th className="py-2.5 px-3 font-semibold">History</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800/80">
+              {UNDO_METHODS.map((method) => {
+                const isSelected = selectedMethod.id === method.id;
+                return (
+                  <tr 
+                    key={method.id}
+                    onClick={() => setSelectedMethod(method)}
+                    className={`cursor-pointer transition-colors ${
+                      isSelected 
+                        ? 'bg-orange-500/10 dark:bg-orange-500/10' 
+                        : 'hover:bg-zinc-50 dark:hover:bg-zinc-900/60'
+                    }`}
+                  >
+                    <td className="py-2.5 px-4 font-mono font-medium text-zinc-900 dark:text-zinc-100 whitespace-nowrap">
+                      {method.name}
+                    </td>
+                    <td className="py-2.5 px-3">
+                      <span className={`px-2 py-0.5 rounded text-[11px] font-medium border ${method.safetyBadge}`}>
+                        {method.safety}
+                      </span>
+                    </td>
+                    <td className="py-2.5 px-3 text-zinc-600 dark:text-zinc-400 whitespace-nowrap">{method.workingTree}</td>
+                    <td className="py-2.5 px-3 text-zinc-600 dark:text-zinc-400 whitespace-nowrap">{method.index}</td>
+                    <td className="py-2.5 px-3 text-zinc-600 dark:text-zinc-400 whitespace-nowrap">{method.history}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {/* Selected Method Details */}
-      <div className="p-5 sm:p-6 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 space-y-4">
+      <div className="p-4 sm:p-6 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="flex items-center gap-2.5">
             <span className={`px-2 py-0.5 rounded text-xs font-medium border ${selectedMethod.safetyBadge}`}>
@@ -173,7 +200,7 @@ export default function UndoLabView({ onRunCommand, isDark = true }) {
           {onRunCommand && (
             <button
               onClick={() => onRunCommand(selectedMethod.sandboxCmd)}
-              className="px-3.5 py-1.5 rounded-lg text-xs font-medium bg-orange-600 hover:bg-orange-500 text-white transition-colors flex items-center gap-1.5 self-start sm:self-auto"
+              className="w-full sm:w-auto px-3.5 py-2 sm:py-1.5 rounded-lg text-xs font-medium bg-orange-600 hover:bg-orange-500 active:scale-[0.98] text-white transition-all flex items-center justify-center gap-1.5 min-h-[40px] sm:min-h-0"
             >
               Run in Sandbox: <code className="font-mono">{selectedMethod.sandboxCmd}</code>
             </button>

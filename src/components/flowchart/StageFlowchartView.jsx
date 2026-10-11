@@ -78,30 +78,34 @@ export default function StageFlowchartView({ onRunCommand, isDark = true }) {
         </div>
 
         {/* Filter Input */}
-        <div className="relative">
+        <div className="relative w-full sm:w-auto">
           <input
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Filter commands..."
             aria-label="Filter flowchart commands"
-            className={`px-3 py-1.5 pl-8 rounded-lg text-xs font-mono border transition-all w-52 ${
+            className={`px-3 py-2 sm:py-1.5 pl-8 rounded-lg text-base sm:text-xs font-mono border transition-all w-full sm:w-52 min-h-[40px] sm:min-h-0 ${
               isDark 
                 ? 'bg-zinc-900 border-zinc-800 text-white placeholder:text-zinc-500' 
                 : 'bg-white border-zinc-300 text-zinc-900 placeholder:text-zinc-400'
             }`}
           />
-          <svg className="w-3.5 h-3.5 absolute left-2.5 top-2.5 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-3.5 h-3.5 absolute left-2.5 top-3 sm:top-2.5 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
         </div>
       </div>
 
       {/* Main Visualizer Area */}
-      <div className="overflow-x-auto flex justify-center py-2">
-        <div className={`relative flex w-[900px] md:w-[1000px] shrink-0 rounded-xl border p-6 md:p-8 overflow-hidden ${
-          isDark ? 'bg-zinc-950 border-zinc-800' : 'bg-white border-zinc-200'
-        }`}>
+      <div className="space-y-2">
+        <div className="sm:hidden text-[11px] text-zinc-400 font-sans flex items-center justify-between px-1">
+          <span>Swipe horizontally to view all 5 Git stages (Stash → Workspace → Staging → Local → Remote) →</span>
+        </div>
+        <div className="overflow-x-auto flex justify-start sm:justify-center py-2 no-scrollbar">
+          <div className={`relative flex w-[900px] md:w-[1000px] shrink-0 rounded-xl border p-6 md:p-8 overflow-hidden ${
+            isDark ? 'bg-zinc-950 border-zinc-800' : 'bg-white border-zinc-200'
+          }`}>
           
           {/* Background Columns */}
           <div className="absolute inset-y-8 left-14 right-8 grid grid-cols-5 gap-3 pointer-events-none opacity-40">
@@ -216,6 +220,7 @@ export default function StageFlowchartView({ onRunCommand, isDark = true }) {
           </div>
         </div>
       </div>
+    </div>
 
       {/* Toast Notification */}
       {toastMessage && (

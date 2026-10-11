@@ -50,17 +50,17 @@ export default function CommitDetailModal({ commit, onClose, onSelectCommit }) {
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-[fadeIn_0.15s_ease-out]"
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-sm animate-[fadeIn_0.15s_ease-out]"
       role="dialog"
       aria-modal="true"
       aria-labelledby="commit-detail-title"
     >
       <div 
         ref={modalRef}
-        className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl w-full max-w-lg shadow-xl overflow-hidden flex flex-col max-h-[85vh] text-zinc-900 dark:text-zinc-100"
+        className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl w-full max-w-lg shadow-xl overflow-hidden flex flex-col max-h-[90vh] text-zinc-900 dark:text-zinc-100"
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-3.5 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/80">
+        <div className="flex items-center justify-between px-4 sm:px-5 py-3 sm:py-3.5 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/80">
           <div className="flex items-center gap-2.5">
             <span aria-hidden="true" className="w-2.5 h-2.5 rounded-full bg-orange-600"></span>
             <h2 id="commit-detail-title" className="text-sm font-semibold font-mono">
@@ -72,7 +72,7 @@ export default function CommitDetailModal({ commit, onClose, onSelectCommit }) {
             type="button"
             onClick={onClose}
             aria-label="Close commit details"
-            className="p-1 rounded-lg text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+            className="w-9 h-9 sm:w-8 sm:h-8 rounded-lg text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors flex items-center justify-center"
           >
             <svg aria-hidden="true" className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
@@ -82,7 +82,7 @@ export default function CommitDetailModal({ commit, onClose, onSelectCommit }) {
         </div>
 
         {/* Body */}
-        <div className="p-5 overflow-y-auto space-y-4 text-xs font-sans">
+        <div className="p-4 sm:p-5 overflow-y-auto space-y-4 text-xs font-sans">
           {/* Commit Message */}
           <div className="p-3 rounded-lg bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800">
             <span className="text-zinc-400 dark:text-zinc-500 font-medium block text-[11px] mb-1">Message</span>
