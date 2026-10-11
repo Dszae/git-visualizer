@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 
 const STAGES = [
-  { id: 1, name: 'Stash', desc: 'Saved Uncommitted', color: 'text-fuchsia-500 dark:text-fuchsia-400', bg: 'bg-fuchsia-500/10', border: 'border-fuchsia-300 dark:border-fuchsia-500/30', glow: 'shadow-fuchsia-500/20', accent: 'bg-fuchsia-500' },
-  { id: 2, name: 'Workspace', desc: 'Working Directory', color: 'text-orange-500 dark:text-orange-400', bg: 'bg-orange-500/10', border: 'border-orange-300 dark:border-orange-500/30', glow: 'shadow-orange-500/20', accent: 'bg-orange-500' },
-  { id: 3, name: 'Staging', desc: 'Index / Next Commit', color: 'text-emerald-600 dark:text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-300 dark:border-emerald-500/30', glow: 'shadow-emerald-500/20', accent: 'bg-emerald-500' },
-  { id: 4, name: 'Local Repo', desc: 'Local History (HEAD)', color: 'text-cyan-600 dark:text-cyan-400', bg: 'bg-cyan-500/10', border: 'border-cyan-300 dark:border-cyan-500/30', glow: 'shadow-cyan-500/20', accent: 'bg-cyan-500' },
-  { id: 5, name: 'Remote Repo', desc: 'GitHub / GitLab', color: 'text-indigo-600 dark:text-indigo-400', bg: 'bg-indigo-500/10', border: 'border-indigo-300 dark:border-indigo-500/30', glow: 'shadow-indigo-500/20', accent: 'bg-indigo-500' }
+  { id: 1, name: 'Stash', desc: 'Saved Uncommitted', color: 'text-fuchsia-700 dark:text-fuchsia-300', bg: 'bg-fuchsia-500/5', border: 'border-fuchsia-200 dark:border-fuchsia-500/20', accent: 'bg-fuchsia-600' },
+  { id: 2, name: 'Workspace', desc: 'Working Directory', color: 'text-orange-700 dark:text-orange-300', bg: 'bg-orange-500/5', border: 'border-orange-200 dark:border-orange-500/20', accent: 'bg-orange-600' },
+  { id: 3, name: 'Staging', desc: 'Index / Next Commit', color: 'text-emerald-700 dark:text-emerald-300', bg: 'bg-emerald-500/5', border: 'border-emerald-200 dark:border-emerald-500/20', accent: 'bg-emerald-600' },
+  { id: 4, name: 'Local Repo', desc: 'Local History (HEAD)', color: 'text-cyan-700 dark:text-cyan-300', bg: 'bg-cyan-500/5', border: 'border-cyan-200 dark:border-cyan-500/20', accent: 'bg-cyan-600' },
+  { id: 5, name: 'Remote Repo', desc: 'GitHub / GitLab', color: 'text-indigo-700 dark:text-indigo-300', bg: 'bg-indigo-500/5', border: 'border-indigo-200 dark:border-indigo-500/20', accent: 'bg-indigo-600' }
 ];
 
 const COMMANDS = [
@@ -48,83 +48,95 @@ export default function StageFlowchartView({ onRunCommand, isDark = true }) {
 
   const categories = [...new Set(COMMANDS.map(c => c.category))];
 
+  const filteredCommands = COMMANDS.filter(c => 
+    c.cmd.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    c.desc.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    c.category.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   const handleCommandClick = (cmd) => {
-    const runnable = cmd.cmd.replace('<file>', '.');
     if (onRunCommand) {
-      onRunCommand(runnable);
-      setToastMessage(`Executed "${runnable}" in Sandbox!`);
+      let runStr = cmd.cmd;
+      if (runStr.includes('<file>')) runStr = 'git add .';
+      onRunCommand(runStr);
+      setToastMessage(`Executed: ${runStr}`);
       setTimeout(() => setToastMessage(''), 2500);
     }
   };
 
-  const filteredCommands = COMMANDS.filter(cmd => 
-    cmd.cmd.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    cmd.desc.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
   return (
-    <div className="p-4 sm:p-8 max-w-7xl mx-auto space-y-6">
+    <div className={`space-y-6 max-w-5xl mx-auto transition-colors ${isDark ? 'text-zinc-100' : 'text-zinc-900'}`}>
+      {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-black text-white flex items-center gap-2">
-            <span>🗺️ Git 5-Stage Architecture Flowchart</span>
+          <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
+            How Git Works
           </h2>
-          <p className="text-xs text-slate-400 mt-1">
-            Hover over any command to trace its directional data movement across Stash, Workspace, Index, Local Repo, and Remote Repo. Click to execute directly in the simulator!
+          <p className="text-xs text-zinc-500 mt-1">
+            Directional data flow across Stash, Workspace, Staging Area, Local Repository, and Remote.
           </p>
         </div>
 
-        {/* Search Input */}
+        {/* Filter Input */}
         <div className="relative">
           <input
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Filter flowchart commands..."
-            className="px-4 py-2 pl-9 rounded-xl bg-slate-900 border border-slate-800 text-white font-mono text-xs focus:outline-none focus:ring-2 focus:ring-orange-500 w-56 sm:w-64 placeholder:text-slate-500"
+            placeholder="Filter commands..."
+            aria-label="Filter flowchart commands"
+            className={`px-3 py-1.5 pl-8 rounded-lg text-xs font-mono border transition-all w-52 ${
+              isDark 
+                ? 'bg-zinc-900 border-zinc-800 text-white placeholder:text-zinc-500' 
+                : 'bg-white border-zinc-300 text-zinc-900 placeholder:text-zinc-400'
+            }`}
           />
-          <svg className="w-3.5 h-3.5 absolute left-3 top-3 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+          <svg className="w-3.5 h-3.5 absolute left-2.5 top-2.5 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
         </div>
       </div>
 
-      {/* Main Visualizer Area (Horizontally Scrollable) */}
-      <div className="overflow-x-auto custom-scrollbar flex justify-center py-4">
-        <div className={`relative flex w-[940px] md:w-[1100px] shrink-0 rounded-3xl border shadow-2xl p-6 md:p-10 overflow-hidden backdrop-blur-md ${isDark ? 'bg-slate-950/70 border-slate-800' : 'bg-white border-slate-200'}`}>
+      {/* Main Visualizer Area */}
+      <div className="overflow-x-auto flex justify-center py-2">
+        <div className={`relative flex w-[900px] md:w-[1000px] shrink-0 rounded-xl border p-6 md:p-8 overflow-hidden ${
+          isDark ? 'bg-zinc-950 border-zinc-800' : 'bg-white border-zinc-200'
+        }`}>
           
-          {/* Background Stage Columns */}
-          <div className="absolute inset-y-10 left-12 md:left-20 right-6 md:right-10 grid grid-cols-5 gap-3 md:gap-6 pointer-events-none opacity-40 dark:opacity-20">
+          {/* Background Columns */}
+          <div className="absolute inset-y-8 left-14 right-8 grid grid-cols-5 gap-3 pointer-events-none opacity-40">
             {STAGES.map(stage => (
-              <div key={stage.id} className={`rounded-2xl md:rounded-3xl ${stage.bg} ${stage.border} border-2 h-full transition-colors shadow-inner`}></div>
+              <div key={stage.id} className={`rounded-lg ${stage.bg} ${stage.border} border h-full`}></div>
             ))}
           </div>
 
           {/* Vertical Category Labels */}
-          <div className="w-8 md:w-12 flex flex-col justify-start pt-24 md:pt-32 gap-10 md:gap-16 relative z-10 shrink-0">
+          <div className="w-8 flex flex-col justify-start pt-24 gap-12 relative z-10 shrink-0">
             {categories.map((cat, i) => (
-              <div key={i} className="relative h-28 md:h-32 flex items-center justify-center">
-                <span className="transform -rotate-90 whitespace-nowrap font-mono text-[8px] md:text-[10px] font-bold tracking-[0.2em] text-slate-400 uppercase opacity-80">
+              <div key={i} className="relative h-24 flex items-center justify-center">
+                <span className="transform -rotate-90 whitespace-nowrap font-mono text-[10px] font-bold tracking-wider text-zinc-500 dark:text-zinc-400 uppercase">
                   {cat}
                 </span>
               </div>
             ))}
           </div>
 
-          {/* Grid Content */}
+          {/* Content */}
           <div className="flex-1 relative z-20">
             {/* Stage Headers */}
-            <div className="grid grid-cols-5 gap-3 md:gap-6 mb-8 md:mb-12">
+            <div className="grid grid-cols-5 gap-3 mb-8">
               {STAGES.map(stage => (
-                <div key={stage.id} className="text-center group cursor-default">
-                  <div className={`inline-block px-2 md:px-4 py-1.5 rounded-full border mb-1 md:mb-2 backdrop-blur-sm ${isDark ? 'bg-slate-900/50' : 'bg-white/80'} ${stage.border} ${stage.color} font-black text-[10px] md:text-sm tracking-wide shadow-lg ${stage.glow}`}>
+                <div key={stage.id} className="text-center cursor-default">
+                  <div className={`inline-block px-3 py-1 rounded-md border mb-1 bg-white dark:bg-zinc-900 ${stage.border} ${stage.color} font-bold text-xs tracking-wide`}>
                     {stage.name}
                   </div>
-                  <p className="text-[8px] md:text-[10px] uppercase font-bold tracking-widest text-slate-400">{stage.desc}</p>
+                  <p className="text-[10px] uppercase font-medium text-zinc-500 dark:text-zinc-400">{stage.desc}</p>
                 </div>
               ))}
             </div>
 
             {/* Commands Flow Grid */}
-            <div className="grid grid-cols-5 gap-y-6 md:gap-y-7 gap-x-3 md:gap-x-6 relative mt-4 md:mt-8 pb-8 md:pb-12">
+            <div className="grid grid-cols-5 gap-y-5 gap-x-3 relative mt-4 pb-6">
               {filteredCommands.map((cmd) => {
                 const isHovered = hoveredCmd === cmd.id;
                 const isFaded = hoveredCmd !== null && hoveredCmd !== cmd.id;
@@ -135,61 +147,64 @@ export default function StageFlowchartView({ onRunCommand, isDark = true }) {
                 const isSameCol = cmd.start === cmd.end;
                 
                 const targetStage = STAGES.find(s => s.id === cmd.end);
-                const lineColor = isHovered ? (isDark ? targetStage.accent : 'bg-orange-500') : (isDark ? 'bg-slate-700' : 'bg-slate-300');
-                const textColor = isHovered ? 'text-white scale-105 z-30 shadow-2xl' : (isDark ? 'text-slate-300 hover:text-white' : 'text-slate-700 hover:text-black');
-                const bgPill = isHovered ? (isDark ? targetStage.accent : 'bg-orange-500 text-white') : (isDark ? 'bg-slate-950 border-slate-700 shadow-sm' : 'bg-white border-slate-300 shadow-sm');
+                const lineColor = isHovered ? (isDark ? targetStage.accent : 'bg-orange-600') : (isDark ? 'bg-zinc-800' : 'bg-zinc-300');
+                const textColor = isHovered 
+                  ? 'text-white' 
+                  : (isDark ? 'text-zinc-200 hover:text-white' : 'text-zinc-800 hover:text-black');
+                const bgPill = isHovered 
+                  ? (isDark ? targetStage.accent : 'bg-orange-600 text-white') 
+                  : (isDark ? 'bg-zinc-900 border-zinc-700' : 'bg-white border-zinc-300');
 
                 return (
                   <div 
                     key={cmd.id}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`Run ${cmd.cmd}: ${cmd.desc}`}
                     onMouseEnter={() => setHoveredCmd(cmd.id)}
                     onMouseLeave={() => setHoveredCmd(null)}
+                    onFocus={() => setHoveredCmd(cmd.id)}
+                    onBlur={() => setHoveredCmd(null)}
                     onClick={() => handleCommandClick(cmd)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        handleCommandClick(cmd);
+                      }
+                    }}
                     style={{ gridColumn: `${colStart} / span ${colSpan}` }}
-                    className={`relative flex items-center justify-center group cursor-pointer transition-all duration-300 h-8 ${isFaded ? 'opacity-20 blur-[1px]' : 'opacity-100'}`}
+                    className={`relative flex items-center justify-center group cursor-pointer transition-all duration-200 h-8 rounded-lg focus:outline-none ${isFaded ? 'opacity-20' : 'opacity-100'}`}
                   >
                     {/* The Line & Arrow */}
                     {!isSameCol && (
-                      <div className={`absolute inset-x-6 md:inset-x-12 top-1/2 -translate-y-1/2 h-[2px] rounded-full transition-colors duration-300 overflow-hidden ${lineColor}`}>
-                        {/* Glowing Data Flow Animation */}
-                        {isHovered && (
-                          <div className={`absolute top-0 w-24 h-full bg-gradient-to-r from-transparent via-white to-transparent opacity-90 ${isLtr ? 'animate-data-ltr' : 'animate-data-rtl'}`}></div>
-                        )}
-
-                        {/* Dot at Start */}
-                        <div className={`absolute top-1/2 -translate-y-1/2 w-2 h-2 rounded-full transition-colors duration-300 ${lineColor} ${isLtr ? '-left-1' : '-right-1'}`}></div>
+                      <div className="absolute inset-x-0 h-0.5 top-1/2 -translate-y-1/2 pointer-events-none">
+                        <div className={`w-full h-full transition-colors duration-200 ${lineColor}`}></div>
                         
-                        {/* Arrow Head at End */}
-                        <svg className={`absolute top-1/2 -translate-y-1/2 w-4 h-4 transition-colors duration-300 ${isHovered ? 'text-white drop-shadow-[0_0_5px_rgba(255,255,255,0.8)]' : (isDark ? 'text-slate-600' : 'text-slate-400')} ${isLtr ? '-right-2' : '-left-2 rotate-180'}`} fill="currentColor" viewBox="0 0 20 20">
+                        <div className={`absolute top-1/2 -translate-y-1/2 w-2 h-2 rounded-full transition-colors duration-200 ${lineColor} ${isLtr ? '-left-1' : '-right-1'}`}></div>
+                        
+                        <svg aria-hidden="true" className={`absolute top-1/2 -translate-y-1/2 w-3.5 h-3.5 transition-colors duration-200 ${isHovered ? 'text-white' : (isDark ? 'text-zinc-600' : 'text-zinc-400')} ${isLtr ? '-right-1.5' : '-left-1.5 rotate-180'}`} fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd"></path>
                         </svg>
                         
-                        {/* Bi-directional arrow if needed */}
                         {cmd.bidirectional && (
-                          <svg className={`absolute top-1/2 -translate-y-1/2 w-4 h-4 transition-colors duration-300 ${isHovered ? 'text-white drop-shadow-[0_0_5px_rgba(255,255,255,0.8)]' : (isDark ? 'text-slate-600' : 'text-slate-400')} ${isLtr ? '-left-2 rotate-180' : '-right-2'}`} fill="currentColor" viewBox="0 0 20 20">
+                          <svg aria-hidden="true" className={`absolute top-1/2 -translate-y-1/2 w-3.5 h-3.5 transition-colors duration-200 ${isHovered ? 'text-white' : (isDark ? 'text-zinc-600' : 'text-zinc-400')} ${isLtr ? '-left-1.5 rotate-180' : '-right-1.5'}`} fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd"></path>
                           </svg>
                         )}
                       </div>
                     )}
 
-                    {/* Same column indicator */}
-                    {isSameCol && (
-                      <div className={`absolute w-3 h-3 rounded-full border-2 transition-colors duration-300 ${isHovered ? `border-white ${targetStage.accent} shadow-[0_0_15px_rgba(255,255,255,0.5)]` : (isDark ? 'border-slate-600 bg-transparent' : 'border-slate-400 bg-white')}`}></div>
-                    )}
-
                     {/* Command Pill */}
-                    <div className={`relative px-3 md:px-5 py-1.5 md:py-2 rounded-xl border text-[10px] md:text-xs font-mono font-bold whitespace-nowrap transition-all duration-300 z-10 ${bgPill} ${textColor} ${isHovered ? targetStage.glow : ''}`}>
-                      <span className={`${isHovered ? 'opacity-100 text-white' : 'opacity-50'} transition-opacity mr-1`}>$</span>
+                    <div className={`relative px-3 py-1 rounded-md border text-xs font-mono font-medium whitespace-nowrap transition-colors z-10 ${bgPill} ${textColor}`}>
+                      <span className="opacity-70 mr-1">$</span>
                       {cmd.cmd}
                       
-                      {/* Tooltip on Hover */}
+                      {/* Tooltip on Hover/Focus */}
                       {isHovered && (
-                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 md:mb-4 w-52 md:w-64 p-3 md:p-4 rounded-xl md:rounded-2xl bg-slate-900 border border-slate-700 shadow-2xl z-[60] pointer-events-none animate-[fadeIn_0.15s_ease-out]">
-                          <p className="text-slate-200 text-[10px] md:text-xs font-sans font-normal leading-relaxed whitespace-normal text-center mb-2">{cmd.desc}</p>
-                          <div className="w-full h-px bg-slate-800 mb-2"></div>
-                          <div className="text-[9px] font-mono uppercase tracking-widest text-orange-400 text-center flex items-center justify-center gap-1.5 font-bold">
-                            Click to run in Sandbox
+                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-56 p-3 rounded-lg bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 shadow-xl z-50 pointer-events-none text-zinc-900 dark:text-zinc-100">
+                          <p className="text-xs font-sans leading-relaxed text-center mb-1.5 text-zinc-700 dark:text-zinc-300">{cmd.desc}</p>
+                          <div className="text-[10px] font-mono text-orange-600 dark:text-orange-400 text-center font-medium">
+                            Click or Enter to run
                           </div>
                         </div>
                       )}
@@ -202,13 +217,12 @@ export default function StageFlowchartView({ onRunCommand, isDark = true }) {
         </div>
       </div>
 
-      {/* Floating notification */}
+      {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-8 right-8 px-4 py-2.5 rounded-xl bg-orange-600 text-white font-mono text-xs font-bold shadow-xl animate-[fadeIn_0.2s_ease-out] z-50">
+        <div className="fixed bottom-6 right-6 px-3.5 py-2 rounded-lg bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 font-mono text-xs font-medium shadow-md z-50 animate-[fadeIn_0.15s_ease-out]">
           {toastMessage}
         </div>
       )}
     </div>
   );
 }
-

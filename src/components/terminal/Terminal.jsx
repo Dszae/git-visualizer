@@ -44,13 +44,13 @@ function renderAnsiText(text) {
       if (part === '\x1b[0m') {
         currentColor = '';
       } else if (part === '\x1b[32m') {
-        currentColor = 'text-emerald-400 font-semibold';
+        currentColor = 'text-emerald-300 font-semibold';
       } else if (part === '\x1b[31m') {
-        currentColor = 'text-rose-400 font-semibold';
+        currentColor = 'text-rose-300 font-semibold';
       } else if (part === '\x1b[33m') {
-        currentColor = 'text-amber-400 font-semibold';
+        currentColor = 'text-amber-300 font-semibold';
       } else if (part === '\x1b[36m') {
-        currentColor = 'text-cyan-400 font-semibold';
+        currentColor = 'text-cyan-300 font-semibold';
       }
       return null;
     }
@@ -170,7 +170,7 @@ export default function Terminal({
             <span className="w-3 h-3 rounded-full bg-amber-500/90 shadow-sm inline-block"></span>
             <span className="w-3 h-3 rounded-full bg-emerald-500/90 shadow-sm inline-block"></span>
           </div>
-          <span className="text-slate-400 font-bold uppercase tracking-wider text-[11px] flex items-center gap-1.5">
+          <span className="text-slate-300 font-bold uppercase tracking-wider text-[11px] flex items-center gap-1.5">
             <svg className="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
             git-cli — interactive terminal
           </span>
@@ -181,12 +181,12 @@ export default function Terminal({
             <button
               onClick={onClearLogs}
               aria-label="Clear terminal output"
-              className="px-2 py-0.5 rounded text-[10px] text-slate-400 hover:text-white hover:bg-slate-800 transition-colors border border-slate-800"
+              className="px-2 py-0.5 rounded text-[10px] text-slate-300 hover:text-white hover:bg-slate-800 transition-colors border border-slate-700"
             >
               Clear Output
             </button>
           )}
-          <span className="px-2 py-0.5 rounded bg-slate-800 text-slate-300 font-bold text-[10px]">
+          <span className="px-2 py-0.5 rounded bg-slate-800 text-slate-200 font-bold text-[10px]">
             {promptBranch}
           </span>
         </div>
@@ -194,12 +194,12 @@ export default function Terminal({
 
       {/* Suggested Quick Command Chips */}
       <div className="px-4 py-2 bg-slate-950/60 border-b border-slate-800/80 flex items-center gap-1.5 overflow-x-auto text-[11px] font-mono custom-scrollbar">
-        <span className="text-slate-400 text-[10px] shrink-0 uppercase tracking-widest font-bold mr-1">Quick:</span>
+        <span className="text-slate-300 text-[10px] shrink-0 uppercase tracking-widest font-bold mr-1">Quick:</span>
         {(suggestedCommands.length > 0 ? suggestedCommands : ['git status', 'git add .', 'git commit -m "update"', 'git log --oneline', 'git branch feature', 'git switch feature', 'git merge feature']).map(cmd => (
           <button
             key={cmd}
             onClick={() => handleQuickRun(cmd)}
-            className="px-2 py-0.5 rounded-md bg-slate-800/70 hover:bg-orange-500 hover:text-white text-slate-300 border border-slate-700/60 transition-all shrink-0 focus-visible:ring-2 focus-visible:ring-orange-500"
+            className="px-2 py-0.5 rounded-md bg-slate-800/70 hover:bg-orange-500 hover:text-white text-slate-200 border border-slate-700/60 transition-all shrink-0 focus-visible:ring-2 focus-visible:ring-orange-500"
           >
             {cmd}
           </button>
@@ -214,28 +214,28 @@ export default function Terminal({
         className="flex-1 p-4 overflow-y-auto space-y-3 font-mono text-xs text-slate-200 custom-scrollbar select-text focus:outline-none focus:ring-1 focus:ring-orange-500/50"
       >
         {terminalLogs.length === 0 ? (
-          <div className="text-slate-400 py-6 text-center italic text-xs">
-            <p>Git sandbox ready. Type any supported command below (e.g. <span className="text-orange-400">git status</span>) or click a quick command chip above.</p>
+          <div className="text-slate-300 py-6 text-center italic text-xs">
+            <p>Git sandbox ready. Type any supported command below (e.g. <span className="text-orange-300 font-bold">git status</span>) or click a quick command chip above.</p>
           </div>
         ) : (
           terminalLogs.map((log, idx) => (
             <div key={idx} className="space-y-1">
               {/* Command Prompt Line */}
-              <div className="flex items-center gap-2 text-slate-400 text-xs">
+              <div className="flex items-center gap-2 text-slate-300 text-xs">
                 <span className="text-emerald-400 font-bold">user@git-visualizer</span>
-                <span className="text-slate-600">:</span>
+                <span className="text-slate-500">:</span>
                 <span className="text-cyan-400 font-semibold">repo ({log.branch || promptBranch})</span>
-                <span className="text-slate-300 font-bold">$</span>
+                <span className="text-slate-200 font-bold">$</span>
                 <span className="text-white font-bold">{log.command}</span>
               </div>
 
               {/* Output or Error */}
               {log.error ? (
-                <div className="pl-4 border-l-2 border-rose-500 text-rose-400 whitespace-pre-wrap leading-relaxed py-1 bg-rose-500/10 rounded-r-lg">
+                <div className="pl-4 border-l-2 border-rose-500 text-rose-300 whitespace-pre-wrap leading-relaxed py-1 bg-rose-500/10 rounded-r-lg">
                   {log.error}
                 </div>
               ) : log.output ? (
-                <div className="pl-4 border-l-2 border-orange-500/80 text-slate-300 whitespace-pre-wrap leading-relaxed py-1 bg-slate-900/40 rounded-r-lg">
+                <div className="pl-4 border-l-2 border-orange-500/80 text-slate-200 whitespace-pre-wrap leading-relaxed py-1 bg-slate-900/40 rounded-r-lg">
                   {renderAnsiText(log.output)}
                 </div>
               ) : null}
@@ -247,8 +247,8 @@ export default function Terminal({
 
       {/* Autocomplete Hints Dropdown (if any) */}
       {suggestions.length > 0 && (
-        <div className="px-4 py-1.5 bg-slate-900/90 border-t border-slate-800 flex items-center gap-2 text-[11px] font-mono text-slate-400 animate-[fadeIn_0.1s_ease-out]">
-          <span className="text-orange-400 font-bold">Tab to complete:</span>
+        <div className="px-4 py-1.5 bg-slate-900/90 border-t border-slate-800 flex items-center gap-2 text-[11px] font-mono text-slate-300 animate-[fadeIn_0.1s_ease-out]">
+          <span className="text-orange-300 font-bold">Tab to complete:</span>
           {suggestions.map(s => (
             <button
               key={s}

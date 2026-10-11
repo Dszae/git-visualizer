@@ -1,12 +1,49 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 export default function CommitDetailModal({ commit, onClose, onSelectCommit }) {
+  const modalRef = useRef(null);
+  const closeBtnRef = useRef(null);
+  const prevFocusedElem = useRef(null);
+
   useEffect(() => {
+    prevFocusedElem.current = document.activeElement;
+    closeBtnRef.current?.focus();
+
     const handleKeyDown = (e) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === 'Escape') {
+        onClose();
+        return;
+      }
+
+      // Focus trap
+      if (e.key === 'Tab' && modalRef.current) {
+        const focusableElements = modalRef.current.querySelectorAll(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        const first = focusableElements[0];
+        const last = focusableElements[focusableElements.length - 1];
+
+        if (e.shiftKey) {
+          if (document.activeElement === first) {
+            e.preventDefault();
+            last?.focus();
+          }
+        } else {
+          if (document.activeElement === last) {
+            e.preventDefault();
+            first?.focus();
+          }
+        }
+      }
     };
+
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      if (prevFocusedElem.current && typeof prevFocusedElem.current.focus === 'function') {
+        prevFocusedElem.current.focus();
+      }
+    };
   }, [onClose]);
 
   if (!commit) return null;
@@ -18,64 +55,74 @@ export default function CommitDetailModal({ commit, onClose, onSelectCommit }) {
       aria-modal="true"
       aria-labelledby="commit-detail-title"
     >
-      <div className="bg-slate-900 border border-slate-700/80 rounded-2xl w-full max-w-xl shadow-2xl overflow-hidden flex flex-col max-h-[85vh]">
+      <div 
+        ref={modalRef}
+        className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl w-full max-w-lg shadow-xl overflow-hidden flex flex-col max-h-[85vh] text-zinc-900 dark:text-zinc-100"
+      >
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800 bg-slate-950/50">
-          <div className="flex items-center gap-3">
-            <span className="w-3 h-3 rounded-full bg-orange-500"></span>
-            <h2 id="commit-detail-title" className="text-base font-bold text-white font-mono">
+        <div className="flex items-center justify-between px-5 py-3.5 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/80">
+          <div className="flex items-center gap-2.5">
+            <span aria-hidden="true" className="w-2.5 h-2.5 rounded-full bg-orange-600"></span>
+            <h2 id="commit-detail-title" className="text-sm font-semibold font-mono">
               Commit {commit.shortHash}
             </h2>
           </div>
           <button 
+            ref={closeBtnRef}
+            type="button"
             onClick={onClose}
             aria-label="Close commit details"
-            className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors focus-visible:ring-2 focus-visible:ring-orange-500"
+            className="p-1 rounded-lg text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
+            <svg aria-hidden="true" className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+            <span className="sr-only">Close</span>
           </button>
         </div>
 
         {/* Body */}
-        <div className="p-6 overflow-y-auto space-y-4 text-sm text-slate-300 custom-scrollbar font-sans">
+        <div className="p-5 overflow-y-auto space-y-4 text-xs font-sans">
           {/* Commit Message */}
-          <div className="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800">
-            <p className="text-xs font-mono uppercase text-slate-400 font-bold tracking-wider mb-1">Commit Message</p>
-            <p className="text-white font-medium whitespace-pre-wrap">{commit.message}</p>
+          <div className="p-3 rounded-lg bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800">
+            <span className="text-zinc-400 dark:text-zinc-500 font-medium block text-[11px] mb-1">Message</span>
+            <p className="text-zinc-900 dark:text-zinc-100 font-medium whitespace-pre-wrap">{commit.message}</p>
           </div>
 
           {/* Meta Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono">
-            <div className="p-3 rounded-lg bg-slate-800/40 border border-slate-800">
-              <span className="text-slate-400 block mb-0.5">Author</span>
-              <span className="text-slate-200">{commit.author}</span>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 font-mono text-xs">
+            <div className="p-2.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950">
+              <span className="text-zinc-400 dark:text-zinc-500 block text-[11px]">Author</span>
+              <span className="text-zinc-800 dark:text-zinc-200 font-medium">{commit.author}</span>
             </div>
-            <div className="p-3 rounded-lg bg-slate-800/40 border border-slate-800">
-              <span className="text-slate-400 block mb-0.5">Date</span>
-              <span className="text-slate-200">{new Date(commit.timestamp).toLocaleString()}</span>
+            <div className="p-2.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950">
+              <span className="text-zinc-400 dark:text-zinc-500 block text-[11px]">Date</span>
+              <span className="text-zinc-800 dark:text-zinc-200 font-medium">{new Date(commit.timestamp).toLocaleString()}</span>
             </div>
-            <div className="p-3 rounded-lg bg-slate-800/40 border border-slate-800 sm:col-span-2">
-              <span className="text-slate-400 block mb-0.5">Full Hash</span>
-              <span className="text-orange-400 select-all font-mono break-all">{commit.hash}</span>
+            <div className="p-2.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 sm:col-span-2">
+              <span className="text-zinc-400 dark:text-zinc-500 block text-[11px]">Hash</span>
+              <span className="text-orange-600 dark:text-orange-400 select-all font-mono break-all font-medium">{commit.hash}</span>
             </div>
           </div>
 
           {/* Parents */}
           <div>
-            <p className="text-xs font-mono uppercase text-slate-400 font-bold tracking-wider mb-1.5">
+            <span className="text-zinc-500 dark:text-zinc-400 font-medium block mb-1.5 text-xs">
               Parents ({commit.parentHashes.length})
-            </p>
+            </span>
             {commit.parentHashes.length === 0 ? (
-              <p className="text-xs text-slate-400 italic">Root commit (no parents)</p>
+              <p className="text-zinc-400 italic">Initial commit</p>
             ) : (
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-1.5">
                 {commit.parentHashes.map(p => (
                   <button
+                    type="button"
                     key={p}
                     onClick={() => onSelectCommit && onSelectCommit(p)}
-                    className="px-2.5 py-1 rounded-md bg-slate-800 hover:bg-slate-700 text-cyan-400 font-mono text-xs border border-slate-700 transition-colors focus-visible:ring-2 focus-visible:ring-orange-500"
+                    aria-label={`Jump to parent commit ${p.slice(0, 7)}`}
+                    className="px-2 py-1 rounded bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-800 dark:text-zinc-200 font-mono text-xs border border-zinc-200 dark:border-zinc-700 transition-colors"
                   >
-                    ↑ {p.slice(0, 7)}
+                    ← {p.slice(0, 7)}
                   </button>
                 ))}
               </div>
@@ -84,17 +131,17 @@ export default function CommitDetailModal({ commit, onClose, onSelectCommit }) {
 
           {/* Files Snapshot */}
           <div>
-            <p className="text-xs font-mono uppercase text-slate-400 font-bold tracking-wider mb-1.5">
-              Files in this snapshot ({Object.keys(commit.tree || {}).length})
-            </p>
-            <div className="space-y-2">
+            <span className="text-zinc-500 dark:text-zinc-400 font-medium block mb-1.5 text-xs">
+              Files in snapshot ({Object.keys(commit.tree || {}).length})
+            </span>
+            <div className="space-y-1.5 font-mono text-xs">
               {Object.entries(commit.tree || {}).map(([file, content]) => (
-                <div key={file} className="rounded-lg border border-slate-800 bg-slate-950 overflow-hidden">
-                  <div className="px-3 py-1.5 bg-slate-900 border-b border-slate-800 text-xs font-mono text-slate-300 flex items-center justify-between">
-                    <span>📄 {file}</span>
-                    <span className="text-[10px] text-slate-400">{content.length} chars</span>
+                <div key={file} className="rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 overflow-hidden">
+                  <div className="px-3 py-1.5 bg-zinc-100/70 dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800 flex justify-between items-center text-xs">
+                    <span className="font-semibold text-zinc-800 dark:text-zinc-200">{file}</span>
+                    <span className="text-zinc-400 text-[11px]">{content.length} chars</span>
                   </div>
-                  <pre className="p-3 text-xs font-mono text-slate-300 max-h-32 overflow-y-auto whitespace-pre-wrap">
+                  <pre className="p-2.5 text-xs text-zinc-700 dark:text-zinc-300 max-h-28 overflow-y-auto whitespace-pre-wrap">
                     {content}
                   </pre>
                 </div>
@@ -104,10 +151,11 @@ export default function CommitDetailModal({ commit, onClose, onSelectCommit }) {
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-3 border-t border-slate-800 bg-slate-950/60 flex justify-end">
+        <div className="px-5 py-3 border-t border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/60 flex justify-end">
           <button
+            type="button"
             onClick={onClose}
-            className="px-4 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-white transition-colors focus-visible:ring-2 focus-visible:ring-orange-500"
+            className="px-3 py-1.5 rounded-lg text-xs font-medium bg-zinc-200 dark:bg-zinc-800 hover:bg-zinc-300 dark:hover:bg-zinc-700 text-zinc-900 dark:text-zinc-100 transition-colors"
           >
             Close
           </button>
@@ -116,4 +164,3 @@ export default function CommitDetailModal({ commit, onClose, onSelectCommit }) {
     </div>
   );
 }
-

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { PRESET_SCENARIOS, serializeStateToUrl } from '../../engine/scenarios.js';
 
 export default function Navbar({
@@ -13,14 +13,26 @@ export default function Navbar({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [shareSuccess, setShareSuccess] = useState(false);
   const [scenarioDropdownOpen, setScenarioDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
   const tabs = [
-    { id: 'sandbox', label: 'Interactive Sandbox', icon: '⚡' },
-    { id: 'lessons', label: 'Guided Lessons', icon: '🎓' },
-    { id: 'undo-lab', label: 'Safe Undo Lab', icon: '🛡️' },
-    { id: 'flowchart', label: 'Stage Flowchart', icon: '🗺️' },
-    { id: 'reference', label: 'Command Reference', icon: '📚' }
+    { id: 'sandbox', label: 'Sandbox' },
+    { id: 'lessons', label: 'Lessons' },
+    { id: 'undo-lab', label: 'Undo Lab' },
+    { id: 'flowchart', label: 'How Git Works' },
+    { id: 'reference', label: 'Reference' }
   ];
+
+  // Close dropdown on click outside
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setScenarioDropdownOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const handleShare = () => {
     const encoded = serializeStateToUrl(currentState);
@@ -40,128 +52,155 @@ export default function Navbar({
   };
 
   return (
-    <header className={`sticky top-0 z-40 backdrop-blur-xl border-b transition-colors duration-300 ${isDark ? 'bg-slate-950/85 border-slate-800' : 'bg-white/90 border-slate-200 shadow-sm'}`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+    <header className={`sticky top-0 z-40 border-b backdrop-blur-md transition-colors duration-200 ${isDark ? 'bg-zinc-950/90 border-zinc-800/80 text-zinc-100' : 'bg-white/95 border-zinc-200 text-zinc-900'}`}>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 h-15 flex items-center justify-between gap-4">
         
-        {/* Brand Logo & Title */}
-        <div className="flex items-center gap-3 shrink-0">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center text-white font-black shadow-lg shadow-orange-500/20 transform transition-transform hover:rotate-6">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
+        {/* Brand */}
+        <div className="flex items-center gap-2.5 shrink-0">
+          <div className="w-7 h-7 rounded-lg bg-orange-600 flex items-center justify-center text-white font-bold" aria-hidden="true">
+            {/* Clean Git Branch SVG icon */}
+            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="6" y1="3" x2="6" y2="15"></line>
+              <circle cx="18" cy="6" r="3"></circle>
+              <circle cx="6" cy="18" r="3"></circle>
+              <path d="M18 9a9 9 0 0 1-9 9"></path>
+            </svg>
           </div>
-          <div>
-            <h1 className="text-base sm:text-lg font-black tracking-tight text-white flex items-center gap-1.5 leading-none">
-              <span>Git Visualizer</span>
-              <span className="text-[9px] font-mono font-bold uppercase tracking-widest px-1.5 py-0.5 rounded bg-orange-500/20 text-orange-400 border border-orange-500/30">
-                PRO
-              </span>
-            </h1>
-            <p className="text-[10px] text-slate-400 font-mono mt-0.5 hidden sm:block">
-              Interactive Git Simulator & Learning Platform
-            </p>
-          </div>
+          <span className="font-semibold text-base tracking-tight text-zinc-900 dark:text-zinc-50">
+            Git Visualizer
+          </span>
         </div>
 
-        {/* Center Desktop Navigation Tabs */}
-        <nav className="hidden md:flex items-center gap-1 p-1 rounded-xl bg-slate-900/60 border border-slate-800 text-xs font-mono" aria-label="Main Navigation">
-          {tabs.map(t => (
-            <button
-              key={t.id}
-              onClick={() => onSelectTab(t.id)}
-              className={`px-3 py-1.5 rounded-lg font-bold transition-all flex items-center gap-1.5 ${activeTab === t.id ? 'bg-orange-500 text-white shadow-md' : 'text-slate-400 hover:text-white hover:bg-slate-800/60'}`}
-            >
-              <span>{t.icon}</span>
-              <span>{t.label}</span>
-            </button>
-          ))}
+        {/* Desktop Navigation Tabs */}
+        <nav className="hidden md:flex items-center gap-1 text-sm font-medium" aria-label="Main Navigation">
+          {tabs.map(t => {
+            const isActive = activeTab === t.id;
+            return (
+              <button
+                key={t.id}
+                onClick={() => onSelectTab(t.id)}
+                className={`px-3 py-1.5 rounded-lg transition-colors ${
+                  isActive
+                    ? 'text-zinc-900 dark:text-white bg-zinc-100 dark:bg-zinc-800 font-semibold'
+                    : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200 hover:bg-zinc-50 dark:hover:bg-zinc-900'
+                }`}
+              >
+                {t.label}
+              </button>
+            );
+          })}
         </nav>
 
-        {/* Right Toolbar Actions */}
-        <div className="flex items-center gap-2">
+        {/* Right Action Controls */}
+        <div className="flex items-center gap-1.5 sm:gap-2">
           {/* Preset Scenarios Dropdown */}
-          <div className="relative hidden lg:block">
+          <div className="relative" ref={dropdownRef}>
             <button
+              type="button"
+              id="scenarios-menu-button"
+              aria-haspopup="true"
+              aria-expanded={scenarioDropdownOpen}
+              aria-label="Preset repository scenarios"
               onClick={() => setScenarioDropdownOpen(!scenarioDropdownOpen)}
-              className="px-3 py-1.5 rounded-xl border border-slate-700 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-mono font-bold transition-colors flex items-center gap-1.5"
+              className="px-2.5 py-1.5 rounded-lg text-xs font-medium border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-850 text-zinc-700 dark:text-zinc-300 transition-colors flex items-center gap-1.5"
             >
               <span>Scenarios</span>
-              <span className="text-[10px] opacity-70">▼</span>
+              <svg aria-hidden="true" className="w-3 h-3 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
+              </svg>
             </button>
 
             {scenarioDropdownOpen && (
-              <div className="absolute right-0 mt-2 w-64 rounded-2xl bg-slate-900 border border-slate-700 shadow-2xl p-2 z-50 space-y-1 text-xs font-sans animate-[fadeIn_0.15s_ease-out]">
-                <p className="px-2.5 py-1 text-[10px] font-mono uppercase text-slate-400 font-bold tracking-wider">
-                  Preset Scenarios
-                </p>
+              <div className="absolute right-0 mt-1.5 w-60 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-lg p-1.5 z-50 text-xs">
+                <div className="px-2.5 py-1 text-[11px] font-semibold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider">
+                  Presets
+                </div>
                 {PRESET_SCENARIOS.map(s => (
                   <button
                     key={s.id}
                     onClick={() => handleSelectScenario(s)}
-                    className="w-full text-left p-2 rounded-lg hover:bg-slate-800 transition-colors block text-slate-200"
+                    className="w-full text-left px-2.5 py-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors block text-zinc-800 dark:text-zinc-200"
                   >
-                    <p className="font-bold text-white text-xs">{s.title}</p>
-                    <p className="text-[10px] text-slate-400 truncate">{s.description}</p>
+                    <p className="font-medium text-xs text-zinc-900 dark:text-zinc-100">{s.title}</p>
+                    <p className="text-[11px] text-zinc-500 dark:text-zinc-400 truncate mt-0.5">{s.description}</p>
                   </button>
                 ))}
               </div>
             )}
           </div>
 
-          {/* Share Scenario Button */}
-          <button
-            onClick={handleShare}
-            aria-label="Share current scenario URL"
-            className="px-3 py-1.5 rounded-xl border border-orange-500/40 bg-orange-500/10 hover:bg-orange-500 text-orange-400 hover:text-white text-xs font-mono font-bold transition-all flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-orange-500"
-          >
-            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" /></svg>
-            <span className="hidden sm:inline">Share</span>
-          </button>
-
-          {/* Reset Sandbox Button */}
+          {/* Reset Sandbox */}
           {onResetSession && (
             <button
               onClick={onResetSession}
-              aria-label="Reset simulation to default state"
-              title="Reset repository to default initial state"
-              className="px-2.5 py-1.5 rounded-xl border border-slate-700 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-mono font-bold transition-all focus-visible:ring-2 focus-visible:ring-orange-500 hidden sm:flex items-center gap-1"
+              aria-label="Reset repository to initial state"
+              title="Reset repository to clean initial state"
+              className="px-2.5 py-1.5 rounded-lg text-xs font-medium border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-850 text-zinc-700 dark:text-zinc-300 transition-colors hidden sm:inline-flex items-center gap-1"
             >
-              <span>↺</span> Reset
+              Reset
             </button>
           )}
 
-          {/* Dark / Light Toggle */}
+          {/* Share Button */}
           <button
-            onClick={onToggleTheme}
-            aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
-            className="p-2 rounded-xl border border-slate-800 bg-slate-900 text-slate-300 hover:text-white hover:bg-slate-800 transition-colors focus-visible:ring-2 focus-visible:ring-orange-500"
+            onClick={handleShare}
+            aria-label="Share current scenario URL"
+            className="px-2.5 py-1.5 rounded-lg text-xs font-medium border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-850 text-zinc-700 dark:text-zinc-300 transition-colors flex items-center gap-1"
           >
-            {isDark ? (
-              <svg className="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
-            ) : (
-              <svg className="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
-            )}
+            <svg aria-hidden="true" className="w-3.5 h-3.5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+            </svg>
+            <span className="hidden sm:inline">Share</span>
           </button>
 
-          {/* Mobile Menu Hamburger */}
+          {/* Dark / Light Toggle */}
           <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle mobile navigation menu"
-            className="md:hidden p-2 rounded-xl border border-slate-800 bg-slate-900 text-slate-300"
+            type="button"
+            onClick={onToggleTheme}
+            aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
+            aria-pressed={isDark}
+            className="p-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-850 transition-colors"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+            {isDark ? (
+              <svg aria-hidden="true" className="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+              </svg>
+            ) : (
+              <svg aria-hidden="true" className="w-4 h-4 text-zinc-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+              </svg>
+            )}
+            <span className="sr-only">{isDark ? "Switch to light theme" : "Switch to dark theme"}</span>
+          </button>
+
+          {/* Mobile Navigation Toggle */}
+          <button
+            type="button"
+            id="mobile-nav-toggle"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle navigation menu"
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-nav-drawer"
+            className="md:hidden p-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300"
+          >
+            <svg aria-hidden="true" className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+            <span className="sr-only">Toggle navigation menu</span>
           </button>
         </div>
       </div>
 
       {/* Share Toast */}
       {shareSuccess && (
-        <div className="fixed top-20 right-6 px-4 py-2.5 rounded-xl bg-emerald-600 text-white font-mono text-xs font-bold shadow-xl animate-[fadeIn_0.2s_ease-out] z-50 flex items-center gap-2">
-          <span>✓</span> Link copied to clipboard!
+        <div className="fixed top-18 right-6 px-3.5 py-2 rounded-lg bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 font-sans text-xs font-medium shadow-md z-50 flex items-center gap-2 animate-[fadeIn_0.15s_ease-out]">
+          <span className="text-emerald-500 font-bold">✓</span> Link copied to clipboard
         </div>
       )}
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-slate-800 bg-slate-950 p-4 space-y-2 text-xs font-mono animate-[fadeIn_0.2s_ease-out]">
+        <div id="mobile-nav-drawer" className="md:hidden border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-4 space-y-1.5 text-sm">
           {tabs.map(t => (
             <button
               key={t.id}
@@ -169,29 +208,28 @@ export default function Navbar({
                 onSelectTab(t.id);
                 setMobileMenuOpen(false);
               }}
-              className={`w-full text-left px-3 py-2.5 rounded-xl font-bold flex items-center gap-2 ${activeTab === t.id ? 'bg-orange-500 text-white' : 'text-slate-300 hover:bg-slate-900'}`}
+              className={`w-full text-left px-3 py-2 rounded-lg font-medium ${
+                activeTab === t.id
+                  ? 'bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-white font-semibold'
+                  : 'text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-900'
+              }`}
             >
-              <span>{t.icon}</span>
-              <span>{t.label}</span>
+              {t.label}
             </button>
           ))}
-          <div className="pt-2 border-t border-slate-800 flex justify-between">
-            <span className="text-[10px] text-slate-400">Scenarios:</span>
-            <div className="flex flex-wrap gap-1">
-              {PRESET_SCENARIOS.slice(0, 3).map(s => (
-                <button
-                  key={s.id}
-                  onClick={() => {
-                    handleSelectScenario(s);
-                    setMobileMenuOpen(false);
-                  }}
-                  className="px-2 py-1 rounded bg-slate-800 text-[10px] text-slate-300"
-                >
-                  {s.title}
-                </button>
-              ))}
+          {onResetSession && (
+            <div className="pt-2 border-t border-zinc-200 dark:border-zinc-800">
+              <button
+                onClick={() => {
+                  onResetSession();
+                  setMobileMenuOpen(false);
+                }}
+                className="w-full text-left px-3 py-2 rounded-lg text-sm text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-900"
+              >
+                Reset Sandbox
+              </button>
             </div>
-          </div>
+          )}
         </div>
       )}
     </header>
