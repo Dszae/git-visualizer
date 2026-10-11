@@ -350,11 +350,11 @@ export default function CommandConsole({
         isDark ? 'border-zinc-800 bg-zinc-950/70' : 'border-zinc-200 bg-zinc-50/60'
       }`}>
         {/* Drawer Tabs Bar */}
-        <div className="px-4 sm:px-6 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between overflow-x-auto text-xs font-medium">
-          <div className="flex items-center gap-6">
+        <div className="px-3 sm:px-6 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between gap-3 text-xs font-medium">
+          <div className="flex items-center gap-4 sm:gap-6 overflow-x-auto no-scrollbar whitespace-nowrap scroll-smooth flex-1 py-0.5">
             <button
               onClick={() => { setActiveDetailTab('output'); setDetailsOpen(true); }}
-              className={`py-3 border-b-2 transition-colors ${
+              className={`py-2.5 sm:py-3 border-b-2 transition-colors shrink-0 ${
                 detailsOpen && activeDetailTab === 'output'
                   ? 'border-orange-600 text-zinc-900 dark:text-white font-semibold'
                   : 'border-transparent text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-200'
@@ -365,7 +365,7 @@ export default function CommandConsole({
 
             <button
               onClick={() => { setActiveDetailTab('files'); setDetailsOpen(true); }}
-              className={`py-3 border-b-2 transition-colors flex items-center gap-1.5 ${
+              className={`py-2.5 sm:py-3 border-b-2 transition-colors flex items-center gap-1.5 shrink-0 ${
                 detailsOpen && activeDetailTab === 'files'
                   ? 'border-orange-600 text-zinc-900 dark:text-white font-semibold'
                   : 'border-transparent text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-200'
@@ -384,7 +384,7 @@ export default function CommandConsole({
 
             <button
               onClick={() => { setActiveDetailTab('branches'); setDetailsOpen(true); }}
-              className={`py-3 border-b-2 transition-colors ${
+              className={`py-2.5 sm:py-3 border-b-2 transition-colors shrink-0 ${
                 detailsOpen && activeDetailTab === 'branches'
                   ? 'border-orange-600 text-zinc-900 dark:text-white font-semibold'
                   : 'border-transparent text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-200'
@@ -396,7 +396,7 @@ export default function CommandConsole({
             {historySteps.length > 1 && (
               <button
                 onClick={() => { setActiveDetailTab('timeline'); setDetailsOpen(true); }}
-                className={`py-3 border-b-2 transition-colors ${
+                className={`py-2.5 sm:py-3 border-b-2 transition-colors shrink-0 ${
                   detailsOpen && activeDetailTab === 'timeline'
                     ? 'border-orange-600 text-zinc-900 dark:text-white font-semibold'
                     : 'border-transparent text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-200'
@@ -407,20 +407,20 @@ export default function CommandConsole({
             )}
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             {activeDetailTab === 'output' && onClearLogs && terminalLogs.length > 0 && (
               <button
                 onClick={onClearLogs}
                 className="text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200 text-xs py-1 transition-colors"
               >
-                Clear output
+                Clear
               </button>
             )}
             <button
               onClick={() => setDetailsOpen(!detailsOpen)}
-              className="text-xs text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 font-medium py-1 transition-colors"
+              className="text-xs text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 font-medium py-1 transition-colors whitespace-nowrap"
             >
-              {detailsOpen ? 'Hide drawer ▴' : 'Show drawer ▾'}
+              {detailsOpen ? 'Hide ▴' : 'Show ▾'}
             </button>
           </div>
         </div>
