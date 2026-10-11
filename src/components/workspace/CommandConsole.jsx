@@ -187,7 +187,7 @@ export default function CommandConsole({
         
         {/* Terminal Input Bar */}
         <div>
-          <label htmlFor="git-command-input" className="block text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-2">
+          <label htmlFor="git-command-input" className="block text-xs font-semibold uppercase tracking-wider text-zinc-600 dark:text-zinc-400 mb-2">
             Git Command Input
           </label>
           <div className="flex flex-col sm:flex-row sm:items-center gap-2">
@@ -322,9 +322,9 @@ export default function CommandConsole({
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 mb-2">
               <div className="flex items-center gap-2.5">
                 <span className={`w-2.5 h-2.5 rounded-full shrink-0 ${lastLog?.error ? 'bg-rose-500' : 'bg-emerald-500'}`} />
-                <h3 className="font-bold text-sm sm:text-base text-zinc-900 dark:text-zinc-100">
+                <h2 className="font-bold text-sm sm:text-base text-zinc-900 dark:text-zinc-100">
                   {latestExplanation.summary}
-                </h3>
+                </h2>
               </div>
               <div className="flex items-center gap-2">
                 {latestExplanation.nextSuggestions?.length > 0 && (

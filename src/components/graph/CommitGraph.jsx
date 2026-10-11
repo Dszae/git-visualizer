@@ -393,7 +393,7 @@ export default function CommitGraph({ state, isDark = true }) {
           {nodes.length === 0 ? (
             <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center text-zinc-500">
               <p className="font-medium text-sm text-zinc-800 dark:text-zinc-200">No commits in repository yet</p>
-              <p className="text-xs text-zinc-500 mt-1 max-w-sm">Stage your files and create a commit to see your history appear.</p>
+              <p className="text-xs text-zinc-600 dark:text-zinc-400 mt-1 max-w-sm">Stage your files and create a commit to see your history appear.</p>
             </div>
           ) : (
             <svg

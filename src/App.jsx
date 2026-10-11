@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { Suspense, lazy, useState, useEffect, useCallback } from 'react';
 import Navbar from './components/nav/Navbar.jsx';
 import CommitGraph from './components/graph/CommitGraph.jsx';
 import CommandConsole from './components/workspace/CommandConsole.jsx';
 import SEOContent from './components/seo/SEOContent.jsx';
-import LessonsView from './components/lessons/LessonsView.jsx';
-import UndoLabView from './components/undoLab/UndoLabView.jsx';
-import StageFlowchartView from './components/flowchart/StageFlowchartView.jsx';
-import CommandReferenceView from './components/reference/CommandReferenceView.jsx';
+const LessonsView = lazy(() => import('./components/lessons/LessonsView.jsx'));
+const UndoLabView = lazy(() => import('./components/undoLab/UndoLabView.jsx'));
+const StageFlowchartView = lazy(() => import('./components/flowchart/StageFlowchartView.jsx'));
+const CommandReferenceView = lazy(() => import('./components/reference/CommandReferenceView.jsx'));
 import {
   createDefaultRepo,
   executeCommand
@@ -220,8 +220,13 @@ export default function App() {
       {/* Main Container */}
       <main className="flex-1 w-full max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-6">
         
-        {/* ================= TAB 1: SANDBOX ================= */}
-        {activeTab === 'sandbox' && (
+        <Suspense fallback={(
+          <div className="min-h-32 flex items-center justify-center text-sm text-zinc-600 dark:text-zinc-400" role="status">
+            Loading Git Visualizer...
+          </div>
+        )}>
+          {/* ================= TAB 1: SANDBOX ================= */}
+          {activeTab === 'sandbox' && (
           <div className="space-y-5">
             {/* Clear Orientation Header */}
             <div className="space-y-1.5">
@@ -254,10 +259,10 @@ export default function App() {
               isDark={isDark}
             />
           </div>
-        )}
+          )}
 
         {/* ================= TAB 2: GUIDED LESSONS ================= */}
-        {activeTab === 'lessons' && (
+          {activeTab === 'lessons' && (
           <div className="space-y-6">
             <LessonsView
               currentState={currentState}
@@ -266,32 +271,32 @@ export default function App() {
               isDark={isDark}
             />
             <div className="pt-4 border-t border-zinc-200 dark:border-zinc-800">
-              <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-3">
+              <h2 className="text-xs font-semibold uppercase tracking-wider text-zinc-600 dark:text-zinc-400 mb-3">
                 Live State Preview
-              </h3>
+              </h2>
               <CommitGraph state={currentState} isDark={isDark} />
             </div>
           </div>
         )}
 
         {/* ================= TAB 3: SAFE UNDO LAB ================= */}
-        {activeTab === 'undo-lab' && (
+          {activeTab === 'undo-lab' && (
           <div className="space-y-6">
             <UndoLabView
               onRunCommand={handleRunCommand}
               isDark={isDark}
             />
             <div className="pt-4 border-t border-zinc-200 dark:border-zinc-800">
-              <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-3">
+              <h2 className="text-xs font-semibold uppercase tracking-wider text-zinc-600 dark:text-zinc-400 mb-3">
                 Live Commit Graph
-              </h3>
+              </h2>
               <CommitGraph state={currentState} isDark={isDark} />
             </div>
           </div>
         )}
 
         {/* ================= TAB 4: ARCHITECTURE FLOWCHART ================= */}
-        {activeTab === 'flowchart' && (
+          {activeTab === 'flowchart' && (
           <StageFlowchartView
             onRunCommand={handleRunCommand}
             isDark={isDark}
@@ -299,12 +304,13 @@ export default function App() {
         )}
 
         {/* ================= TAB 5: COMMAND REFERENCE ================= */}
-        {activeTab === 'reference' && (
+          {activeTab === 'reference' && (
           <CommandReferenceView
             onRunCommand={handleRunCommand}
             isDark={isDark}
           />
-        )}
+          )}
+        </Suspense>
 
         {/* Editorial SEO & Topics */}
         <SEOContent isDark={isDark} />
