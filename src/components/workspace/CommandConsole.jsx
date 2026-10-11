@@ -263,22 +263,22 @@ export default function CommandConsole({
           </div>
 
           {/* Primary Quick Actions Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
             {BEGINNER_ACTIONS.map(action => (
               <button
                 key={action.cmd}
                 onClick={() => handleRunPreset(action.cmd)}
                 title={action.desc}
-                className={`p-2.5 rounded-xl border text-left transition-all group flex flex-col justify-between ${
+                className={`p-3 rounded-xl border text-left transition-all group flex flex-col justify-between cursor-pointer ${
                   isDark
-                    ? 'bg-zinc-900/70 border-zinc-800 hover:border-zinc-700 hover:bg-zinc-900 text-zinc-200'
-                    : 'bg-zinc-50/80 border-zinc-200 hover:border-zinc-300 hover:bg-white text-zinc-800 shadow-2xs'
+                    ? 'bg-zinc-900/80 border-zinc-800 hover:border-zinc-700 hover:bg-zinc-850 text-zinc-200'
+                    : 'bg-zinc-50 border-zinc-200 hover:border-zinc-300 hover:bg-white text-zinc-800 shadow-2xs'
                 }`}
               >
-                <span className="text-xs font-semibold block text-zinc-900 dark:text-zinc-100 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors">
+                <span className="text-sm font-semibold block text-zinc-900 dark:text-zinc-100 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors">
                   {action.label}
                 </span>
-                <span className="text-[11px] font-mono text-zinc-500 truncate block mt-1">
+                <span className="text-xs font-mono text-zinc-500 dark:text-zinc-400 truncate block mt-1.5">
                   {action.cmd}
                 </span>
               </button>
@@ -287,22 +287,22 @@ export default function CommandConsole({
 
           {/* Advanced Actions Grid (Expandable) */}
           {showAdvanced && (
-            <div className="mt-2.5 pt-2.5 border-t border-zinc-100 dark:border-zinc-850 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 animate-[fadeIn_0.15s_ease-out]">
+            <div className="mt-3 pt-3 border-t border-zinc-100 dark:border-zinc-850 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 animate-[fadeIn_0.15s_ease-out]">
               {ADVANCED_ACTIONS.map(action => (
                 <button
                   key={action.cmd}
                   onClick={() => handleRunPreset(action.cmd)}
                   title={action.desc}
-                  className={`p-2 rounded-lg border text-left transition-all ${
+                  className={`p-2.5 rounded-xl border text-left transition-all cursor-pointer ${
                     isDark
-                      ? 'bg-zinc-900/40 border-zinc-800/80 hover:bg-zinc-900 text-zinc-300'
+                      ? 'bg-zinc-900/50 border-zinc-800 hover:bg-zinc-850 text-zinc-300'
                       : 'bg-white border-zinc-200 hover:bg-zinc-50 text-zinc-700'
                   }`}
                 >
-                  <span className="text-xs font-medium block text-zinc-900 dark:text-zinc-100">
+                  <span className="text-sm font-medium block text-zinc-900 dark:text-zinc-100">
                     {action.label}
                   </span>
-                  <span className="text-[10px] font-mono text-zinc-400 truncate block mt-0.5">
+                  <span className="text-xs font-mono text-zinc-500 dark:text-zinc-400 truncate block mt-1">
                     {action.cmd}
                   </span>
                 </button>
@@ -313,27 +313,27 @@ export default function CommandConsole({
 
         {/* 3. Educational Outcome Banner (Instant Feedback & Learning) */}
         {latestExplanation && (
-          <div className={`p-4 rounded-xl border text-xs transition-colors ${
+          <div className={`p-4 sm:p-5 rounded-xl border text-sm transition-colors ${
             lastLog?.error
               ? 'bg-rose-500/10 border-rose-500/25 text-rose-800 dark:text-rose-300'
               : 'bg-emerald-500/5 dark:bg-emerald-500/10 border-emerald-500/20 text-zinc-800 dark:text-zinc-200'
           }`}>
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-1.5">
-              <div className="flex items-center gap-2">
-                <span className={`w-2 h-2 rounded-full shrink-0 ${lastLog?.error ? 'bg-rose-500' : 'bg-emerald-500'}`} />
-                <h3 className="font-bold text-sm text-zinc-900 dark:text-zinc-100">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 mb-2">
+              <div className="flex items-center gap-2.5">
+                <span className={`w-2.5 h-2.5 rounded-full shrink-0 ${lastLog?.error ? 'bg-rose-500' : 'bg-emerald-500'}`} />
+                <h3 className="font-bold text-sm sm:text-base text-zinc-900 dark:text-zinc-100">
                   {latestExplanation.summary}
                 </h3>
               </div>
               <div className="flex items-center gap-2">
                 {latestExplanation.nextSuggestions?.length > 0 && (
-                  <span className="text-[11px] text-zinc-500">Next suggested:</span>
+                  <span className="text-xs text-zinc-500 dark:text-zinc-400">Next suggested:</span>
                 )}
                 {latestExplanation.nextSuggestions?.slice(0, 2).map(s => (
                   <button
                     key={s}
                     onClick={() => handleRunPreset(s)}
-                    className="px-2 py-0.5 rounded text-[11px] font-mono font-medium bg-orange-600 text-white hover:bg-orange-500 transition-colors"
+                    className="px-2.5 py-1 rounded-md text-xs font-mono font-medium bg-orange-600 text-white hover:bg-orange-500 transition-colors cursor-pointer"
                   >
                     {s}
                   </button>
@@ -341,7 +341,7 @@ export default function CommandConsole({
               </div>
             </div>
 
-            <p className="text-zinc-600 dark:text-zinc-300 text-xs leading-relaxed font-sans mt-1">
+            <p className="text-zinc-700 dark:text-zinc-300 text-sm leading-relaxed font-sans">
               {latestExplanation.details}
             </p>
           </div>
@@ -353,14 +353,14 @@ export default function CommandConsole({
         isDark ? 'border-zinc-800 bg-zinc-950/70' : 'border-zinc-200 bg-zinc-50/60'
       }`}>
         {/* Drawer Tabs Bar */}
-        <div className="px-3 sm:px-6 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between gap-3 text-xs font-medium">
+        <div className="px-3 sm:px-6 border-b border-zinc-200 dark:border-zinc-850 flex items-center justify-between gap-3 text-sm font-medium">
           <div className="flex items-center gap-4 sm:gap-6 overflow-x-auto no-scrollbar whitespace-nowrap scroll-smooth flex-1 py-0.5">
             <button
               onClick={() => { setActiveDetailTab('output'); setDetailsOpen(true); }}
-              className={`py-2.5 sm:py-3 border-b-2 transition-colors shrink-0 ${
+              className={`py-3 border-b-2 transition-colors shrink-0 cursor-pointer ${
                 detailsOpen && activeDetailTab === 'output'
-                  ? 'border-orange-600 text-zinc-900 dark:text-white font-semibold'
-                  : 'border-transparent text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-200'
+                  ? 'border-orange-600 text-zinc-950 dark:text-white font-semibold'
+                  : 'border-transparent text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-200'
               }`}
             >
               Terminal Logs {terminalLogs.length > 0 && `(${terminalLogs.length})`}
@@ -368,29 +368,29 @@ export default function CommandConsole({
 
             <button
               onClick={() => { setActiveDetailTab('files'); setDetailsOpen(true); }}
-              className={`py-2.5 sm:py-3 border-b-2 transition-colors flex items-center gap-1.5 shrink-0 ${
+              className={`py-3 border-b-2 transition-colors flex items-center gap-2 shrink-0 cursor-pointer ${
                 detailsOpen && activeDetailTab === 'files'
-                  ? 'border-orange-600 text-zinc-900 dark:text-white font-semibold'
-                  : 'border-transparent text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-200'
+                  ? 'border-orange-600 text-zinc-950 dark:text-white font-semibold'
+                  : 'border-transparent text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-200'
               }`}
             >
               <span>Files & Staging</span>
               {(workingFiles.length > 0 || indexFiles.length > 0) && (
-                <span className="px-1.5 py-0.2 rounded-full text-[10px] bg-zinc-200 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300">
+                <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-zinc-200 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200">
                   {workingFiles.length + indexFiles.length}
                 </span>
               )}
               {isConflict && (
-                <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse" title="Merge conflict active" />
+                <span className="w-2.5 h-2.5 rounded-full bg-rose-500 shrink-0" title="Merge conflict active" />
               )}
             </button>
 
             <button
               onClick={() => { setActiveDetailTab('branches'); setDetailsOpen(true); }}
-              className={`py-2.5 sm:py-3 border-b-2 transition-colors shrink-0 ${
+              className={`py-3 border-b-2 transition-colors shrink-0 cursor-pointer ${
                 detailsOpen && activeDetailTab === 'branches'
-                  ? 'border-orange-600 text-zinc-900 dark:text-white font-semibold'
-                  : 'border-transparent text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-200'
+                  ? 'border-orange-600 text-zinc-950 dark:text-white font-semibold'
+                  : 'border-transparent text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-200'
               }`}
             >
               Branches ({branchList.length}) {stashList.length > 0 && `· ${stashList.length} stashed`}
@@ -399,10 +399,10 @@ export default function CommandConsole({
             {historySteps.length > 1 && (
               <button
                 onClick={() => { setActiveDetailTab('timeline'); setDetailsOpen(true); }}
-                className={`py-2.5 sm:py-3 border-b-2 transition-colors shrink-0 ${
+                className={`py-3 border-b-2 transition-colors shrink-0 cursor-pointer ${
                   detailsOpen && activeDetailTab === 'timeline'
-                    ? 'border-orange-600 text-zinc-900 dark:text-white font-semibold'
-                    : 'border-transparent text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-200'
+                    ? 'border-orange-600 text-zinc-950 dark:text-white font-semibold'
+                    : 'border-transparent text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-200'
                 }`}
               >
                 History ({currentStepIndex + 1}/{historySteps.length})
@@ -414,14 +414,14 @@ export default function CommandConsole({
             {activeDetailTab === 'output' && onClearLogs && terminalLogs.length > 0 && (
               <button
                 onClick={onClearLogs}
-                className="text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200 text-xs py-1 transition-colors"
+                className="text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200 text-xs py-1 transition-colors cursor-pointer"
               >
                 Clear
               </button>
             )}
             <button
               onClick={() => setDetailsOpen(!detailsOpen)}
-              className="text-xs text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 font-medium py-1 transition-colors whitespace-nowrap inline-flex items-center gap-1"
+              className="text-xs text-zinc-600 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-zinc-100 font-medium py-1 transition-colors whitespace-nowrap inline-flex items-center gap-1 cursor-pointer"
             >
               <span>{detailsOpen ? 'Hide' : 'Show'}</span>
               <svg aria-hidden="true" className={`w-3.5 h-3.5 transition-transform ${detailsOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -433,25 +433,25 @@ export default function CommandConsole({
 
         {/* Drawer Contents */}
         {detailsOpen && (
-          <div className="p-4 sm:p-6 max-h-72 overflow-y-auto text-xs">
+          <div className="p-4 sm:p-6 max-h-80 overflow-y-auto text-sm">
             {/* TAB: TERMINAL OUTPUT */}
             {activeDetailTab === 'output' && (
               <div className="space-y-3 font-mono">
                 {terminalLogs.length === 0 ? (
-                  <p className="text-zinc-400 italic">No commands run yet.</p>
+                  <p className="text-zinc-500 dark:text-zinc-400 italic">No commands run yet.</p>
                 ) : (
                   terminalLogs.map((log, idx) => (
                     <div key={idx} className="space-y-1">
-                      <div className="text-zinc-400 text-xs flex items-center gap-2">
+                      <div className="text-sm flex items-center gap-2">
                         <span className="text-orange-600 dark:text-orange-400 font-bold">$</span>
                         <span className="text-zinc-900 dark:text-zinc-100 font-bold">{log.command}</span>
                       </div>
                       {log.error ? (
-                        <div className="pl-3 border-l-2 border-rose-500 text-rose-600 dark:text-rose-400 whitespace-pre-wrap py-0.5">
+                        <div className="pl-3 border-l-2 border-rose-500 text-rose-600 dark:text-rose-400 whitespace-pre-wrap py-0.5 text-sm">
                           {log.error}
                         </div>
                       ) : log.output ? (
-                        <div className="pl-3 border-l-2 border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 whitespace-pre-wrap py-0.5 leading-relaxed">
+                        <div className="pl-3 border-l-2 border-zinc-300 dark:border-zinc-700 text-zinc-800 dark:text-zinc-200 whitespace-pre-wrap py-0.5 leading-relaxed text-sm">
                           {renderAnsiText(log.output)}
                         </div>
                       ) : null}

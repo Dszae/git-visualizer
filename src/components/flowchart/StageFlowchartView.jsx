@@ -72,7 +72,7 @@ export default function StageFlowchartView({ onRunCommand, isDark = true }) {
           <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
             How Git Works
           </h2>
-          <p className="text-xs text-zinc-500 mt-1">
+          <p className="text-sm text-zinc-600 dark:text-zinc-400 mt-1">
             Directional data flow across Stash, Workspace, Staging Area, Local Repository, and Remote.
           </p>
         </div>
@@ -85,13 +85,13 @@ export default function StageFlowchartView({ onRunCommand, isDark = true }) {
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Filter commands..."
             aria-label="Filter flowchart commands"
-            className={`px-3 py-2 sm:py-1.5 pl-8 rounded-lg text-base sm:text-xs font-mono border transition-all w-full sm:w-52 min-h-[40px] sm:min-h-0 ${
+            className={`px-3 py-2 sm:py-2 pl-9 rounded-xl text-sm font-mono border transition-all w-full sm:w-56 min-h-[44px] ${
               isDark 
                 ? 'bg-zinc-900 border-zinc-800 text-white placeholder:text-zinc-500' 
                 : 'bg-white border-zinc-300 text-zinc-900 placeholder:text-zinc-400'
             }`}
           />
-          <svg className="w-3.5 h-3.5 absolute left-2.5 top-3 sm:top-2.5 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-4 h-4 absolute left-3 top-3.5 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
         </div>
@@ -99,16 +99,16 @@ export default function StageFlowchartView({ onRunCommand, isDark = true }) {
 
       {/* Main Visualizer Area */}
       <div className="space-y-2">
-        <div className="sm:hidden text-[11px] text-zinc-400 font-sans flex items-center justify-between px-1">
+        <div className="sm:hidden text-xs text-zinc-500 dark:text-zinc-400 font-sans flex items-center justify-between px-1">
           <span className="inline-flex items-center gap-1">
             <span>Swipe horizontally across all 5 Git stages (Stash / Workspace / Staging / Local / Remote)</span>
-            <svg aria-hidden="true" className="w-3 h-3 opacity-60 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg aria-hidden="true" className="w-3.5 h-3.5 opacity-60 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>
           </span>
         </div>
         <div className="overflow-x-auto flex justify-start sm:justify-center py-2 no-scrollbar">
-          <div className={`relative flex w-[900px] md:w-[1000px] shrink-0 rounded-xl border p-6 md:p-8 overflow-hidden ${
+          <div className={`relative flex w-[900px] md:w-[1000px] shrink-0 rounded-2xl border p-6 md:p-8 overflow-hidden ${
             isDark ? 'bg-zinc-950 border-zinc-800' : 'bg-white border-zinc-200'
           }`}>
           
@@ -123,7 +123,7 @@ export default function StageFlowchartView({ onRunCommand, isDark = true }) {
           <div className="w-8 flex flex-col justify-start pt-24 gap-12 relative z-10 shrink-0">
             {categories.map((cat, i) => (
               <div key={i} className="relative h-24 flex items-center justify-center">
-                <span className="transform -rotate-90 whitespace-nowrap font-mono text-[10px] font-bold tracking-wider text-zinc-500 dark:text-zinc-400 uppercase">
+                <span className="transform -rotate-90 whitespace-nowrap font-mono text-[11px] font-bold tracking-wider text-zinc-500 dark:text-zinc-400 uppercase">
                   {cat}
                 </span>
               </div>
@@ -136,10 +136,10 @@ export default function StageFlowchartView({ onRunCommand, isDark = true }) {
             <div className="grid grid-cols-5 gap-3 mb-8">
               {STAGES.map(stage => (
                 <div key={stage.id} className="text-center cursor-default">
-                  <div className={`inline-block px-3 py-1 rounded-md border mb-1 bg-white dark:bg-zinc-900 ${stage.border} ${stage.color} font-bold text-xs tracking-wide`}>
+                  <div className={`inline-block px-3.5 py-1.5 rounded-lg border mb-1 bg-white dark:bg-zinc-900 ${stage.border} ${stage.color} font-bold text-xs tracking-wide`}>
                     {stage.name}
                   </div>
-                  <p className="text-[10px] uppercase font-medium text-zinc-500 dark:text-zinc-400">{stage.desc}</p>
+                  <p className="text-xs uppercase font-medium text-zinc-500 dark:text-zinc-400">{stage.desc}</p>
                 </div>
               ))}
             </div>

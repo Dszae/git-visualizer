@@ -221,11 +221,11 @@ export default function App() {
         {activeTab === 'sandbox' && (
           <div className="space-y-5">
             {/* Clear Orientation Header */}
-            <div className="space-y-1">
-              <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
+            <div className="space-y-1.5">
+              <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-50">
                 See how Git works visually
               </h1>
-              <p className="text-sm text-zinc-600 dark:text-zinc-400">
+              <p className="text-base text-zinc-600 dark:text-zinc-400">
                 Type a command or pick an action below to watch commits, branches, and pointers update in real time.
               </p>
             </div>
@@ -256,7 +256,7 @@ export default function App() {
         {/* ================= TAB 2: GUIDED LESSONS ================= */}
         {activeTab === 'lessons' && (
           <Suspense fallback={
-            <div className="py-20 text-center text-zinc-400 font-sans text-sm animate-pulse">
+            <div className="py-20 text-center text-zinc-500 font-sans text-sm">
               Loading lessons...
             </div>
           }>
@@ -280,7 +280,7 @@ export default function App() {
         {/* ================= TAB 3: SAFE UNDO LAB ================= */}
         {activeTab === 'undo-lab' && (
           <Suspense fallback={
-            <div className="py-20 text-center text-zinc-400 font-sans text-sm animate-pulse">
+            <div className="py-20 text-center text-zinc-500 font-sans text-sm">
               Loading Undo Lab...
             </div>
           }>
@@ -302,7 +302,7 @@ export default function App() {
         {/* ================= TAB 4: ARCHITECTURE FLOWCHART ================= */}
         {activeTab === 'flowchart' && (
           <Suspense fallback={
-            <div className="py-20 text-center text-zinc-400 font-sans text-sm animate-pulse">
+            <div className="py-20 text-center text-zinc-500 font-sans text-sm">
               Loading flowchart...
             </div>
           }>
@@ -316,7 +316,7 @@ export default function App() {
         {/* ================= TAB 5: COMMAND REFERENCE ================= */}
         {activeTab === 'reference' && (
           <Suspense fallback={
-            <div className="py-20 text-center text-zinc-400 font-sans text-sm animate-pulse">
+            <div className="py-20 text-center text-zinc-500 font-sans text-sm">
               Loading reference...
             </div>
           }>

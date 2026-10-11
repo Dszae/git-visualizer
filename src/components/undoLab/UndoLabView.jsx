@@ -112,22 +112,22 @@ export default function UndoLabView({ onRunCommand, isDark = true }) {
         <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
           Safe Undo Guide
         </h2>
-        <p className="text-xs text-zinc-500 mt-1 max-w-2xl">
+        <p className="text-sm text-zinc-600 dark:text-zinc-400 mt-1 max-w-2xl">
           Compare how different Git undo commands affect your Working Directory, Index, and Commit History.
         </p>
       </div>
 
       {/* Quick Mobile Selector Pills */}
-      <div className="sm:hidden space-y-1.5">
-        <span className="text-[11px] font-semibold text-zinc-500 uppercase tracking-wider block">
+      <div className="sm:hidden space-y-2">
+        <span className="text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider block">
           Select Undo Command
         </span>
-        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1 text-xs font-mono">
+        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1 text-sm font-mono">
           {UNDO_METHODS.map((m) => (
             <button
               key={m.id}
               onClick={() => setSelectedMethod(m)}
-              className={`px-3 py-2 rounded-lg border whitespace-nowrap transition-colors min-h-[40px] flex items-center gap-1 ${
+              className={`px-3 py-2 rounded-lg border whitespace-nowrap transition-colors min-h-[44px] flex items-center gap-1 cursor-pointer ${
                 selectedMethod.id === m.id
                   ? 'border-orange-500 bg-orange-500/10 text-orange-600 dark:text-orange-400 font-bold'
                   : 'border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300'
@@ -140,24 +140,24 @@ export default function UndoLabView({ onRunCommand, isDark = true }) {
       </div>
 
       {/* Comparison Matrix Table */}
-      <div className="space-y-1.5">
-        <div className="sm:hidden text-[11px] text-zinc-400 font-sans flex items-center justify-between px-1">
+      <div className="space-y-2">
+        <div className="sm:hidden text-xs text-zinc-500 dark:text-zinc-400 font-sans flex items-center justify-between px-1">
           <span className="inline-flex items-center gap-1">
             <span>Swipe table horizontally to compare all 5 columns</span>
-            <svg aria-hidden="true" className="w-3 h-3 opacity-60 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg aria-hidden="true" className="w-3.5 h-3.5 opacity-60 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>
           </span>
         </div>
         <div className="overflow-x-auto rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950">
-          <table className="w-full text-left text-xs border-collapse" aria-label="Git Undo operations comparison table">
+          <table className="w-full text-left text-sm border-collapse" aria-label="Git Undo operations comparison table">
             <thead>
-              <tr className="border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/60 text-zinc-600 dark:text-zinc-400">
-                <th className="py-2.5 px-4 font-semibold">Command</th>
-                <th className="py-2.5 px-3 font-semibold">Safety</th>
-                <th className="py-2.5 px-3 font-semibold">Working Directory</th>
-                <th className="py-2.5 px-3 font-semibold">Index (Staging)</th>
-                <th className="py-2.5 px-3 font-semibold">History</th>
+              <tr className="border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/60 text-zinc-700 dark:text-zinc-300">
+                <th className="py-3 px-4 font-semibold">Command</th>
+                <th className="py-3 px-3 font-semibold">Safety</th>
+                <th className="py-3 px-3 font-semibold">Working Directory</th>
+                <th className="py-3 px-3 font-semibold">Index (Staging)</th>
+                <th className="py-3 px-3 font-semibold">History</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800/80">
@@ -173,17 +173,17 @@ export default function UndoLabView({ onRunCommand, isDark = true }) {
                         : 'hover:bg-zinc-50 dark:hover:bg-zinc-900/60'
                     }`}
                   >
-                    <td className="py-2.5 px-4 font-mono font-medium text-zinc-900 dark:text-zinc-100 whitespace-nowrap">
+                    <td className="py-3 px-4 font-mono font-medium text-zinc-900 dark:text-zinc-100 whitespace-nowrap">
                       {method.name}
                     </td>
-                    <td className="py-2.5 px-3">
-                      <span className={`px-2 py-0.5 rounded text-[11px] font-medium border ${method.safetyBadge}`}>
+                    <td className="py-3 px-3">
+                      <span className={`px-2.5 py-0.5 rounded text-xs font-medium border ${method.safetyBadge}`}>
                         {method.safety}
                       </span>
                     </td>
-                    <td className="py-2.5 px-3 text-zinc-600 dark:text-zinc-400 whitespace-nowrap">{method.workingTree}</td>
-                    <td className="py-2.5 px-3 text-zinc-600 dark:text-zinc-400 whitespace-nowrap">{method.index}</td>
-                    <td className="py-2.5 px-3 text-zinc-600 dark:text-zinc-400 whitespace-nowrap">{method.history}</td>
+                    <td className="py-3 px-3 text-zinc-600 dark:text-zinc-400 whitespace-nowrap">{method.workingTree}</td>
+                    <td className="py-3 px-3 text-zinc-600 dark:text-zinc-400 whitespace-nowrap">{method.index}</td>
+                    <td className="py-3 px-3 text-zinc-600 dark:text-zinc-400 whitespace-nowrap">{method.history}</td>
                   </tr>
                 );
               })}
@@ -193,51 +193,51 @@ export default function UndoLabView({ onRunCommand, isDark = true }) {
       </div>
 
       {/* Selected Method Details */}
-      <div className="p-4 sm:p-6 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 space-y-4">
+      <div className="p-5 sm:p-6 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="flex items-center gap-2.5">
-            <span className={`px-2 py-0.5 rounded text-xs font-medium border ${selectedMethod.safetyBadge}`}>
+            <span className={`px-2.5 py-1 rounded text-xs font-semibold border ${selectedMethod.safetyBadge}`}>
               {selectedMethod.safety}
             </span>
-            <h3 className="text-base font-bold font-mono text-zinc-900 dark:text-zinc-100">{selectedMethod.name}</h3>
+            <h3 className="text-base sm:text-lg font-bold font-mono text-zinc-900 dark:text-zinc-100">{selectedMethod.name}</h3>
           </div>
 
           {onRunCommand && (
             <button
               onClick={() => onRunCommand(selectedMethod.sandboxCmd)}
-              className="w-full sm:w-auto px-3.5 py-2 sm:py-1.5 rounded-lg text-xs font-medium bg-orange-600 hover:bg-orange-500 active:scale-[0.98] text-white transition-all flex items-center justify-center gap-1.5 min-h-[40px] sm:min-h-0"
+              className="w-full sm:w-auto px-4 py-2 rounded-xl text-sm font-semibold bg-orange-600 hover:bg-orange-500 active:scale-[0.98] text-white transition-all flex items-center justify-center gap-1.5 min-h-[44px] cursor-pointer shadow-2xs"
             >
               Run in Sandbox: <code className="font-mono">{selectedMethod.sandboxCmd}</code>
             </button>
           )}
         </div>
 
-        <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-sans">{selectedMethod.description}</p>
+        <p className="text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed font-sans">{selectedMethod.description}</p>
 
         {/* Warning Banner */}
         {selectedMethod.warning && (
-          <div className={`p-3.5 rounded-lg border text-xs leading-relaxed ${
+          <div className={`p-4 rounded-xl border text-sm leading-relaxed ${
             selectedMethod.safety === 'Destructive' 
-              ? 'bg-rose-500/10 border-rose-500/30 text-rose-700 dark:text-rose-300' 
-              : 'bg-amber-500/10 border-amber-500/30 text-amber-700 dark:text-amber-300'
+              ? 'bg-rose-500/10 border-rose-500/30 text-rose-800 dark:text-rose-300' 
+              : 'bg-amber-500/10 border-amber-500/30 text-amber-800 dark:text-amber-300'
           }`}>
-            <span className="font-semibold block mb-0.5">Note on data safety:</span>
+            <span className="font-semibold block mb-1">Note on data safety:</span>
             <p>{selectedMethod.warning}</p>
           </div>
         )}
 
         {/* 3 Pillars Breakdown */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1 text-xs">
-          <div className="p-3 rounded-lg bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800">
-            <span className="text-zinc-500 font-medium block mb-1 text-[11px]">Working Directory</span>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1 text-sm">
+          <div className="p-3.5 rounded-xl bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800">
+            <span className="text-zinc-500 dark:text-zinc-400 font-semibold block mb-1 text-xs uppercase tracking-wider">Working Directory</span>
             <span className="text-zinc-800 dark:text-zinc-200">{selectedMethod.workingTree}</span>
           </div>
-          <div className="p-3 rounded-lg bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800">
-            <span className="text-zinc-500 font-medium block mb-1 text-[11px]">Staging Area (Index)</span>
+          <div className="p-3.5 rounded-xl bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800">
+            <span className="text-zinc-500 dark:text-zinc-400 font-semibold block mb-1 text-xs uppercase tracking-wider">Staging Area (Index)</span>
             <span className="text-zinc-800 dark:text-zinc-200">{selectedMethod.index}</span>
           </div>
-          <div className="p-3 rounded-lg bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800">
-            <span className="text-zinc-500 font-medium block mb-1 text-[11px]">Commit History</span>
+          <div className="p-3.5 rounded-xl bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800">
+            <span className="text-zinc-500 dark:text-zinc-400 font-semibold block mb-1 text-xs uppercase tracking-wider">Commit History</span>
             <span className="text-zinc-800 dark:text-zinc-200">{selectedMethod.history}</span>
           </div>
         </div>

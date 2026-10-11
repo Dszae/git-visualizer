@@ -85,30 +85,30 @@ export default function LessonsView({
           <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
             Guided Lessons & Challenges
           </h2>
-          <p className="text-xs text-zinc-500 mt-1">
+          <p className="text-sm text-zinc-600 dark:text-zinc-400 mt-1">
             Hands-on tutorials to master branching, committing, merging, and recovery.
           </p>
         </div>
 
         {/* Tab Switcher */}
         <div className="flex items-center gap-2">
-          <div className="flex p-1 rounded-lg bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-xs font-medium">
+          <div className="flex p-1 rounded-lg bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-850 text-sm font-medium">
             <button
               onClick={() => setActiveTab('lessons')}
-              className={`px-3 py-1.5 rounded-md transition-colors ${
+              className={`px-3.5 py-1.5 rounded-md transition-colors cursor-pointer ${
                 activeTab === 'lessons'
-                  ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-sm font-semibold'
-                  : 'text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-200'
+                  ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-xs font-semibold'
+                  : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-200'
               }`}
             >
               Lessons ({effectiveCompletedLessons.length}/{LESSONS.length})
             </button>
             <button
               onClick={() => setActiveTab('challenges')}
-              className={`px-3 py-1.5 rounded-md transition-colors ${
+              className={`px-3.5 py-1.5 rounded-md transition-colors cursor-pointer ${
                 activeTab === 'challenges'
-                  ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-sm font-semibold'
-                  : 'text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-200'
+                  ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-xs font-semibold'
+                  : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-200'
               }`}
             >
               Challenges ({effectiveCompletedChallenges.length}/{CHALLENGES.length})
@@ -118,7 +118,7 @@ export default function LessonsView({
           <button
             onClick={handleResetProgress}
             title="Reset saved progress"
-            className="px-2.5 py-1.5 rounded-lg text-xs font-medium text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200 border border-zinc-200 dark:border-zinc-800 transition-colors"
+            className="px-3 py-1.5 rounded-lg text-xs font-medium text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200 border border-zinc-200 dark:border-zinc-800 transition-colors cursor-pointer"
           >
             Reset
           </button>
@@ -138,30 +138,30 @@ export default function LessonsView({
                 <button
                   key={lesson.id}
                   onClick={() => handleStartLesson(lesson)}
-                  className={`min-w-[220px] lg:min-w-0 w-full text-left p-2.5 sm:p-3 rounded-lg border transition-colors flex items-start justify-between gap-2 shrink-0 lg:shrink ${
+                  className={`min-w-[220px] lg:min-w-0 w-full text-left p-3 rounded-xl border transition-colors flex items-start justify-between gap-2 shrink-0 lg:shrink cursor-pointer ${
                     isSelected
                       ? 'border-orange-500/50 bg-orange-500/5 text-zinc-900 dark:text-white'
-                      : 'border-zinc-200 dark:border-zinc-800/80 bg-white dark:bg-zinc-900/60 hover:bg-zinc-50 dark:hover:bg-zinc-900 text-zinc-700 dark:text-zinc-300'
+                      : 'border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/60 hover:bg-zinc-50 dark:hover:bg-zinc-900 text-zinc-700 dark:text-zinc-300'
                   }`}
                 >
                   <div className="truncate">
-                    <div className="flex items-center gap-1.5 mb-0.5">
-                      <span className="text-[10px] font-mono px-1.5 py-0.2 rounded font-medium bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400">
+                    <div className="flex items-center gap-1.5 mb-1">
+                      <span className="text-xs font-mono px-2 py-0.5 rounded font-medium bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400">
                         {lesson.level}
                       </span>
-                      <span className="text-xs font-semibold truncate text-zinc-900 dark:text-zinc-100">{lesson.title}</span>
+                      <span className="text-sm font-semibold truncate text-zinc-900 dark:text-zinc-100">{lesson.title}</span>
                     </div>
-                    <p className="text-[11px] text-zinc-500 dark:text-zinc-400 truncate">{lesson.subtitle}</p>
+                    <p className="text-xs text-zinc-500 dark:text-zinc-400 truncate">{lesson.subtitle}</p>
                   </div>
 
                   {isDone ? (
-                    <span className="w-4 h-4 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 mt-0.5">
-                      <svg aria-hidden="true" className="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <span className="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 mt-0.5">
+                      <svg aria-hidden="true" className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
                       </svg>
                     </span>
                   ) : (
-                    <span className="text-[11px] font-mono text-zinc-400 shrink-0 mt-0.5">{idx + 1}</span>
+                    <span className="text-xs font-mono text-zinc-400 shrink-0 mt-0.5">{idx + 1}</span>
                   )}
                 </button>
               );
@@ -169,33 +169,33 @@ export default function LessonsView({
           </div>
 
           {/* Active Lesson Panel */}
-          <div className="lg:col-span-8 p-4 sm:p-6 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 flex flex-col justify-between space-y-5">
+          <div className="lg:col-span-8 p-5 sm:p-6 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 flex flex-col justify-between space-y-5">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-mono font-medium text-zinc-500">
+                <span className="text-xs font-mono font-medium text-zinc-500 dark:text-zinc-400">
                   {activeLesson.level} Level
                 </span>
                 <button
                   onClick={() => handleStartLesson(activeLesson)}
-                  className="px-2.5 py-1 rounded text-xs font-medium border border-zinc-200 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300 transition-colors"
+                  className="px-3 py-1.5 rounded-lg text-xs font-medium border border-zinc-200 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300 transition-colors cursor-pointer"
                 >
                   Reset scenario
                 </button>
               </div>
 
               <div>
-                <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-50">{activeLesson.title}</h3>
-                <p className="text-xs text-zinc-600 dark:text-zinc-400 mt-1">{activeLesson.subtitle}</p>
+                <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-50">{activeLesson.title}</h3>
+                <p className="text-sm text-zinc-600 dark:text-zinc-400 mt-1">{activeLesson.subtitle}</p>
               </div>
 
               {/* Objective */}
-              <div className="p-3 rounded-lg bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 text-xs">
-                <span className="font-semibold text-zinc-500 block mb-0.5 text-[11px]">Objective</span>
+              <div className="p-3.5 rounded-xl bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 text-sm">
+                <span className="font-semibold text-zinc-500 dark:text-zinc-400 block mb-1 text-xs uppercase tracking-wider">Objective</span>
                 <p className="text-zinc-800 dark:text-zinc-200">{activeLesson.objective}</p>
               </div>
 
               {/* Explanation */}
-              <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+              <p className="text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed font-sans">
                 {activeLesson.explanation}
               </p>
 
