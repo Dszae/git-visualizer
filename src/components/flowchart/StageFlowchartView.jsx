@@ -54,6 +54,8 @@ export default function StageFlowchartView({ onRunCommand, isDark = true }) {
     c.category.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const hoveredCommand = COMMANDS.find(command => command.id === hoveredCmd);
+
   const handleCommandClick = (cmd) => {
     if (onRunCommand) {
       let runStr = cmd.cmd;
@@ -113,10 +115,23 @@ export default function StageFlowchartView({ onRunCommand, isDark = true }) {
           }`}>
           
           {/* Background Columns */}
-          <div className="absolute inset-y-8 left-14 right-8 grid grid-cols-5 gap-3 pointer-events-none opacity-40">
-            {STAGES.map(stage => (
-              <div key={stage.id} className={`rounded-lg ${stage.bg} ${stage.border} border h-full`}></div>
-            ))}
+          <div className="absolute inset-y-8 left-14 right-8 grid grid-cols-5 gap-3 pointer-events-none opacity-90">
+            {STAGES.map(stage => {
+              const isSource = hoveredCommand?.start === stage.id;
+              const isDestination = hoveredCommand?.end === stage.id && !isSource;
+              return (
+                <div
+                  key={stage.id}
+                  className={`rounded-lg ${stage.bg} ${stage.border} border transition-all duration-200 h-full ${
+                    isSource
+                      ? 'bg-orange-500/20 ring-2 ring-orange-500 ring-offset-2 ring-offset-white dark:ring-offset-zinc-950'
+                      : isDestination
+                        ? 'bg-cyan-500/20 ring-2 ring-cyan-500 ring-offset-2 ring-offset-white dark:ring-offset-zinc-950'
+                        : ''
+                  }`}
+                ></div>
+              );
+            })}
           </div>
 
           {/* Vertical Category Labels */}
@@ -134,14 +149,26 @@ export default function StageFlowchartView({ onRunCommand, isDark = true }) {
           <div className="flex-1 relative z-20">
             {/* Stage Headers */}
             <div className="grid grid-cols-5 gap-3 mb-8">
-              {STAGES.map(stage => (
-                <div key={stage.id} className="text-center cursor-default">
-                  <div className={`inline-block px-3.5 py-1.5 rounded-lg border mb-1 bg-white dark:bg-zinc-900 ${stage.border} ${stage.color} font-bold text-xs tracking-wide`}>
+              {STAGES.map(stage => {
+                const isSource = hoveredCommand?.start === stage.id;
+                const isDestination = hoveredCommand?.end === stage.id && !isSource;
+                return (
+                  <div key={stage.id} className="text-center cursor-default">
+                    <div className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg border-2 mb-1 bg-white dark:bg-zinc-900 ${stage.border} ${stage.color} font-bold text-xs tracking-wide transition-all duration-200 ${
+                      isSource
+                        ? 'ring-2 ring-orange-500 ring-offset-2 ring-offset-white dark:ring-offset-zinc-950'
+                        : isDestination
+                          ? 'ring-2 ring-cyan-500 ring-offset-2 ring-offset-white dark:ring-offset-zinc-950'
+                          : ''
+                    }`}>
                     {stage.name}
+                      {isSource && <span className="text-[9px] uppercase tracking-wider text-orange-700 dark:text-orange-300">Source</span>}
+                      {isDestination && <span className="text-[9px] uppercase tracking-wider text-cyan-700 dark:text-cyan-300">Destination</span>}
                   </div>
-                  <p className="text-xs uppercase font-medium text-zinc-500 dark:text-zinc-400">{stage.desc}</p>
-                </div>
-              ))}
+                    <p className="text-xs uppercase font-semibold text-zinc-700 dark:text-zinc-300">{stage.desc}</p>
+                  </div>
+                );
+              })}
             </div>
 
             {/* Commands Flow Grid */}
