@@ -13,21 +13,8 @@ Git Visualizer is an interactive Git learning platform that turns repository sta
 ## Product Launch
 
 <p align="center">
-  <video src="./git-visualizer-video-output/git-visualizer-launch.mp4" autoplay loop controls muted playsinline width="100%">
-    <a href="./git-visualizer-video-output/git-visualizer-launch.mp4">Watch the Git Visualizer launch video</a>
-  </video>
+  <img src="./git-visualizer-video-output/git-visualizer-launch.gif" alt="Git Visualizer 16:9 launch animation" width="860">
 </p>
-
-<p align="center">
-  <a href="./git-visualizer-video-output/git-visualizer-launch.mp4">
-    <img src="./git-visualizer-video-output/git-visualizer-thumbnail.png" alt="Git Visualizer launch video thumbnail" width="860">
-  </a>
-</p>
-
-The launch video is available in both formats:
-
-- [16:9 launch video](git-visualizer-video-output/git-visualizer-launch.mp4)
-- [9:16 vertical reel](git-visualizer-video-output/git-visualizer-reel.mp4)
 
 ## Why It Exists
 
