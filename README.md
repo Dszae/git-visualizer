@@ -1,108 +1,152 @@
-# Git Visualizer 🌿
+# Git Visualizer
 
-An interactive Git visualization and learning platform featuring a live SVG commit graph, deterministic Git repository simulator, interactive CLI terminal, guided curriculum & target challenges, safe undo laboratory, and 5-stage architecture flowchart.
+> See the story behind every commit.
 
-**Live Website:** [https://git-visualizer.dipeshsapkota7.com.np/](https://git-visualizer.dipeshsapkota7.com.np/)
+Git Visualizer is an interactive Git learning platform that turns repository state into a live, explorable visual model. Inspect commit history, simulate Git commands, follow branches and merges, compare undo strategies, and learn how Git moves changes between its core areas, all in the browser.
 
----
+<p align="center">
+  <a href="https://git-visualizer.dipeshsapkota7.com.np/">Open Git Visualizer</a>
+  &nbsp;&middot;&nbsp;
+  <a href="https://github.com/dszae/git-visualizer">View source</a>
+</p>
 
-## 🌟 Key Features
+## Product Launch
 
-### 1. Deterministic Git Repository Simulator
-- Real state machine accurately modeling the **Working Directory**, **Staging Area (Index)**, **Local Repository (Commit DAG)**, **Remote Repository & Tracking Branches**, **HEAD (including Detached HEAD)**, **Tags**, **Stashes**, and **Merge Conflict States**.
-- Supports 25+ real Git commands with argument parsing, error validation, and state integrity checks:
-  - `git init`, `git status`, `git add`, `git commit [-m | -a]`, `git log [--oneline]`, `git diff [--staged]`, `git branch [-d | -a]`, `git switch [-c]`, `git checkout [-b]`, `git merge [--abort]`, `git rebase`, `git stash [pop | list | apply | drop | clear]`, `git fetch`, `git pull`, `git push`, `git clone`, `git remote [-v | add]`, `git tag [-d]`, `git show`, `git restore [--staged]`, `git reset [--soft | --mixed | --hard]`, `git revert`, `git cherry-pick`, `git reflog`.
+<p align="center">
+  <video src="./git-visualizer-video-output/git-visualizer-launch.mp4" autoplay loop controls muted playsinline width="100%">
+    <a href="./git-visualizer-video-output/git-visualizer-launch.mp4">Watch the Git Visualizer launch video</a>
+  </video>
+</p>
 
-### 2. Live Interactive SVG Commit Graph
-- Topological lane layout supporting multi-branch diverging histories, multi-parent merge commits, and linear rebases.
-- Dynamic branch indicators, HEAD badges, tags, and remote tracking labels (`origin/main`).
-- Node click inspection for full commit hash, author, date, message, parent links, and file snapshot contents.
-- Zoom in/out, pan, reset view, and accessible table toggle for screen-reader / keyboard navigation (WCAG 2.2 AA).
+<p align="center">
+  <a href="./git-visualizer-video-output/git-visualizer-launch.mp4">
+    <img src="./git-visualizer-video-output/git-visualizer-thumbnail.png" alt="Git Visualizer launch video thumbnail" width="860">
+  </a>
+</p>
 
-### 3. Interactive CLI Terminal & Before/After Explanations
-- Terminal with syntax highlighting, ANSI color rendering, command history (Up/Down arrow keys), and tab auto-completion.
-- Rich before-and-after breakdown explaining initial state, what changed, what remained unchanged, resulting state, and suggested next steps.
-- Time-travel scrubber allowing step-by-step playback, pausing, and history inspection.
+The launch video is available in both formats:
 
-### 4. Guided Curriculum & Target Challenges
-- 12 structured lessons ranging from Beginner to Advanced:
-  1. Initialize a Repository
-  2. Working Directory & Staging Area
-  3. Make Your First Commit
-  4. Read Commit History
-  5. Create & Switch Branches
-  6. Fast-Forward vs 3-Way Merge
-  7. Resolve a Merge Conflict
-  8. Undo Safely (Restore & Revert)
-  9. Stash Uncommitted Work
-  10. Synchronize with Remotes (Fetch & Push)
-  11. Merge vs Rebase
-  12. Recover Commits with Reflog
-- Challenge Mode with target state validation (verifies branch tips, commits, and files).
-- Local progress persistence via `localStorage`.
+- [16:9 launch video](git-visualizer-video-output/git-visualizer-launch.mp4)
+- [9:16 vertical reel](git-visualizer-video-output/git-visualizer-reel.mp4)
 
-### 5. Safe Undo & Recovery Laboratory
-- Comparative matrix showing the impact of `git restore`, `git reset --soft`, `git reset --mixed`, `git reset --hard`, `git revert`, and `git reflog` across Working Tree, Index, Branch Tips, and Commit History.
-- Safety warnings and one-click execution in the simulator.
+## Why It Exists
 
-### 6. 5-Stage Architecture Flowchart
-- Preserved and enhanced original visual flowchart mapping data movement across **Stash**, **Workspace**, **Staging**, **Local Repo**, and **Remote Repo** with glowing data flows and instant sandbox execution.
+Git is powerful, but its mental model is easy to lose inside terminal output alone. Git Visualizer makes that model visible and gives learners a safe place to experiment with realistic repository state.
 
-### 7. Searchable Command Reference
-- Comprehensive directory of commands with syntax, preconditions, expected effects, common errors, and one-click execution.
+The simulator runs entirely in the browser. Repository state is deterministic and in-memory, so commands can be explored without touching a real checkout or sending repository data to an external server.
 
-### 8. Shareable Scenario URLs
-- Encode and share arbitrary repository states via URL parameters (`?state=...` or `?scenario=...`).
+## What You Can Explore
 
----
+### Live commit graph
 
-## 🛠️ Tech Stack
+- Topological SVG layout for linear history, diverging branches, rebases, and multi-parent merges.
+- Branch pointers, `HEAD`, tags, remote-tracking labels, and detached `HEAD` states.
+- Clickable commits with hashes, authors, dates, messages, parent links, and file snapshots.
+- Pan, zoom, fit-to-view, and an accessible table representation for keyboard and screen-reader users.
 
-- **Framework:** React 19, Vite 8
-- **Styling:** Tailwind CSS (Dark & Light themes)
-- **Testing:** Vitest
-- **Linting:** oxlint
-- **Deployment:** Vercel
+### Deterministic Git simulator
 
----
+The engine models the Working Directory, Staging Area, Local Repository, Remote Repository, tracking branches, `HEAD`, tags, stashes, reflog entries, and merge-conflict state.
 
-## 🚀 Getting Started
+Supported command families include:
 
-### Prerequisites
-- Node.js (v18+)
+```text
+init  status  add  commit  log  diff  branch  switch  checkout
+merge  rebase  stash  fetch  pull  push  clone  remote  tag  show
+restore  reset  revert  cherry-pick  reflog
+```
+
+Commands are parsed, validated, executed against immutable-style state transitions, and reflected immediately in the graph and inspection panels.
+
+### Interactive command console
+
+- Git command input with syntax-aware suggestions and tab completion.
+- One-click actions for staging, committing, branching, switching, merging, and status checks.
+- ANSI-aware terminal output with command history and Up/Down navigation.
+- Before/after explanations showing what changed, what stayed intact, the resulting state, and suggested next steps.
+- Timeline playback for stepping through repository history.
+
+### Learning tools
+
+- Twelve guided lessons from repository initialization through reflog recovery.
+- Target challenges with branch, commit, and file-state validation.
+- Safe Undo Lab comparing `restore`, `reset`, `revert`, and `reflog` across the Working Directory, Index, branch tips, and history.
+- Five-stage architecture flowchart covering Stash, Workspace, Staging, Local Repository, and Remote Repository.
+- Searchable command reference with syntax, preconditions, effects, common errors, and sandbox execution.
+
+### Shareable scenarios
+
+Repository states can be encoded into URL parameters, making a scenario easy to share or reopen:
+
+```text
+?state=<serialized-repository-state>
+?scenario=<preset-scenario-id>
+```
+
+## Architecture
+
+```text
+React UI
+  -> deterministic Git engine
+  -> repository state, history, explanations, and terminal output
+  -> SVG graph, timeline, lessons, undo lab, flowchart, and reference views
+```
+
+The application is organized around a small set of focused surfaces:
+
+- `src/engine/` contains repository state transitions and preset scenarios.
+- `src/components/graph/` renders the commit DAG and commit inspection experience.
+- `src/components/workspace/` owns the command console, terminal logs, and timeline controls.
+- `src/components/lessons/`, `src/components/undoLab/`, `src/components/flowchart/`, and `src/components/reference/` provide the learning views.
+- `tests/` covers Git engine behavior, including staging, commits, branches, merges, conflicts, undo operations, remotes, and recovery.
+
+## Tech Stack
+
+- React 19
+- Vite 8
+- Tailwind CSS
+- Vitest
+- oxlint
+- Vercel deployment
+
+## Getting Started
+
+### Requirements
+
+- Node.js 18 or newer
 - npm
 
-### Installation
+### Install and run
+
 ```bash
-# Clone the repository
 git clone https://github.com/dszae/git-visualizer.git
-
-# Navigate to project directory
 cd git-visualizer
-
-# Install dependencies
 npm install
-
-# Start local development server
 npm run dev
 ```
 
-### Running Tests & Linting
+Open the local Vite URL printed in the terminal.
+
+### Verify the project
+
 ```bash
-# Run automated Vitest test suite
 npm test
-
-# Run oxlint
 npm run lint
-
-# Build for production
 npm run build
 ```
 
----
+## Live Demo
 
-## 👤 Author
+Visit [git-visualizer.dipeshsapkota7.com.np](https://git-visualizer.dipeshsapkota7.com.np/) to start in the interactive sandbox.
 
-**Dipesh Sapkota**  
-Website: [https://www.dipeshsapkota7.com.np/](https://www.dipeshsapkota7.com.np/)  
-Project: [https://git-visualizer.dipeshsapkota7.com.np/](https://git-visualizer.dipeshsapkota7.com.np/)
+## Author
+
+**Dipesh Sapkota**
+
+- Website: [dipeshsapkota7.com.np](https://www.dipeshsapkota7.com.np/)
+- GitHub: [@Dszae](https://github.com/Dszae)
+- Project: [Git Visualizer](https://git-visualizer.dipeshsapkota7.com.np/)
+
+## License
+
+See the repository for the current license and project metadata.

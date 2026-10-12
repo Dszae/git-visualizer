@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1920, height=1080" />
+  <title>Git Visualizer Launch</title>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <style>
+    :root { --bg: #090a0c; --panel: #111318; --line: #2a2d33; --text: #f4f1eb; --muted: #a9a7a2; --accent: #f97316; --green: #4ade80; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: var(--bg); color: var(--text); }
+    body { font-family: monospace; }
+    #root { position: relative; width: 100%; height: 100%; overflow: hidden; background: var(--bg); }
+    .scene { position: absolute; inset: 0; overflow: hidden; }
+    .grid { position: absolute; inset: 0; opacity: .22; background-image: linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px); background-size: 64px 64px; }
+    .glow { position: absolute; width: 700px; height: 700px; border-radius: 50%; background: radial-gradient(circle, rgba(249,115,22,.20), rgba(249,115,22,0) 68%); filter: blur(8px); }
+    .kicker { color: var(--accent); font-size: 24px; letter-spacing: 4px; text-transform: uppercase; font-weight: 700; }
+    .headline { margin: 0; font-family: serif; font-size: 106px; line-height: .94; letter-spacing: 0; max-width: 1250px; }
+    .subline { margin: 28px 0 0; color: var(--muted); font-size: 30px; line-height: 1.35; max-width: 970px; }
+    .caption { position: absolute; left: 120px; bottom: 92px; color: var(--text); font-family: serif; font-size: 42px; line-height: 1.1; max-width: 1100px; }
+    .caption span { color: var(--accent); }
+    .topmark { position: absolute; left: 112px; top: 72px; display: flex; align-items: center; gap: 20px; color: var(--text); font-size: 25px; font-weight: 700; letter-spacing: 1px; }
+    .mark { width: 26px; height: 26px; border: 5px solid var(--accent); border-radius: 50%; box-shadow: 42px 0 0 -5px var(--green); }
+    .node { position: absolute; width: 26px; height: 26px; border: 5px solid var(--accent); border-radius: 50%; background: var(--bg); box-shadow: 0 0 24px rgba(249,115,22,.6); }
+    .branch { position: absolute; height: 4px; background: var(--accent); transform-origin: left center; opacity: .85; box-shadow: 0 0 16px rgba(249,115,22,.45); }
+    .branch.green { background: var(--green); box-shadow: 0 0 16px rgba(74,222,128,.35); }
+    .code-label { position: absolute; color: #85878c; font-size: 20px; letter-spacing: 1px; }
+    .ui-frame { position: absolute; left: 170px; top: 138px; width: 1580px; height: 804px; border: 3px solid #3d4047; border-radius: 18px; overflow: hidden; background: #090a0c; box-shadow: 0 28px 90px rgba(0,0,0,.55); }
+    .ui-frame img { width: 100%; height: 100%; object-fit: cover; object-position: top left; display: block; }
+    .ui-frame:after { content: ''; position: absolute; inset: 0; border: 1px solid rgba(249,115,22,.42); border-radius: 15px; pointer-events: none; }
+    .focus-ring { position: absolute; border: 4px solid var(--accent); border-radius: 14px; box-shadow: 0 0 0 900px rgba(4,5,7,.45), 0 0 28px rgba(249,115,22,.65); }
+    .ui-tag { position: absolute; padding: 16px 22px; border: 2px solid var(--accent); background: rgba(9,10,12,.94); color: var(--text); font-size: 23px; letter-spacing: 1px; border-radius: 8px; }
+    .outro-name { font-family: serif; font-size: 124px; line-height: .9; margin: 0; }
+    .url { margin-top: 26px; font-size: 30px; color: var(--accent); }
+    .tagline { margin-top: 30px; font-family: serif; font-size: 44px; color: var(--muted); }
+    .caption-bar { position: absolute; left: 0; right: 0; bottom: 0; height: 180px; background: linear-gradient(transparent, rgba(0,0,0,.86)); }
+    audio { display: none; }
+  </style>
+</head>
+<body>
+  <div id="root" data-composition-id="git-visualizer-launch" data-width="1920" data-height="1080" data-duration="27">
+    <div class="scene clip" id="hook" data-start="0" data-duration="4.2">
+      <div class="grid"></div><div class="glow" style="left:-120px;top:-220px"></div><div class="glow" style="right:-220px;bottom:-300px;opacity:.5"></div>
+      <div class="topmark"><span class="mark"></span> GIT VISUALIZER</div>
+      <div class="kicker" id="hook-kicker" style="position:absolute;left:120px;top:280px">THE HISTORY IS THERE</div>
+      <h1 class="headline" id="hook-title" style="position:absolute;left:120px;top:334px">Git history,<br><span style="color:var(--accent)">visualized.</span></h1>
+      <div class="branch" id="b1" style="left:1110px;top:410px;width:520px;transform:rotate(-22deg)"></div><div class="branch green" id="b2" style="left:1080px;top:604px;width:620px;transform:rotate(16deg)"></div><div class="branch" id="b3" style="left:1220px;top:510px;width:400px;transform:rotate(22deg)"></div>
+      <div class="node" id="n1" style="left:1080px;top:590px"></div><div class="node" id="n2" style="left:1260px;top:518px"></div><div class="node" id="n3" style="left:1550px;top:386px"></div><div class="node" id="n4" style="left:1540px;top:704px"></div>
+      <div class="code-label" style="left:1120px;top:760px">branches · commits · merges</div>
+      <div class="caption-bar"></div><div class="caption clip" id="cap1" data-start="0.2" data-duration="3.2">Git history can get <span>complicated.</span></div>
+    </div>
+
+    <div class="scene clip" id="reveal" data-start="4.2" data-duration="4.0">
+      <div class="grid"></div><div class="topmark"><span class="mark"></span> GIT VISUALIZER</div>
+      <div class="kicker" id="reveal-kicker" style="position:absolute;left:120px;top:235px">A CLEARER WAY TO SEE IT</div>
+      <h1 class="headline" id="reveal-title" style="position:absolute;left:120px;top:292px">Turn Git history<br>into a <span style="color:var(--green)">story.</span></h1>
+      <div class="branch" style="left:1050px;top:620px;width:520px;transform:rotate(-26deg)"></div><div class="branch green" style="left:1050px;top:620px;width:530px;transform:rotate(24deg)"></div><div class="branch" style="left:1050px;top:620px;width:340px;transform:rotate(0deg)"></div>
+      <div class="node" style="left:1028px;top:606px"></div><div class="node" style="left:1500px;top:390px"></div><div class="node" style="left:1500px;top:820px"></div><div class="node" style="left:1360px;top:607px"></div>
+      <div class="caption-bar"></div><div class="caption" id="cap2">Meet <span>Git Visualizer.</span></div>
+    </div>
+
+    <div class="scene clip" id="sandbox" data-start="8.2" data-duration="10.2">
+      <div class="grid"></div><div class="ui-frame" id="sandbox-frame"><img src="assets/site-sandbox-top.png" alt="Real Git Visualizer sandbox interface" /></div>
+      <div class="ui-tag" id="sandbox-tag" style="left:1040px;top:175px">LIVE COMMIT GRAPH</div>
+      <div class="focus-ring" id="sandbox-ring" style="left:264px;top:330px;width:1120px;height:250px"></div>
+      <div class="caption-bar"></div><div class="caption" id="cap3">Explore the graph. <span>Run real Git commands.</span></div>
+    </div>
+
+    <div class="scene clip" id="undo" data-start="18.4" data-duration="4.8">
+      <div class="grid"></div><div class="ui-frame" id="undo-frame"><img src="assets/site-undo-top.png" alt="Real Git Visualizer Undo Lab interface" /></div>
+      <div class="ui-tag" id="undo-tag" style="left:1120px;top:180px">SAFE UNDO LAB</div>
+      <div class="focus-ring" id="undo-ring" style="left:250px;top:240px;width:1260px;height:300px"></div>
+      <div class="caption-bar"></div><div class="caption" id="cap4">Understand branches, files, and <span>safe undo.</span></div>
+    </div>
+
+    <div class="scene clip" id="outro" data-start="23.2" data-duration="3.8">
+      <div class="grid"></div><div class="glow" style="left:540px;top:100px"></div>
+      <div class="topmark"><span class="mark"></span> GIT VISUALIZER</div>
+      <div style="position:absolute;left:120px;top:330px"><h1 class="outro-name" id="outro-name">Git<br><span style="color:var(--accent)">Visualizer.</span></h1><div class="url" id="outro-url">git-visualizer.dipeshsapkota7.com.np</div><div class="tagline" id="outro-tagline">See the story behind every commit.</div></div>
+    </div>
+
+    <audio id="vo" data-start="0" data-track-index="5" data-volume="1" src="assets/git-visualizer-voiceover.wav"></audio>
+    <audio id="music" data-start="0" data-track-index="4" data-volume="0.18" src="assets/git-visualizer-music.wav"></audio>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true, defaults: { ease: 'power3.out' } });
+    const fadeIn = (target, start, duration = 0.55, y = 24) => tl.fromTo(target, { opacity: 0, y }, { opacity: 1, y: 0, duration }, start);
+    fadeIn('#hook-kicker', 0.2, 0.5, 18); fadeIn('#hook-title', 0.38, 0.8, 42);
+    tl.fromTo(['#b1','#b2','#b3'], { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: .85, duration: .9, stagger: .12 }, .55);
+    tl.fromTo(['#n1','#n2','#n3','#n4'], { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: .45, stagger: .12, ease: 'back.out(1.7)' }, 1.05);
+    fadeIn('#cap1', .8, .5, 18);
+    fadeIn('#reveal-kicker', 4.35, .45, 18); fadeIn('#reveal-title', 4.55, .75, 38); fadeIn('#cap2', 5.0, .5, 18);
+    tl.fromTo('#sandbox-frame', { opacity: 0, scale: 1.06, y: 34 }, { opacity: 1, scale: 1, y: 0, duration: .8 }, 8.2);
+    tl.fromTo('#sandbox-tag', { opacity: 0, x: 36 }, { opacity: 1, x: 0, duration: .5 }, 8.9);
+    tl.fromTo('#sandbox-ring', { opacity: 0, scale: .96 }, { opacity: 1, scale: 1, duration: .45 }, 9.2);
+    fadeIn('#cap3', 9.2, .5, 18);
+    tl.to('#sandbox-ring', { x: 120, y: 80, duration: 1.2, ease: 'power2.inOut' }, 12.6);
+    tl.to('#sandbox-tag', { x: -80, y: 170, duration: 1.2, ease: 'power2.inOut' }, 12.6);
+    tl.to('#cap3', { opacity: 0, duration: .35 }, 16.8);
+    tl.fromTo('#undo-frame', { opacity: 0, scale: 1.05, y: 30 }, { opacity: 1, scale: 1, y: 0, duration: .7 }, 18.4);
+    tl.fromTo('#undo-tag', { opacity: 0, x: 34 }, { opacity: 1, x: 0, duration: .5 }, 18.95);
+    tl.fromTo('#undo-ring', { opacity: 0, scale: .96 }, { opacity: 1, scale: 1, duration: .45 }, 19.1);
+    fadeIn('#cap4', 19.2, .5, 18);
+    fadeIn('#outro-name', 23.45, .65, 38); fadeIn('#outro-url', 23.8, .45, 18); fadeIn('#outro-tagline', 24.15, .55, 18);
+    window.__timelines['git-visualizer-launch'] = tl;
+  </script>
+</body>
+</html>

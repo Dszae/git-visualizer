@@ -1,0 +1,7 @@
+Git history can get complicated. Branches, commits, and merges make it easy to lose the bigger picture.
+
+Git Visualizer turns that history into a visual story you can actually understand. Explore the commit graph, run real Git commands, and watch your repository change in real time.
+
+Inspect branches, files, and safe undo strategies, all in the browser.
+
+Git Visualizer. See the story behind every commit.
