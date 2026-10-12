@@ -349,6 +349,14 @@ export default function App() {
             </nav>
 
             <div className="space-y-3">
+              <a
+                href="https://www.dipeshsapkota7.com.np/"
+                target="_blank"
+                rel="noopener noreferrer author me"
+                className="text-xs text-zinc-600 dark:text-zinc-400 hover:text-orange-600 dark:hover:text-orange-400 transition-colors"
+              >
+                Dipesh Sapkota portfolio
+              </a>
               <div className="flex flex-wrap items-center justify-center md:justify-start gap-2.5 pt-1" aria-label="Dipesh Sapkota links">
                 {/* Original Website Link with Globe Icon */}
                 <a
