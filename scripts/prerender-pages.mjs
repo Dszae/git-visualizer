@@ -133,4 +133,21 @@ for (const page of pages) {
   await writeFile(new URL('index.html', directory), html);
 }
 
+const today = new Date().toISOString().slice(0, 10);
+const sitemapUrls = [
+  { path: '/', priority: '1.0' },
+  ...pages.map(page => ({ path: `/${page.route}/`, priority: '0.9' }))
+];
+const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${sitemapUrls.map(({ path, priority }) => `  <url>
+    <loc>${siteUrl}${path}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>${priority}</priority>
+  </url>`).join('\n')}
+</urlset>
+`;
+await writeFile(new URL('sitemap.xml', outputDirectory), sitemap);
+
 console.log(`Generated ${pages.length} prerendered section pages in dist/.`);
