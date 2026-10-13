@@ -208,7 +208,7 @@ export default function LessonsView({
                 {activeLesson.steps.map((step, sIdx) => {
                   const isStepDone = step.verify(currentState);
                   // Extract command from backticks or quotes
-                  const cmdMatch = step.instruction.match(/`([^`]+)`/) || step.hint.match(/"([^"]+)"/);
+                  const cmdMatch = step.instruction.match(/`(git\s+[^`]+)`/i) || step.hint.match(/"(git\s+[^"]+)"/i);
                   const suggestedCmd = cmdMatch ? cmdMatch[1] : null;
 
                   return (
