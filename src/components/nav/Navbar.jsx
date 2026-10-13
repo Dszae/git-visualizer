@@ -86,7 +86,7 @@ export default function Navbar({
                 onClick={() => onSelectTab(t.id)}
                 className={`h-10 px-4 rounded-lg text-sm font-medium transition-colors cursor-pointer ${
                   isActive
-                    ? 'text-zinc-950 dark:text-white bg-zinc-100 dark:bg-zinc-800 font-semibold shadow-2xs'
+                    ? 'text-orange-700 dark:text-orange-400 bg-orange-500/10 dark:bg-orange-500/15 font-semibold shadow-2xs ring-1 ring-orange-500/25'
                     : 'text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-zinc-100 hover:bg-zinc-100/70 dark:hover:bg-zinc-900'
                 }`}
               >
@@ -216,7 +216,7 @@ export default function Navbar({
                 }}
                 className={`w-full text-left px-4 py-3 rounded-xl font-medium transition-colors min-h-[48px] flex items-center cursor-pointer text-base ${
                   activeTab === t.id
-                    ? 'bg-zinc-100 dark:bg-zinc-800 text-zinc-950 dark:text-white font-semibold'
+                    ? 'bg-orange-500/10 dark:bg-orange-500/15 text-orange-700 dark:text-orange-400 font-semibold ring-1 ring-orange-500/25'
                     : 'text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-900'
                 }`}
               >
