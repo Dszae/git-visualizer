@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useState, useEffect, useCallback } from 'react';
+import React, { Suspense, lazy, useState, useEffect, useLayoutEffect, useCallback } from 'react';
 import Navbar from './components/nav/Navbar.jsx';
 import CommitGraph from './components/graph/CommitGraph.jsx';
 import CommandConsole from './components/workspace/CommandConsole.jsx';
@@ -16,7 +16,29 @@ import {
   deserializeStateFromUrl
 } from './engine/scenarios.js';
 
+const TAB_PATHS = {
+  sandbox: '/',
+  lessons: '/lessons/',
+  'undo-lab': '/undo-lab/',
+  flowchart: '/flowchart/',
+  reference: '/reference/'
+};
+
+function getTabFromLocation() {
+  const pathTab = Object.entries(TAB_PATHS).find(([, path]) => window.location.pathname === path);
+  if (pathTab) return pathTab[0];
+
+  const tabParam = new URLSearchParams(window.location.search).get('tab');
+  return ['sandbox', 'lessons', 'undo-lab', 'flowchart', 'reference'].includes(tabParam)
+    ? tabParam
+    : 'sandbox';
+}
+
 export default function App() {
+  useLayoutEffect(() => {
+    document.getElementById('pre-rendered-content')?.remove();
+  }, []);
+
   const [isDark, setIsDark] = useState(() => {
     try {
       const saved = localStorage.getItem('git_visualizer_theme');
@@ -28,11 +50,7 @@ export default function App() {
 
   const [activeTab, setActiveTab] = useState(() => {
     try {
-      const urlParams = new URLSearchParams(window.location.search);
-      const tabParam = urlParams.get('tab');
-      if (['sandbox', 'lessons', 'undo-lab', 'flowchart', 'reference'].includes(tabParam)) {
-        return tabParam;
-      }
+      return getTabFromLocation();
     } catch {}
     return 'sandbox';
   });
@@ -102,6 +120,7 @@ export default function App() {
   // Update query params when tab changes
   useEffect(() => {
     try {
+      if (window.location.pathname !== '/' && window.location.pathname !== '/index.html') return;
       const url = new URL(window.location.href);
       if (activeTab === 'sandbox') {
         url.searchParams.delete('tab');
@@ -341,10 +360,10 @@ export default function App() {
               </h2>
               <div className="grid grid-cols-2 gap-x-5 gap-y-1.5 text-xs">
                 <a href="/" className="text-zinc-700 dark:text-zinc-300 hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Interactive Sandbox</a>
-                <a href="/?tab=lessons" className="text-zinc-700 dark:text-zinc-300 hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Guided Lessons</a>
-                <a href="/?tab=undo-lab" className="text-zinc-700 dark:text-zinc-300 hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Undo Lab</a>
-                <a href="/?tab=flowchart" className="text-zinc-700 dark:text-zinc-300 hover:text-orange-600 dark:hover:text-orange-400 transition-colors">How Git Works</a>
-                <a href="/?tab=reference" className="text-zinc-700 dark:text-zinc-300 hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Command Reference</a>
+                <a href="/lessons/" className="text-zinc-700 dark:text-zinc-300 hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Guided Lessons</a>
+                <a href="/undo-lab/" className="text-zinc-700 dark:text-zinc-300 hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Undo Lab</a>
+                <a href="/flowchart/" className="text-zinc-700 dark:text-zinc-300 hover:text-orange-600 dark:hover:text-orange-400 transition-colors">How Git Works</a>
+                <a href="/reference/" className="text-zinc-700 dark:text-zinc-300 hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Command Reference</a>
               </div>
             </nav>
 

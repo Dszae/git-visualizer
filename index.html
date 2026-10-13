@@ -174,28 +174,28 @@
                 "position": 2,
                 "name": "Guided Lessons & Challenges",
                 "description": "Step-by-step interactive Git curriculum and target-state challenges",
-                "url": "https://git-visualizer.dipeshsapkota7.com.np/?tab=lessons"
+                "url": "https://git-visualizer.dipeshsapkota7.com.np/lessons/"
               },
               {
                 "@type": "SiteNavigationElement",
                 "position": 3,
                 "name": "Safe Undo Lab",
                 "description": "Comparison guide for git restore, git reset, git revert, and git reflog",
-                "url": "https://git-visualizer.dipeshsapkota7.com.np/?tab=undo-lab"
+                "url": "https://git-visualizer.dipeshsapkota7.com.np/undo-lab/"
               },
               {
                 "@type": "SiteNavigationElement",
                 "position": 4,
                 "name": "How Git Works Architecture",
                 "description": "5-stage code movement flowchart across Stash, Workspace, Staging, Local, and Remote",
-                "url": "https://git-visualizer.dipeshsapkota7.com.np/?tab=flowchart"
+                "url": "https://git-visualizer.dipeshsapkota7.com.np/flowchart/"
               },
               {
                 "@type": "SiteNavigationElement",
                 "position": 5,
                 "name": "Command Reference",
                 "description": "Searchable Git command documentation with preconditions and safety warnings",
-                "url": "https://git-visualizer.dipeshsapkota7.com.np/?tab=reference"
+                "url": "https://git-visualizer.dipeshsapkota7.com.np/reference/"
               },
               {
                 "@type": "SiteNavigationElement",
@@ -205,45 +205,80 @@
                 "url": "https://www.dipeshsapkota7.com.np/"
               }
             ]
+          },
+          {
+            "@type": "FAQPage",
+            "@id": "https://git-visualizer.dipeshsapkota7.com.np/#faq",
+            "url": "https://git-visualizer.dipeshsapkota7.com.np/",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "How does this Git visualizer simulate commands?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Git Visualizer runs an in-memory, deterministic Git repository state machine in the browser. It models the working directory, staging area, commit DAG, branches, HEAD, stash, and remotes without sending repository data to an external server."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Is git revert safer than git reset?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "git revert creates a new commit that reverses an earlier commit without rewriting shared history. git reset moves branch pointers and can discard or rewrite history, so it needs more care on shared branches."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Can I learn Git with Git Visualizer by Dipesh Sapkota?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. Git Visualizer by Dipesh Sapkota includes an interactive sandbox, guided lessons, a safe undo lab, a Git architecture flowchart, and a searchable Git command reference."
+                }
+              }
+            ]
           }
         ]
       }
     </script>
   </head>
   <body>
-    <noscript>
-      <div style="padding: 2.5rem; font-family: 'Trebuchet MS', 'Segoe UI', sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto;">
-        <nav aria-label="Breadcrumb" style="margin-bottom: 1rem; font-size: 0.9rem;">
-          <a href="https://www.dipeshsapkota7.com.np/" rel="home author">Dipesh Sapkota (Home)</a> &gt; <span>Git Visualizer</span>
-        </nav>
-        <h1>Git Visualizer — Interactive Git Learning Platform</h1>
-        <p>A deterministic Git repository simulator, live commit DAG visualizer, guided curriculum, safe undo laboratory, and architecture flowchart by <a href="https://www.dipeshsapkota7.com.np/" rel="author">Dipesh Sapkota</a>.</p>
-        <p>Main Portfolio & Projects: <a href="https://www.dipeshsapkota7.com.np/" rel="home">https://www.dipeshsapkota7.com.np/</a></p>
+    <article id="pre-rendered-content" style="padding: 2.5rem; font-family: 'Trebuchet MS', 'Segoe UI', sans-serif; line-height: 1.6; max-width: 900px; margin: 0 auto;">
+      <nav aria-label="Breadcrumb" style="margin-bottom: 1rem; font-size: 0.9rem;">
+        <a href="https://www.dipeshsapkota7.com.np/" rel="home author">Dipesh Sapkota (Home)</a> &gt; <span>Git Visualizer</span>
+      </nav>
+      <h1>Git Visualizer by Dipesh Sapkota</h1>
+      <p>Git Visualizer is an interactive Git learning platform by Dipesh Sapkota. Explore a deterministic Git repository simulator, live commit DAG visualizer, guided lessons, safe undo laboratory, searchable command reference, and Git architecture flowchart.</p>
+      <p>This Git visualizer runs in your browser and models the working directory, staging area, commits, branches, HEAD, stash, and remotes. It is useful for learning Git commands such as git init, git status, git add, git commit, git branch, git merge, git rebase, git reset, git revert, and git reflog.</p>
 
-        <nav aria-label="Git Visualizer features">
-          <h2>Explore Git Visualizer</h2>
-          <ul>
-            <li><a href="https://git-visualizer.dipeshsapkota7.com.np/">Interactive Sandbox</a></li>
-            <li><a href="https://git-visualizer.dipeshsapkota7.com.np/?tab=lessons">Guided Lessons</a></li>
-            <li><a href="https://git-visualizer.dipeshsapkota7.com.np/?tab=undo-lab">Undo Lab</a></li>
-            <li><a href="https://git-visualizer.dipeshsapkota7.com.np/?tab=flowchart">How Git Works</a></li>
-            <li><a href="https://git-visualizer.dipeshsapkota7.com.np/?tab=reference">Command Reference</a></li>
-          </ul>
-        </nav>
-        
-        <h2>Core Modules</h2>
+      <nav aria-label="Git Visualizer features">
+        <h2>Explore Git Visualizer</h2>
         <ul>
-          <li><strong>Interactive Sandbox:</strong> Live commit graph, simulated CLI terminal, repository state inspector (working tree, index, branches, stash, remotes), before-and-after explanation panel, and time-travel timeline.</li>
-          <li><strong>Guided Lessons & Challenges:</strong> 12 step-by-step lessons from repository initialization to merge conflict resolution and reflog recovery, plus target-state challenges.</li>
-          <li><strong>Safe Undo Lab:</strong> Detailed comparative matrix for <code>git restore</code>, <code>git reset (--soft/mixed/hard)</code>, <code>git revert</code>, and <code>git reflog</code> with safety warnings.</li>
-          <li><strong>5-Stage Architecture Flowchart:</strong> Trace code movement across Stash, Workspace, Staging Area, Local Repository, and Remote Repository.</li>
-          <li><strong>Command Reference:</strong> Searchable guide covering syntax, preconditions, expected effects, and error handling.</li>
+          <li><a href="https://git-visualizer.dipeshsapkota7.com.np/">Interactive Git Sandbox and Commit Graph</a></li>
+          <li><a href="https://git-visualizer.dipeshsapkota7.com.np/lessons/">Guided Git Lessons and Challenges</a></li>
+          <li><a href="https://git-visualizer.dipeshsapkota7.com.np/undo-lab/">Git Reset, Revert, Restore, and Reflog Undo Lab</a></li>
+          <li><a href="https://git-visualizer.dipeshsapkota7.com.np/flowchart/">How Git Works Architecture Flowchart</a></li>
+          <li><a href="https://git-visualizer.dipeshsapkota7.com.np/reference/">Searchable Git Command Reference</a></li>
         </ul>
+      </nav>
 
-        <h2>Supported Commands</h2>
-        <p>git init, git status, git add, git commit, git log, git diff, git branch, git switch, git checkout, git merge, git rebase, git stash, git stash pop, git fetch, git pull, git push, git clone, git remote, git tag, git show, git restore, git reset, git revert, git cherry-pick, git reflog.</p>
-      </div>
-    </noscript>
+      <h2>Git Visualizer Features</h2>
+      <ul>
+        <li><strong>Interactive Sandbox:</strong> Watch commits, branches, pointers, the working tree, index, stash, and remotes change as commands run.</li>
+        <li><strong>Guided Lessons:</strong> Learn from repository initialization through branching, merging, conflicts, and reflog recovery.</li>
+        <li><strong>Safe Undo Lab:</strong> Compare git restore, git reset, git revert, and git reflog with safety guidance.</li>
+        <li><strong>Architecture Flowchart:</strong> Trace code across the stash, workspace, staging area, local repository, and remote repository.</li>
+      </ul>
+
+      <h2>Git Concepts and Frequently Asked Questions</h2>
+      <h3>What is the difference between git merge and git rebase?</h3>
+      <p>git merge preserves the history of both branches and may create a merge commit. git rebase reapplies commits on a new base to create a linear history and changes commit IDs.</p>
+      <h3>Is git revert safer than git reset?</h3>
+      <p>For shared branches, git revert is generally safer because it creates a new commit that reverses an earlier commit. git reset moves a branch pointer and can rewrite or discard history.</p>
+      <h3>Can lost commits be recovered after git reset --hard?</h3>
+      <p>Often yes. git reflog records earlier positions of HEAD, allowing a recovered commit to be inspected or referenced by a new branch.</p>
+
+      <p>Created by <a href="https://www.dipeshsapkota7.com.np/" rel="author">Dipesh Sapkota</a>. Visit the <a href="https://www.dipeshsapkota7.com.np/" rel="home author">Dipesh Sapkota developer portfolio</a>.</p>
+    </article>
 
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>

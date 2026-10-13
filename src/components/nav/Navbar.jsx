@@ -22,6 +22,14 @@ export default function Navbar({
     { id: 'reference', label: 'Command Reference' }
   ];
 
+  const tabPaths = {
+    sandbox: '/',
+    lessons: '/lessons/',
+    'undo-lab': '/undo-lab/',
+    flowchart: '/flowchart/',
+    reference: '/reference/'
+  };
+
   // Close dropdown on click outside
   useEffect(() => {
     function handleClickOutside(e) {
@@ -82,7 +90,7 @@ export default function Navbar({
             return (
               <a
                 key={t.id}
-                href={t.id === 'sandbox' ? '/' : `/?tab=${t.id}`}
+                href={tabPaths[t.id]}
                 onClick={() => onSelectTab(t.id)}
                 className={`h-10 px-4 rounded-lg text-sm font-medium transition-colors cursor-pointer ${
                   isActive
@@ -209,7 +217,7 @@ export default function Navbar({
             {tabs.map(t => (
               <a
                 key={t.id}
-                href={t.id === 'sandbox' ? '/' : `/?tab=${t.id}`}
+                href={tabPaths[t.id]}
                 onClick={() => {
                   onSelectTab(t.id);
                   setMobileMenuOpen(false);
