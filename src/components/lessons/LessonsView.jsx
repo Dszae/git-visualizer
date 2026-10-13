@@ -9,6 +9,7 @@ export default function LessonsView({
 }) {
   const [activeTab, setActiveTab] = useState('lessons'); // 'lessons' | 'challenges'
   const [selectedLessonId, setSelectedLessonId] = useState(LESSONS[0].id);
+  const [activeStepIndex, setActiveStepIndex] = useState(0);
   const [completedLessons, setCompletedLessons] = useState(() => {
     try {
       const saved = localStorage.getItem('git_visualizer_completed_lessons');
@@ -54,6 +55,7 @@ export default function LessonsView({
 
   const handleStartLesson = (lesson) => {
     setSelectedLessonId(lesson.id);
+    setActiveStepIndex(0);
     if (onLoadState) {
       onLoadState(lesson.initialStateGenerator());
     }
@@ -77,11 +79,11 @@ export default function LessonsView({
   };
 
   return (
-    <div className={`space-y-7 max-w-5xl mx-auto transition-colors ${
+    <div className={`space-y-6 max-w-5xl mx-auto transition-colors ${
       isDark ? 'text-zinc-100' : 'text-zinc-900'
     }`}>
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-5 pb-5 border-b border-zinc-200 dark:border-zinc-800">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-zinc-200 dark:border-zinc-800">
         <div>
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
             Guided Lessons & Challenges
@@ -128,9 +130,9 @@ export default function LessonsView({
 
       {/* ================= TAB 1: LESSONS ================= */}
       {activeTab === 'lessons' && (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6">
           {/* Lessons List: Swipeable row on mobile, sidebar on desktop */}
-          <div className="lg:col-span-4 flex lg:flex-col gap-2 overflow-x-auto lg:overflow-y-auto no-scrollbar pb-2 lg:pb-0 max-h-none lg:max-h-[560px] pr-0 lg:pr-1">
+          <div className="lg:col-span-4 flex lg:flex-col gap-1.5 overflow-x-auto lg:overflow-y-auto no-scrollbar pb-2 lg:pb-0 max-h-none lg:max-h-[520px] pr-0 lg:pr-1">
             {LESSONS.map((lesson, idx) => {
               const isSelected = lesson.id === activeLesson.id;
               const isDone = effectiveCompletedLessons.includes(lesson.id);
@@ -139,7 +141,7 @@ export default function LessonsView({
                 <button
                   key={lesson.id}
                   onClick={() => handleStartLesson(lesson)}
-                  className={`min-w-[220px] lg:min-w-0 w-full text-left p-4 rounded-xl border transition-colors flex items-start justify-between gap-3 shrink-0 lg:shrink cursor-pointer ${
+                  className={`min-w-[220px] lg:min-w-0 w-full text-left p-3 rounded-xl border transition-colors flex items-start justify-between gap-2 shrink-0 lg:shrink cursor-pointer ${
                     isSelected
                       ? 'border-orange-500/50 bg-orange-500/5 text-zinc-900 dark:text-white'
                       : 'border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/60 hover:bg-zinc-50 dark:hover:bg-zinc-900 text-zinc-700 dark:text-zinc-300'
@@ -170,8 +172,8 @@ export default function LessonsView({
           </div>
 
           {/* Active Lesson Panel */}
-          <div className="lg:col-span-8 p-6 sm:p-8 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 flex flex-col justify-between space-y-6">
-            <div className="space-y-6">
+          <div className="lg:col-span-8 p-5 sm:p-6 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 flex flex-col justify-between space-y-5">
+            <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <span className="text-sm font-mono font-medium text-zinc-500 dark:text-zinc-400">
                   {activeLesson.level} Level
@@ -201,7 +203,7 @@ export default function LessonsView({
               </p>
 
               {/* Step by Step */}
-              <div className="space-y-3 pt-2">
+              <div className="space-y-2 pt-2">
                 <span className="text-sm font-semibold text-zinc-700 dark:text-zinc-300 block">
                   Steps to complete
                 </span>
@@ -211,10 +213,13 @@ export default function LessonsView({
                   const cmdMatch = step.instruction.match(/`(git\s+[^`]+)`/i) || step.hint.match(/"(git\s+[^"]+)"/i);
                   const suggestedCmd = cmdMatch ? cmdMatch[1] : null;
 
+                  const isCurrentStep = sIdx === activeStepIndex;
+                  const canAdvance = isCurrentStep && isStepDone;
+
                   return (
                     <div 
                       key={sIdx}
-                      className={`p-4 sm:p-5 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-sm transition-colors ${
+                      className={`p-3.5 sm:p-4 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-sm transition-colors ${
                         isStepDone 
                           ? 'border-emerald-500/30 bg-emerald-500/5 text-emerald-800 dark:text-emerald-300' 
                           : 'border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 text-zinc-700 dark:text-zinc-300'
@@ -236,12 +241,23 @@ export default function LessonsView({
                         </div>
                       </div>
 
-                      {suggestedCmd && !isStepDone && onRunCommand && (
+                      {suggestedCmd && isCurrentStep && !isStepDone && onRunCommand && (
                         <button
                           onClick={() => onRunCommand(suggestedCmd)}
                           className="w-full sm:w-auto px-4 py-2.5 rounded-lg bg-orange-600 hover:bg-orange-500 active:scale-[0.98] text-white font-mono text-sm font-semibold transition-all shrink-0 flex items-center justify-center gap-1.5 shadow-2xs min-h-[44px] sm:min-h-0"
                         >
                           Run: {suggestedCmd}
+                        </button>
+                      )}
+                      {canAdvance && sIdx < activeLesson.steps.length - 1 && (
+                        <button
+                          onClick={() => setActiveStepIndex(index => index + 1)}
+                          className="w-full sm:w-auto px-4 py-2.5 rounded-lg bg-orange-600 hover:bg-orange-500 active:scale-[0.98] text-white text-sm font-semibold transition-all shrink-0 flex items-center justify-center gap-1.5 shadow-2xs min-h-[44px] sm:min-h-0"
+                        >
+                          Next Step
+                          <svg aria-hidden="true" className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 12h14m-6-6 6 6-6 6" />
+                          </svg>
                         </button>
                       )}
                     </div>

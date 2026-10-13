@@ -46,7 +46,7 @@ export const LESSONS = [
       {
         instruction: 'Stage only `index.html` using `git add index.html`.',
         hint: 'Run "git add index.html" to stage just that single file.',
-        verify: (state) => !!state.index.files['index.html'] && !state.index.files['style.css']
+        verify: (state) => !!state.index.files['index.html']
       },
       {
         instruction: 'Stage all remaining files with `git add .`.',
