@@ -125,7 +125,7 @@ export default function App() {
       return;
     }
 
-    const { nextState, output, error, explanation } = executeCommand(currentState, trimmed);
+    const { state: nextState, output, error, explanation } = executeCommand(currentState, trimmed);
 
     // Append to logs
     setTerminalLogs(prev => [
