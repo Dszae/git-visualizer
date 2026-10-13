@@ -55,6 +55,14 @@ const pages = [
     heading: 'Searchable Git Command Reference',
     body: 'Find practical explanations for git init, status, add, commit, log, diff, branch, switch, checkout, merge, rebase, stash, fetch, pull, push, clone, remote, tag, show, restore, reset, revert, cherry-pick, and reflog.',
     links: 'Every reference entry explains what a command does, what state it expects, and what changes to inspect afterward.'
+  },
+  {
+    route: 'profile',
+    title: 'Dipesh Sapkota Developer Profile | Git Visualizer',
+    description: 'Profile of Dipesh Sapkota, software developer and creator of Git Visualizer, with verified website and professional links.',
+    heading: 'Dipesh Sapkota Developer Profile',
+    body: 'Dipesh Sapkota is the software developer and creator of Git Visualizer, an interactive Git learning platform for commits, branches, merges, rebases, undo operations, and repository architecture.',
+    links: 'Explore the Git Visualizer project or visit Dipesh Sapkota\'s official developer portfolio and verified professional profiles.'
   }
 ];
 
@@ -69,7 +77,7 @@ function escapeHtml(value) {
 function renderArticle(page) {
   return `<article id="pre-rendered-content" style="padding: 2.5rem; font-family: 'Trebuchet MS', 'Segoe UI', sans-serif; line-height: 1.6; max-width: 900px; margin: 0 auto;">
       <nav aria-label="Breadcrumb" style="margin-bottom: 1rem; font-size: 0.9rem;">
-        <a href="${siteUrl}/" rel="home">Git Visualizer</a> &gt; <span>${escapeHtml(page.heading)}</span>
+        <a href="${siteUrl}/" rel="home">Git Visualizer</a> &gt; <a href="${siteUrl}/profile/" rel="author">Dipesh Sapkota</a> &gt; <span>${escapeHtml(page.heading)}</span>
       </nav>
       <h1>${escapeHtml(page.heading)}</h1>
       <p>${escapeHtml(page.body)}</p>
@@ -82,6 +90,7 @@ function renderArticle(page) {
         <li><a href="${siteUrl}/undo-lab/">Git Undo Lab</a></li>
         <li><a href="${siteUrl}/flowchart/">How Git Works Architecture Flowchart</a></li>
         <li><a href="${siteUrl}/reference/">Git Command Reference</a></li>
+        <li><a href="${siteUrl}/profile/">Dipesh Sapkota Developer Profile</a></li>
       </ul>
       <p>Git Visualizer is created by <a href="https://www.dipeshsapkota7.com.np/" rel="author">Dipesh Sapkota</a>.</p>
     </article>`;
@@ -105,11 +114,16 @@ function renderFlowchart() {
   return `<section><h2>Git Architecture Stages</h2><ol>${FLOW_STAGES.map(stage => `<li><strong>${escapeHtml(stage[0])}</strong>: ${escapeHtml(stage[1])}</li>`).join('')}</ol><h2>Git Data-Flow Commands</h2><dl>${FLOW_COMMANDS.map(command => `<dt><code>${escapeHtml(command[0])}</code></dt><dd>${escapeHtml(command[1])}</dd>`).join('')}</dl></section>`;
 }
 
+function renderProfile() {
+  return `<section><img src="${siteUrl}/profile.svg" alt="Profile illustration for Dipesh Sapkota" width="160" height="160"><h2>About Dipesh Sapkota</h2><p>Dipesh Sapkota is a software developer and the creator of Git Visualizer. His work focuses on practical developer tools, interactive technical education, and browser-based learning experiences.</p><h2>Git Visualizer</h2><p>Git Visualizer provides a deterministic Git simulator, live commit graph, guided lessons, safe undo comparisons, architecture flowchart, and command reference.</p><h2>Verified profiles</h2><ul><li><a href="https://www.dipeshsapkota7.com.np/">Official website</a></li><li><a href="https://github.com/dszae">GitHub</a></li><li><a href="https://www.linkedin.com/in/dszae">LinkedIn</a></li><li><a href="https://dev.to/dszae">Dev.to</a></li></ul></section>`;
+}
+
 const pageContent = {
   lessons: renderLessons(),
   'undo-lab': renderUndo(),
   flowchart: renderFlowchart(),
-  reference: renderReference()
+  reference: renderReference(),
+  profile: renderProfile()
 };
 
 const template = await readFile(new URL('index.html', outputDirectory), 'utf8');

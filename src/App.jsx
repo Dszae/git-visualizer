@@ -3,6 +3,7 @@ import Navbar from './components/nav/Navbar.jsx';
 import CommitGraph from './components/graph/CommitGraph.jsx';
 import CommandConsole from './components/workspace/CommandConsole.jsx';
 import SEOContent from './components/seo/SEOContent.jsx';
+import ProfileView from './components/profile/ProfileView.jsx';
 const LessonsView = lazy(() => import('./components/lessons/LessonsView.jsx'));
 const UndoLabView = lazy(() => import('./components/undoLab/UndoLabView.jsx'));
 const StageFlowchartView = lazy(() => import('./components/flowchart/StageFlowchartView.jsx'));
@@ -21,7 +22,8 @@ const TAB_PATHS = {
   lessons: '/lessons/',
   'undo-lab': '/undo-lab/',
   flowchart: '/flowchart/',
-  reference: '/reference/'
+  reference: '/reference/',
+  profile: '/profile/'
 };
 
 function getTabFromLocation() {
@@ -221,6 +223,10 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  if (window.location.pathname === '/profile/') {
+    return <ProfileView />;
+  }
+
   return (
     <div className={`min-h-screen font-sans flex flex-col transition-colors duration-200 ${
       isDark ? 'bg-zinc-950 text-zinc-100' : 'bg-zinc-50 text-zinc-900'
@@ -368,6 +374,12 @@ export default function App() {
             </nav>
 
             <div className="space-y-3">
+              <a
+                href="/profile/"
+                className="block text-xs text-zinc-600 dark:text-zinc-400 hover:text-orange-600 dark:hover:text-orange-400 transition-colors"
+              >
+                Dipesh Sapkota developer profile
+              </a>
               <a
                 href="https://www.dipeshsapkota7.com.np/"
                 target="_blank"

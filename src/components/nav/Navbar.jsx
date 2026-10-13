@@ -27,7 +27,8 @@ export default function Navbar({
     lessons: '/lessons/',
     'undo-lab': '/undo-lab/',
     flowchart: '/flowchart/',
-    reference: '/reference/'
+    reference: '/reference/',
+    profile: '/profile/'
   };
 
   // Close dropdown on click outside
