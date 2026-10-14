@@ -119,19 +119,33 @@ export default function App() {
     }
   }, [isDark]);
 
-  // Update query params when tab changes
+  // Sync clean canonical URL path when tab changes and clean up legacy ?tab=
   useEffect(() => {
     try {
-      if (window.location.pathname !== '/' && window.location.pathname !== '/index.html') return;
+      const targetPath = TAB_PATHS[activeTab] || '/';
+      const currentPath = window.location.pathname;
       const url = new URL(window.location.href);
-      if (activeTab === 'sandbox') {
+
+      const hadTabParam = url.searchParams.has('tab');
+      if (hadTabParam) {
         url.searchParams.delete('tab');
-      } else {
-        url.searchParams.set('tab', activeTab);
       }
-      window.history.replaceState({}, '', url.toString());
+
+      if (currentPath !== targetPath || hadTabParam) {
+        url.pathname = targetPath;
+        window.history.replaceState({}, '', url.toString());
+      }
     } catch {}
   }, [activeTab]);
+
+  // Handle browser back and forward button navigation
+  useEffect(() => {
+    const handlePopState = () => {
+      setActiveTab(getTabFromLocation());
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
 
   /**
    * Execute git command deterministically

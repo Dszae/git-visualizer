@@ -47,8 +47,12 @@ export default function Navbar({
     setScenarioDropdownOpen(false);
   };
 
-  const handleBrandClick = () => {
+  const handleBrandClick = (e) => {
+    e.preventDefault();
     onSelectTab('sandbox');
+    if (window.location.pathname !== '/') {
+      window.history.pushState({}, '', '/');
+    }
     setMobileMenuOpen(false);
   };
 
@@ -92,7 +96,14 @@ export default function Navbar({
               <a
                 key={t.id}
                 href={tabPaths[t.id]}
-                onClick={() => onSelectTab(t.id)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  onSelectTab(t.id);
+                  const targetPath = tabPaths[t.id];
+                  if (window.location.pathname !== targetPath) {
+                    window.history.pushState({}, '', targetPath);
+                  }
+                }}
                 className={`h-10 px-4 rounded-lg text-sm font-medium transition-colors cursor-pointer ${
                   isActive
                     ? 'text-orange-700 dark:text-orange-400 bg-orange-500/10 dark:bg-orange-500/15 font-semibold shadow-2xs ring-1 ring-orange-500/25'
@@ -219,8 +230,13 @@ export default function Navbar({
               <a
                 key={t.id}
                 href={tabPaths[t.id]}
-                onClick={() => {
+                onClick={(e) => {
+                  e.preventDefault();
                   onSelectTab(t.id);
+                  const targetPath = tabPaths[t.id];
+                  if (window.location.pathname !== targetPath) {
+                    window.history.pushState({}, '', targetPath);
+                  }
                   setMobileMenuOpen(false);
                 }}
                 className={`w-full text-left px-4 py-3 rounded-xl font-medium transition-colors min-h-[48px] flex items-center cursor-pointer text-base ${
