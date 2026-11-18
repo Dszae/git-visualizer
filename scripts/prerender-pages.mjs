@@ -115,7 +115,7 @@ function renderFlowchart() {
 }
 
 function renderProfile() {
-  return `<section><img src="${siteUrl}/profile.svg" alt="Profile illustration for Dipesh Sapkota" width="160" height="160"><h2>About Dipesh Sapkota</h2><p>Dipesh Sapkota is a software developer and the creator of Git Visualizer. His work focuses on practical developer tools, interactive technical education, and browser-based learning experiences.</p><h2>Git Visualizer</h2><p>Git Visualizer provides a deterministic Git simulator, live commit graph, guided lessons, safe undo comparisons, architecture flowchart, and command reference.</p><h2>Verified profiles</h2><ul><li><a href="https://www.dipeshsapkota7.com.np/">Official website</a></li><li><a href="https://github.com/dszae">GitHub</a></li><li><a href="https://www.linkedin.com/in/dszae">LinkedIn</a></li><li><a href="https://dev.to/dszae">Dev.to</a></li></ul></section>`;
+  return `<section><img src="${siteUrl}/profile.svg" alt="Profile illustration for Dipesh Sapkota" width="160" height="160"><h2>About Dipesh Sapkota</h2><p>Dipesh Sapkota is a software developer and the creator of Git Visualizer. His work focuses on practical developer tools, interactive technical education, and browser-based learning experiences.</p><h2>Git Visualizer</h2><p>Git Visualizer provides a deterministic Git simulator, live commit graph, guided lessons, safe undo comparisons, architecture flowchart, and command reference.</p><h2>Verified profiles</h2><ul><li><a href="https://www.dipeshsapkota7.com.np/">Official website</a></li><li><a href="https://github.com/dszae">GitHub</a></li><li><a href="https://www.linkedin.com/in/dipeshsapkota7/">LinkedIn</a></li><li><a href="https://dev.to/dszae">Dev.to</a></li></ul></section>`;
 }
 
 const pageContent = {
