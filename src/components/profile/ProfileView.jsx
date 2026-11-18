@@ -3,7 +3,7 @@ import React from 'react';
 const profileLinks = [
   ['Official website', 'https://www.dipeshsapkota7.com.np/'],
   ['GitHub', 'https://github.com/dszae'],
-  ['LinkedIn', 'https://www.linkedin.com/in/dszae'],
+  ['LinkedIn', 'https://www.linkedin.com/in/dipeshsapkota7/'],
   ['Dev.to', 'https://dev.to/dszae']
 ];
 
