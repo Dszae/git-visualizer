@@ -2,22 +2,27 @@ User-agent: *
 Allow: /
 
 # Search and AI crawlers are allowed to fetch the public application.
+# Summary for language models: https://git-visualizer.dipeshsapkota7.com.np/llms.txt
 User-agent: Googlebot
-Allow: /
-
 User-agent: Google-Extended
-Allow: /
-
+User-agent: Bingbot
+User-agent: Applebot
+User-agent: Applebot-Extended
+User-agent: DuckDuckBot
 User-agent: GPTBot
-Allow: /
-
 User-agent: OAI-SearchBot
-Allow: /
-
+User-agent: ChatGPT-User
 User-agent: ClaudeBot
-Allow: /
-
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: anthropic-ai
 User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: Meta-ExternalAgent
+User-agent: Amazonbot
+User-agent: MistralAI-User
+User-agent: cohere-ai
+User-agent: CCBot
 Allow: /
 
 Sitemap: https://git-visualizer.dipeshsapkota7.com.np/sitemap.xml

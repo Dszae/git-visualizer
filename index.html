@@ -3,296 +3,56 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
+
+    <!--
+      Template for every page. scripts/prerender-pages.mjs fills the per-page title, meta,
+      canonical/hreflang, JSON-LD (#structured-data) and server-rendered content
+      (#pre-rendered-content) from src/data/siteContent.js at build time.
+    -->
     <title>Git Visualizer — Interactive Git Commit Graph, Simulator & Learning Platform</title>
     <meta name="title" content="Git Visualizer — Interactive Git Commit Graph, Simulator & Learning Platform" />
-    <meta name="description" content="Master Git visually with an interactive commit graph, deterministic Git command simulator, guided lessons, safe undo lab, and architecture flowchart." />
+    <meta name="description" content="Git Visualizer is a free, interactive Git learning tool: run commands in a simulated repository and watch the commit graph update live, with guided lessons, an undo lab, and a command reference." />
     <meta name="keywords" content="git visualizer, interactive git, git commit graph, learn git, git branch merge visualizer, git rebase vs merge, git reset vs revert, git staging area explained, git reflog, Dipesh Sapkota" />
     <meta name="author" content="Dipesh Sapkota" />
     <meta name="application-name" content="Git Visualizer" />
     <meta name="robots" content="index, follow" />
     <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-    
+
     <meta name="google-site-verification" content="wtQe5iJTyPSo0Nrj7GN4IteUky0stRBG7tIB1Lu92P8" />
     <link rel="canonical" href="https://git-visualizer.dipeshsapkota7.com.np/" />
     <link rel="author me" href="https://www.dipeshsapkota7.com.np/" />
     <link rel="alternate" hreflang="en" href="https://git-visualizer.dipeshsapkota7.com.np/" />
+    <link rel="alternate" hreflang="x-default" href="https://git-visualizer.dipeshsapkota7.com.np/" />
+    <link rel="alternate" type="text/plain" title="llms.txt" href="/llms.txt" />
 
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="en_US" />
-    <meta property="og:site_name" content="Dipesh Sapkota — Git Visualizer" />
+    <meta property="og:site_name" content="Git Visualizer" />
     <meta property="og:url" content="https://git-visualizer.dipeshsapkota7.com.np/" />
     <meta property="og:title" content="Git Visualizer — Interactive Git Commit Graph, Simulator & Learning Platform" />
-    <meta property="og:description" content="Master Git version control visually with an interactive commit graph, deterministic command terminal, guided lessons, safe undo lab, and flowchart." />
+    <meta property="og:description" content="Free, interactive Git learning: run commands in a simulated repository and watch the commit graph update live." />
     <meta property="og:image" content="https://git-visualizer.dipeshsapkota7.com.np/og-image.png" />
-    <meta property="og:image:alt" content="Git Visualizer interactive commit graph and Git learning platform" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Git Visualizer: an interactive Git commit graph by Dipesh Sapkota" />
 
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://git-visualizer.dipeshsapkota7.com.np/" />
-    <meta property="twitter:title" content="Git Visualizer — Interactive Git Commit Graph, Simulator & Learning Platform" />
-    <meta property="twitter:description" content="Master Git version control visually with an interactive commit graph, deterministic command terminal, guided lessons, and safe undo lab." />
-    <meta property="twitter:creator" content="@DszAe18" />
-    <meta property="twitter:image" content="https://git-visualizer.dipeshsapkota7.com.np/og-image.png" />
-    <meta property="twitter:image:alt" content="Git Visualizer interactive commit graph and Git learning platform" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@DszAe18" />
+    <meta name="twitter:creator" content="@DszAe18" />
+    <meta name="twitter:url" content="https://git-visualizer.dipeshsapkota7.com.np/" />
+    <meta name="twitter:title" content="Git Visualizer — Interactive Git Commit Graph, Simulator & Learning Platform" />
+    <meta name="twitter:description" content="Free, interactive Git learning: run commands in a simulated repository and watch the commit graph update live." />
+    <meta name="twitter:image" content="https://git-visualizer.dipeshsapkota7.com.np/og-image.png" />
+    <meta name="twitter:image:alt" content="Git Visualizer: an interactive Git commit graph by Dipesh Sapkota" />
 
     <link rel="icon" type="image/svg+xml" href="/git-logo.svg" />
     <meta name="theme-color" content="#090d16" />
 
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@graph": [
-          {
-            "@type": "WebSite",
-            "@id": "https://www.dipeshsapkota7.com.np/#website",
-            "url": "https://www.dipeshsapkota7.com.np/",
-            "name": "Dipesh Sapkota",
-            "description": "Dipesh Sapkota's official portfolio, software engineering projects, and technical web applications.",
-            "publisher": {
-              "@id": "https://www.dipeshsapkota7.com.np/#person"
-            },
-            "author": {
-              "@id": "https://www.dipeshsapkota7.com.np/#person"
-            },
-            "inLanguage": "en"
-          },
-          {
-            "@type": "WebSite",
-            "@id": "https://git-visualizer.dipeshsapkota7.com.np/#website",
-            "url": "https://git-visualizer.dipeshsapkota7.com.np/",
-            "name": "Git Visualizer",
-            "description": "Interactive Git commit graph, command simulator, guided lessons, safe undo lab, and architecture flowchart.",
-            "keywords": "Git Visualizer, Git simulator, Git commit graph, learn Git, Git branching, Git merge, Git reset, Git revert",
-            "publisher": {
-              "@id": "https://www.dipeshsapkota7.com.np/#person"
-            },
-            "author": {
-              "@id": "https://www.dipeshsapkota7.com.np/#person"
-            },
-            "isPartOf": {
-              "@id": "https://www.dipeshsapkota7.com.np/#website"
-            },
-            "inLanguage": "en"
-          },
-          {
-            "@type": "SoftwareApplication",
-            "@id": "https://git-visualizer.dipeshsapkota7.com.np/#app",
-            "url": "https://git-visualizer.dipeshsapkota7.com.np/",
-            "name": "Git Visualizer — Interactive Git Commit Graph & Simulator",
-            "applicationCategory": "EducationalApplication",
-            "operatingSystem": "All",
-            "isAccessibleForFree": true,
-            "featureList": [
-              "Interactive SVG commit graph",
-              "Deterministic Git command simulator",
-              "Guided Git lessons and challenges",
-              "Safe undo comparison laboratory",
-              "Git architecture flowchart",
-              "Searchable Git command reference"
-            ],
-            "browserRequirements": "Requires JavaScript. Requires HTML5.",
-            "description": "An interactive Git learning platform featuring a live SVG commit graph, deterministic command simulator, guided lessons, safe undo comparisons, and architecture flowchart.",
-            "isPartOf": {
-              "@id": "https://git-visualizer.dipeshsapkota7.com.np/#website"
-            },
-            "author": {
-              "@id": "https://www.dipeshsapkota7.com.np/#person"
-            },
-            "publisher": {
-              "@id": "https://www.dipeshsapkota7.com.np/#person"
-            },
-            "mainEntityOfPage": {
-              "@id": "https://git-visualizer.dipeshsapkota7.com.np/#webpage"
-            }
-          },
-          {
-            "@type": "WebPage",
-            "@id": "https://git-visualizer.dipeshsapkota7.com.np/#webpage",
-            "url": "https://git-visualizer.dipeshsapkota7.com.np/",
-            "name": "Git Visualizer — Interactive Git Commit Graph, Simulator & Learning Platform",
-            "isPartOf": {
-              "@id": "https://git-visualizer.dipeshsapkota7.com.np/#website"
-            },
-            "about": {
-              "@id": "https://www.dipeshsapkota7.com.np/#person"
-            },
-            "mainEntity": {
-              "@id": "https://git-visualizer.dipeshsapkota7.com.np/#app"
-            },
-            "breadcrumb": {
-              "@id": "https://git-visualizer.dipeshsapkota7.com.np/#breadcrumbs"
-            },
-            "inLanguage": "en"
-          },
-          {
-            "@type": "BreadcrumbList",
-            "@id": "https://git-visualizer.dipeshsapkota7.com.np/#breadcrumbs",
-            "itemListElement": [
-              {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Dipesh Sapkota (Portfolio)",
-                "item": "https://www.dipeshsapkota7.com.np/"
-              },
-              {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "Git Visualizer",
-                "item": "https://git-visualizer.dipeshsapkota7.com.np/"
-              }
-            ]
-          },
-          {
-            "@type": "Person",
-            "@id": "https://www.dipeshsapkota7.com.np/#person",
-            "name": "Dipesh Sapkota",
-            "url": "https://www.dipeshsapkota7.com.np/",
-            "identifier": "https://orcid.org/0009-0001-7595-5114",
-            "image": "https://git-visualizer.dipeshsapkota7.com.np/profile.svg",
-            "jobTitle": "Software Developer",
-            "description": "Software developer and creator of Git Visualizer.",
-            "sameAs": [
-              "https://www.dipeshsapkota7.com.np/",
-              "https://github.com/dszae",
-              "https://instagram.com/dsz.ae",
-              "https://facebook.com/dsz.ae",
-              "https://www.linkedin.com/in/dipeshsapkota7/",
-              "https://dev.to/dszae",
-              "https://x.com/DszAe18",
-              "https://www.wikidata.org/wiki/Q141595522",
-              "https://orcid.org/0009-0001-7595-5114"
-            ]
-          },
-          {
-            "@type": "ItemList",
-            "@id": "https://git-visualizer.dipeshsapkota7.com.np/#sitelinks",
-            "name": "Git Visualizer Navigation",
-            "itemListElement": [
-              {
-                "@type": "SiteNavigationElement",
-                "position": 1,
-                "name": "Interactive Sandbox",
-                "description": "Deterministic Git command simulator with live commit DAG graph",
-                "url": "https://git-visualizer.dipeshsapkota7.com.np/"
-              },
-              {
-                "@type": "SiteNavigationElement",
-                "position": 2,
-                "name": "Guided Lessons & Challenges",
-                "description": "Step-by-step interactive Git curriculum and target-state challenges",
-                "url": "https://git-visualizer.dipeshsapkota7.com.np/lessons/"
-              },
-              {
-                "@type": "SiteNavigationElement",
-                "position": 3,
-                "name": "Safe Undo Lab",
-                "description": "Comparison guide for git restore, git reset, git revert, and git reflog",
-                "url": "https://git-visualizer.dipeshsapkota7.com.np/undo-lab/"
-              },
-              {
-                "@type": "SiteNavigationElement",
-                "position": 4,
-                "name": "How Git Works Architecture",
-                "description": "5-stage code movement flowchart across Stash, Workspace, Staging, Local, and Remote",
-                "url": "https://git-visualizer.dipeshsapkota7.com.np/flowchart/"
-              },
-              {
-                "@type": "SiteNavigationElement",
-                "position": 5,
-                "name": "Command Reference",
-                "description": "Searchable Git command documentation with preconditions and safety warnings",
-                "url": "https://git-visualizer.dipeshsapkota7.com.np/reference/"
-              },
-              {
-                "@type": "SiteNavigationElement",
-                "position": 6,
-                "name": "Original Website — Dipesh Sapkota",
-                "description": "Developer portfolio and parent website",
-                "url": "https://www.dipeshsapkota7.com.np/"
-              },
-              {
-                "@type": "SiteNavigationElement",
-                "position": 7,
-                "name": "Dipesh Sapkota Developer Profile",
-                "description": "Author profile and verified links for Git Visualizer creator Dipesh Sapkota",
-                "url": "https://git-visualizer.dipeshsapkota7.com.np/profile/"
-              }
-            ]
-          },
-          {
-            "@type": "FAQPage",
-            "@id": "https://git-visualizer.dipeshsapkota7.com.np/#faq",
-            "url": "https://git-visualizer.dipeshsapkota7.com.np/",
-            "mainEntity": [
-              {
-                "@type": "Question",
-                "name": "How does this Git visualizer simulate commands?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Git Visualizer runs an in-memory, deterministic Git repository state machine in the browser. It models the working directory, staging area, commit DAG, branches, HEAD, stash, and remotes without sending repository data to an external server."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "Is git revert safer than git reset?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "git revert creates a new commit that reverses an earlier commit without rewriting shared history. git reset moves branch pointers and can discard or rewrite history, so it needs more care on shared branches."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "Can I learn Git with Git Visualizer by Dipesh Sapkota?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Yes. Git Visualizer by Dipesh Sapkota includes an interactive sandbox, guided lessons, a safe undo lab, a Git architecture flowchart, and a searchable Git command reference."
-                }
-              }
-            ]
-          }
-        ]
-      }
-    </script>
+    <script type="application/ld+json" id="structured-data">{}</script>
   </head>
   <body>
-    <article id="pre-rendered-content" style="padding: 2.5rem; font-family: 'Trebuchet MS', 'Segoe UI', sans-serif; line-height: 1.6; max-width: 900px; margin: 0 auto;">
-      <nav aria-label="Breadcrumb" style="margin-bottom: 1rem; font-size: 0.9rem;">
-        <a href="https://www.dipeshsapkota7.com.np/" rel="home author">Dipesh Sapkota (Home)</a> &gt; <span>Git Visualizer</span>
-      </nav>
-      <h1>Git Visualizer by Dipesh Sapkota</h1>
-      <p>Git Visualizer is an interactive Git learning platform by Dipesh Sapkota. Explore a deterministic Git repository simulator, live commit DAG visualizer, guided lessons, safe undo laboratory, searchable command reference, and Git architecture flowchart.</p>
-      <p>This Git visualizer runs in your browser and models the working directory, staging area, commits, branches, HEAD, stash, and remotes. It is useful for learning Git commands such as git init, git status, git add, git commit, git branch, git merge, git rebase, git reset, git revert, and git reflog.</p>
-
-      <nav aria-label="Git Visualizer features">
-        <h2>Explore Git Visualizer</h2>
-        <ul>
-          <li><a href="https://git-visualizer.dipeshsapkota7.com.np/">Interactive Git Sandbox and Commit Graph</a></li>
-          <li><a href="https://git-visualizer.dipeshsapkota7.com.np/lessons/">Guided Git Lessons and Challenges</a></li>
-          <li><a href="https://git-visualizer.dipeshsapkota7.com.np/undo-lab/">Git Reset, Revert, Restore, and Reflog Undo Lab</a></li>
-          <li><a href="https://git-visualizer.dipeshsapkota7.com.np/flowchart/">How Git Works Architecture Flowchart</a></li>
-          <li><a href="https://git-visualizer.dipeshsapkota7.com.np/reference/">Searchable Git Command Reference</a></li>
-          <li><a href="https://git-visualizer.dipeshsapkota7.com.np/profile/">Dipesh Sapkota Developer Profile</a></li>
-        </ul>
-      </nav>
-
-      <h2>Git Visualizer Features</h2>
-      <ul>
-        <li><strong>Interactive Sandbox:</strong> Watch commits, branches, pointers, the working tree, index, stash, and remotes change as commands run.</li>
-        <li><strong>Guided Lessons:</strong> Learn from repository initialization through branching, merging, conflicts, and reflog recovery.</li>
-        <li><strong>Safe Undo Lab:</strong> Compare git restore, git reset, git revert, and git reflog with safety guidance.</li>
-        <li><strong>Architecture Flowchart:</strong> Trace code across the stash, workspace, staging area, local repository, and remote repository.</li>
-      </ul>
-
-      <h2>Git Concepts and Frequently Asked Questions</h2>
-      <h3>What is the difference between git merge and git rebase?</h3>
-      <p>git merge preserves the history of both branches and may create a merge commit. git rebase reapplies commits on a new base to create a linear history and changes commit IDs.</p>
-      <h3>Is git revert safer than git reset?</h3>
-      <p>For shared branches, git revert is generally safer because it creates a new commit that reverses an earlier commit. git reset moves a branch pointer and can rewrite or discard history.</p>
-      <h3>Can lost commits be recovered after git reset --hard?</h3>
-      <p>Often yes. git reflog records earlier positions of HEAD, allowing a recovered commit to be inspected or referenced by a new branch.</p>
-
-      <p>Created by <a href="https://git-visualizer.dipeshsapkota7.com.np/profile/" rel="author">Dipesh Sapkota</a>. Visit the <a href="https://www.dipeshsapkota7.com.np/" rel="home author">Dipesh Sapkota developer portfolio</a>.</p>
-    </article>
+    <article id="pre-rendered-content"></article>
 
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>

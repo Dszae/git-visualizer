@@ -4,6 +4,7 @@ import CommitGraph from './components/graph/CommitGraph.jsx';
 import CommandConsole from './components/workspace/CommandConsole.jsx';
 import SEOContent from './components/seo/SEOContent.jsx';
 import ProfileView from './components/profile/ProfileView.jsx';
+import { HOME_H1, HOME_INTRO, PROFILES } from './data/siteContent.js';
 const LessonsView = lazy(() => import('./components/lessons/LessonsView.jsx'));
 const UndoLabView = lazy(() => import('./components/undoLab/UndoLabView.jsx'));
 const StageFlowchartView = lazy(() => import('./components/flowchart/StageFlowchartView.jsx'));
@@ -270,10 +271,10 @@ export default function App() {
             {/* Clear Orientation Header */}
             <div className="space-y-1.5">
               <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-50">
-                See how Git works visually
+                {HOME_H1}
               </h1>
               <p className="text-base text-zinc-600 dark:text-zinc-400">
-                Type a command or pick an action below to watch commits, branches, and pointers update in real time.
+                {HOME_INTRO}
               </p>
             </div>
 
@@ -421,7 +422,7 @@ export default function App() {
 
                 {/* GitHub Profile with GitHub Octocat Icon */}
                 <a
-                  href="https://github.com/Dszae"
+                  href={PROFILES.github}
                   target="_blank"
                   rel="noopener noreferrer me"
                   aria-label="Visit Dipesh Sapkota on GitHub"

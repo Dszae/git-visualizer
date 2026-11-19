@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { DEFINITION, HOME_FAQS } from '../../data/siteContent.js';
 
 const TOPICS = [
   {
@@ -38,25 +39,6 @@ When merging branches:
   }
 ];
 
-const FAQS = [
-  {
-    q: "How does this Git visualizer simulate commands?",
-    a: "The platform runs an in-memory, deterministic Git repository state machine. It manages a complete Working Directory, Staging Area, commit DAG, branch references, HEAD, and remotes entirely in your browser without sending data to an external server."
-  },
-  {
-    q: "Is git revert safer than git reset?",
-    a: "Yes. 'git revert' creates a new commit that inverts changes without rewriting history, making it completely safe for shared branches. 'git reset' alters branch pointers and can discard history or create sync conflicts if pushed."
-  },
-  {
-    q: "What causes a Git merge conflict?",
-    a: "A merge conflict occurs when two branches make different changes to the exact same lines of a file, or when one branch modifies a file that the other deleted. Git embeds conflict markers (<<<<<<< HEAD, =======, >>>>>>>) for manual resolution."
-  },
-  {
-    q: "Can I recover commits lost after running git reset --hard?",
-    a: "Yes! Running 'git reflog' reveals the previous commit hashes that HEAD pointed to. You can recover your commits by creating a new branch at that hash: 'git switch -c recovery <hash>'."
-  }
-];
-
 export default function SEOContent({ isDark = true }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -89,6 +71,25 @@ export default function SEOContent({ isDark = true }) {
         </button>
       </div>
 
+      {/* Always visible: definition and FAQ, word-for-word the same as the FAQPage schema. */}
+      <div className="space-y-6 pb-6">
+        <div className="space-y-1.5 max-w-3xl">
+          <h2 className="text-base font-semibold text-zinc-900 dark:text-zinc-100">{DEFINITION.q}</h2>
+          <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">{DEFINITION.a}</p>
+        </div>
+        <div className="space-y-3">
+          <h2 className="text-base font-semibold text-zinc-900 dark:text-zinc-100">Frequently asked questions</h2>
+          <dl className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+            {HOME_FAQS.slice(1).map((faq) => (
+              <div key={faq.q} className="space-y-1 text-sm">
+                <dt className="font-semibold text-zinc-800 dark:text-zinc-200">{faq.q}</dt>
+                <dd className="text-zinc-600 dark:text-zinc-400 leading-relaxed">{faq.a}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </div>
+
       {isOpen && (
         <div className="space-y-8 pt-4 animate-[fadeIn_0.15s_ease-out]">
           {/* Topics Grid */}
@@ -103,21 +104,6 @@ export default function SEOContent({ isDark = true }) {
                 </p>
               </article>
             ))}
-          </div>
-
-          {/* FAQs */}
-          <div className="pt-6 border-t border-zinc-200 dark:border-zinc-800 space-y-3">
-            <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">
-              Frequently Asked Questions
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {FAQS.map((faq, i) => (
-                <div key={i} className="space-y-1 text-xs">
-                  <h4 className="font-semibold text-zinc-800 dark:text-zinc-200">{faq.q}</h4>
-                  <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">{faq.a}</p>
-                </div>
-              ))}
-            </div>
           </div>
 
           {/* Author & Parent Portfolio Backlink Section */}

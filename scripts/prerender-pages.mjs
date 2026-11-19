@@ -1,9 +1,13 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { LESSONS, CHALLENGES } from '../src/data/lessonsData.js';
 import { COMMAND_REFERENCE } from '../src/data/commandReferenceData.js';
+import {
+  SITE_URL, MAIN_SITE, PERSON, PERSON_ID, PROFILES, PROFILE_LINKS, PROFILE_PAGE, SOURCE_REPO,
+  HOME_H1, HOME_INTRO, DEFINITION, HOME_FAQS, ROUTES,
+} from '../src/data/siteContent.js';
 
 const outputDirectory = new URL('../dist/', import.meta.url);
-const siteUrl = 'https://git-visualizer.dipeshsapkota7.com.np';
+const siteUrl = SITE_URL;
 
 const UNDO_METHODS = [
   ['git restore <file>', 'Working Tree Undo', 'Caution', 'Discards unstaged modifications in the working directory, restoring the file to match the index/HEAD.', 'Discards unstaged edits', 'Unchanged', 'Preserved (no new commit)', 'Destructive for unstaged edits! Edits made in the working tree that were never staged will be lost permanently.'],
@@ -58,11 +62,11 @@ const pages = [
   },
   {
     route: 'profile',
-    title: 'Dipesh Sapkota Developer Profile | Git Visualizer',
-    description: 'Profile of Dipesh Sapkota, software developer and creator of Git Visualizer, with verified website and professional links.',
-    heading: 'Dipesh Sapkota Developer Profile',
-    body: 'Dipesh Sapkota is the software developer and creator of Git Visualizer, an interactive Git learning platform for commits, branches, merges, rebases, undo operations, and repository architecture.',
-    links: 'Explore the Git Visualizer project or visit Dipesh Sapkota\'s official developer portfolio and verified professional profiles.'
+    title: PROFILE_PAGE.title,
+    description: PROFILE_PAGE.description,
+    heading: 'Dipesh Sapkota',
+    body: PROFILE_PAGE.intro,
+    links: PROFILE_PAGE.more
   }
 ];
 
@@ -115,7 +119,172 @@ function renderFlowchart() {
 }
 
 function renderProfile() {
-  return `<section><img src="${siteUrl}/profile.svg" alt="Profile illustration for Dipesh Sapkota" width="160" height="160"><h2>About Dipesh Sapkota</h2><p>Dipesh Sapkota is a software developer and the creator of Git Visualizer. His work focuses on practical developer tools, interactive technical education, and browser-based learning experiences.</p><h2>Git Visualizer</h2><p>Git Visualizer provides a deterministic Git simulator, live commit graph, guided lessons, safe undo comparisons, architecture flowchart, and command reference.</p><h2>Verified profiles</h2><ul><li><a href="https://www.dipeshsapkota7.com.np/">Official website</a></li><li><a href="https://github.com/dszae">GitHub</a></li><li><a href="https://www.linkedin.com/in/dipeshsapkota7/">LinkedIn</a></li><li><a href="https://dev.to/dszae">Dev.to</a></li></ul></section>`;
+  return `<section><p>Updated <time datetime="${PROFILE_PAGE.dateModified}">${PROFILE_PAGE.dateModifiedLabel}</time></p><p>Full profile: <a href="${MAIN_SITE}" rel="author me">Dipesh Sapkota</a></p><h2>Git Visualizer</h2><p>${escapeHtml(DEFINITION.a)}</p><h2>Profiles</h2><ul>${PROFILE_LINKS.map(link => `<li><a href="${link.href}" rel="me">${escapeHtml(link.label)}</a> (${escapeHtml(link.meta)})</li>`).join('')}</ul></section>`;
+}
+
+function renderHomeArticle() {
+  return `<article id="pre-rendered-content" style="padding: 2.5rem; font-family: 'Trebuchet MS', 'Segoe UI', sans-serif; line-height: 1.6; max-width: 900px; margin: 0 auto;">
+      <nav aria-label="Breadcrumb" style="margin-bottom: 1rem; font-size: 0.9rem;">
+        <a href="${MAIN_SITE}" rel="author">Dipesh Sapkota</a> &gt; <span>Git Visualizer</span>
+      </nav>
+      <h1>${escapeHtml(HOME_H1)}</h1>
+      <p>${escapeHtml(HOME_INTRO)}</p>
+      <h2>${escapeHtml(DEFINITION.q)}</h2>
+      <p>${escapeHtml(DEFINITION.a)}</p>
+      <h2>Explore Git Visualizer</h2>
+      <ul>${ROUTES.map(r => `<li><a href="${siteUrl}${r.path}">${escapeHtml(r.name)}</a>: ${escapeHtml(r.summary)}</li>`).join('')}</ul>
+      <h2>Frequently asked questions</h2>
+      ${HOME_FAQS.slice(1).map(f => `<h3>${escapeHtml(f.q)}</h3><p>${escapeHtml(f.a)}</p>`).join('')}
+      <p>Created by <a href="${MAIN_SITE}" rel="author">Dipesh Sapkota</a>.</p>
+    </article>`;
+}
+
+// ---------------------------------------------------------------- structured data
+
+const personRef = { '@id': PERSON_ID };
+const websiteNode = {
+  '@type': 'WebSite',
+  '@id': `${siteUrl}/#website`,
+  url: `${siteUrl}/`,
+  name: 'Git Visualizer',
+  description: 'Interactive Git commit graph, command simulator, guided lessons, undo lab, and architecture flowchart.',
+  inLanguage: 'en',
+  publisher: personRef,
+  author: personRef,
+  isPartOf: { '@id': `${MAIN_SITE}#website` }
+};
+const appNode = {
+  '@type': 'SoftwareApplication',
+  '@id': `${siteUrl}/#app`,
+  url: `${siteUrl}/`,
+  name: 'Git Visualizer',
+  description: DEFINITION.a,
+  applicationCategory: 'EducationalApplication',
+  operatingSystem: 'Any (runs in a web browser)',
+  isAccessibleForFree: true,
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  featureList: [
+    'Interactive SVG commit graph',
+    'Deterministic Git command simulator',
+    'Guided Git lessons and challenges',
+    'Safe undo comparison laboratory',
+    'Git architecture flowchart',
+    'Searchable Git command reference'
+  ],
+  image: `${siteUrl}/og-image.png`,
+  author: personRef,
+  creator: personRef,
+  publisher: personRef,
+  codeRepository: SOURCE_REPO
+};
+const breadcrumb = (url, name) => ({
+  '@type': 'BreadcrumbList',
+  '@id': `${url}#breadcrumb`,
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Git Visualizer', item: `${siteUrl}/` },
+    ...(name ? [{ '@type': 'ListItem', position: 2, name, item: url }] : [])
+  ]
+});
+
+function homeGraph() {
+  const url = `${siteUrl}/`;
+  return [
+    websiteNode,
+    appNode,
+    {
+      '@type': 'WebPage',
+      '@id': `${url}#webpage`,
+      url,
+      name: HOME_H1,
+      isPartOf: { '@id': websiteNode['@id'] },
+      about: { '@id': appNode['@id'] },
+      mainEntity: { '@id': appNode['@id'] },
+      author: personRef,
+      breadcrumb: { '@id': `${url}#breadcrumb` },
+      inLanguage: 'en'
+    },
+    breadcrumb(url),
+    {
+      '@type': 'FAQPage',
+      '@id': `${url}#faq`,
+      url,
+      mainEntity: HOME_FAQS.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } }))
+    },
+    PERSON
+  ];
+}
+
+function profileGraph(page) {
+  const url = `${siteUrl}/${page.route}/`;
+  return [
+    websiteNode,
+    {
+      '@type': 'ProfilePage',
+      '@id': `${url}#webpage`,
+      url,
+      name: page.title,
+      description: page.description,
+      dateCreated: PROFILE_PAGE.dateCreated,
+      dateModified: PROFILE_PAGE.dateModified,
+      isPartOf: { '@id': websiteNode['@id'] },
+      breadcrumb: { '@id': `${url}#breadcrumb` },
+      mainEntity: PERSON,
+      inLanguage: 'en'
+    },
+    breadcrumb(url, 'Dipesh Sapkota')
+  ];
+}
+
+function sectionGraph(page) {
+  const url = `${siteUrl}/${page.route}/`;
+  return [
+    websiteNode,
+    {
+      '@type': 'WebPage',
+      '@id': `${url}#webpage`,
+      url,
+      name: page.title,
+      description: page.description,
+      isPartOf: { '@id': websiteNode['@id'] },
+      about: { '@id': appNode['@id'] },
+      author: personRef,
+      breadcrumb: { '@id': `${url}#breadcrumb` },
+      inLanguage: 'en'
+    },
+    breadcrumb(url, page.heading),
+    PERSON
+  ];
+}
+
+const jsonLd = graph => JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }).replaceAll('<', '\\u003c');
+
+/** Fills the per-page head of the template. */
+function fillHead(template, { url, title, description, graph, noindex = false }) {
+  let html = template
+    .replace(/<title>.*?<\/title>/, `<title>${escapeHtml(title)}</title>`)
+    .replace(/<meta name="title" content=".*?" \/>/, `<meta name="title" content="${escapeHtml(title)}" />`)
+    .replace(/<meta name="description" content=".*?" \/>/, `<meta name="description" content="${escapeHtml(description)}" />`)
+    .replace(/<meta property="og:title" content=".*?" \/>/, `<meta property="og:title" content="${escapeHtml(title)}" />`)
+    .replace(/<meta property="og:description" content=".*?" \/>/, `<meta property="og:description" content="${escapeHtml(description)}" />`)
+    .replace(/<meta name="twitter:title" content=".*?" \/>/, `<meta name="twitter:title" content="${escapeHtml(title)}" />`)
+    .replace(/<meta name="twitter:description" content=".*?" \/>/, `<meta name="twitter:description" content="${escapeHtml(description)}" />`)
+    .replace(/<script type="application\/ld\+json" id="structured-data">[\s\S]*?<\/script>/, graph ? `<script type="application/ld+json" id="structured-data">${jsonLd(graph)}</script>` : '');
+  if (url) {
+    html = html
+      .replace(/<link rel="canonical" href=".*?" \/>/, `<link rel="canonical" href="${url}" />`)
+      .replace(/<link rel="alternate" hreflang="en" href=".*?" \/>/, `<link rel="alternate" hreflang="en" href="${url}" />`)
+      .replace(/<link rel="alternate" hreflang="x-default" href=".*?" \/>/, `<link rel="alternate" hreflang="x-default" href="${url}" />`)
+      .replace(/<meta property="og:url" content=".*?" \/>/, `<meta property="og:url" content="${url}" />`)
+      .replace(/<meta name="twitter:url" content=".*?" \/>/, `<meta name="twitter:url" content="${url}" />`);
+  }
+  if (noindex) {
+    html = html
+      .replace(/<meta name="robots" content=".*?" \/>/, '<meta name="robots" content="noindex, follow" />')
+      .replace(/<meta name="googlebot" content=".*?" \/>\s*/, '')
+      .replace(/\s*<link rel="canonical" href=".*?" \/>/, '')
+      .replace(/\s*<link rel="alternate" hreflang="[^"]*" href=".*?" \/>/g, '');
+  }
+  return html;
 }
 
 const pageContent = {
@@ -127,24 +296,121 @@ const pageContent = {
 };
 
 const template = await readFile(new URL('index.html', outputDirectory), 'utf8');
+const ARTICLE = /<article id="pre-rendered-content"[\s\S]*?<\/article>/;
+
+// Homepage: same template, filled with the home content and graph.
+{
+  const html = fillHead(template, {
+    url: `${siteUrl}/`,
+    title: 'Git Visualizer — Interactive Git Commit Graph, Simulator & Learning Platform',
+    description: 'Git Visualizer is a free, interactive Git learning tool by Dipesh Sapkota: run commands in a simulated repository and watch the commit graph update live, with guided lessons, an undo lab, and a command reference.',
+    graph: homeGraph()
+  }).replace(ARTICLE, renderHomeArticle());
+  await writeFile(new URL('index.html', outputDirectory), html);
+}
 
 for (const page of pages) {
   const url = `${siteUrl}/${page.route}/`;
-  const html = template
-    .replace(/<title>.*?<\/title>/, `<title>${escapeHtml(page.title)}</title>`)
-    .replace(/<meta name="description" content=".*?" \/>/, `<meta name="description" content="${escapeHtml(page.description)}" />`)
-    .replace(/<link rel="canonical" href=".*?" \/>/, `<link rel="canonical" href="${url}" />`)
-    .replace(/<meta property="og:url" content=".*?" \/>/, `<meta property="og:url" content="${url}" />`)
-    .replace(/<meta property="og:title" content=".*?" \/>/, `<meta property="og:title" content="${escapeHtml(page.title)}" />`)
-    .replace(/<meta property="og:description" content=".*?" \/>/, `<meta property="og:description" content="${escapeHtml(page.description)}" />`)
-    .replace(/<meta property="twitter:url" content=".*?" \/>/, `<meta property="twitter:url" content="${url}" />`)
-    .replace(/<meta property="twitter:title" content=".*?" \/>/, `<meta property="twitter:title" content="${escapeHtml(page.title)}" />`)
-    .replace(/<meta property="twitter:description" content=".*?" \/>/, `<meta property="twitter:description" content="${escapeHtml(page.description)}" />`)
-    .replace(/<article id="pre-rendered-content"[\s\S]*?<\/article>/, renderArticle({ ...page, extraHtml: pageContent[page.route] }));
+  const html = fillHead(template, {
+    url,
+    title: page.title,
+    description: page.description,
+    graph: page.route === 'profile' ? profileGraph(page) : sectionGraph(page)
+  }).replace(ARTICLE, renderArticle({ ...page, extraHtml: pageContent[page.route] }));
 
   const directory = new URL(`./${page.route}/`, outputDirectory);
   await mkdir(directory, { recursive: true });
   await writeFile(new URL('index.html', directory), html);
+}
+
+// 404 page: a real file, served with status 404 for unknown paths
+// (Cloudflare assets "not_found_handling": "404-page" in wrangler.jsonc).
+// It does not load the app, so unknown URLs never render the sandbox.
+{
+  const notFound = `<article id="pre-rendered-content" style="padding: 2.5rem; font-family: 'Trebuchet MS', 'Segoe UI', sans-serif; line-height: 1.6; max-width: 900px; margin: 0 auto; color: #e4e4e7;">
+      <p style="color: #f97316; font-weight: 600;">404</p>
+      <h1>Page not found</h1>
+      <p>This page does not exist on Git Visualizer. Try one of these:</p>
+      <ul>${ROUTES.map(r => `<li><a style="color: #fb923c;" href="${r.path}">${escapeHtml(r.name)}</a></li>`).join('')}</ul>
+    </article>`;
+  const html = fillHead(template, {
+    title: 'Page not found | Git Visualizer',
+    description: 'This page does not exist on Git Visualizer.',
+    graph: null,
+    noindex: true
+  })
+    .replace(ARTICLE, notFound)
+    .replace(/<body>/, '<body style="background: #09090b; margin: 0;">')
+    .replace(/\s*<div id="root"><\/div>/, '')
+    .replace(/\s*<script type="module"[^>]*><\/script>/g, '')
+    .replace(/\s*<link rel="modulepreload"[^>]*>/g, '');
+  await writeFile(new URL('404.html', outputDirectory), html);
+}
+
+// llms.txt (summary) and llms-full.txt (full content), as real text files.
+{
+  const links = [
+    `- Creator: Dipesh Sapkota (${MAIN_SITE})`,
+    `- Wikidata: ${PROFILES.wikidata}`,
+    `- ORCID: ${PROFILES.orcid}`,
+    `- GitHub: ${PROFILES.github}`,
+    `- LinkedIn: ${PROFILES.linkedin}`,
+    `- Source code: ${SOURCE_REPO}`
+  ].join('\n');
+  const routes = ROUTES.map(r => `- [${r.name}](${siteUrl}${r.path}): ${r.summary}`).join('\n');
+  const llms = `# Git Visualizer
+
+> ${DEFINITION.a}
+
+Git Visualizer is free to use, needs no account, and runs locally in the browser: the simulated repository never leaves the visitor's device. It was created by Dipesh Sapkota, a Computer Engineering student at IOE Thapathali Campus in Kathmandu, Nepal.
+
+## Creator
+
+${links}
+
+## Pages
+
+${routes}
+
+## Full content
+
+- [llms-full.txt](${siteUrl}/llms-full.txt): every lesson, challenge, undo method and command reference entry as plain text.
+`;
+
+  const faq = HOME_FAQS.map(f => `### ${f.q}\n\n${f.a}`).join('\n\n');
+  const lessons = LESSONS.map(l => `### ${l.title} (${l.level})\n\n${l.subtitle}\n\nObjective: ${l.objective}\n\n${l.explanation}\n\nSteps:\n${l.steps.map((s, i) => `${i + 1}. ${s.instruction}`).join('\n')}\n\nSummary: ${l.summary}`).join('\n\n');
+  const challenges = CHALLENGES.map(c => `### ${c.title} (${c.difficulty})\n\n${c.description}\n\nGoal: ${c.targetGoalDescription}`).join('\n\n');
+  const undo = UNDO_METHODS.map(m => `### ${m[0]}: ${m[1]} (${m[2]})\n\n${m[3]}\n\n- Working directory: ${m[4]}\n- Index: ${m[5]}\n- History: ${m[6]}${m[7] ? `\n- Warning: ${m[7]}` : ''}`).join('\n\n');
+  const reference = COMMAND_REFERENCE.map(c => `### ${c.syntax}\n\nCategory: ${c.category}\n\n${c.purpose}\n\nExample: ${c.example}\n\nPreconditions: ${c.preconditions}\n\nEffect: ${c.expectedEffect}${c.safetyWarning ? `\n\nSafety: ${c.safetyWarning}` : ''}`).join('\n\n');
+  const full = `${llms}
+## Frequently asked questions
+
+${faq}
+
+## Lessons
+
+${lessons}
+
+## Challenges
+
+${challenges}
+
+## Undo methods
+
+${undo}
+
+## How Git works
+
+${FLOW_STAGES.map(s => `- ${s[0]}: ${s[1]}`).join('\n')}
+
+${FLOW_COMMANDS.map(c => `- ${c[0]}: ${c[1]}`).join('\n')}
+
+## Command reference
+
+${reference}
+`;
+  await writeFile(new URL('llms.txt', outputDirectory), llms);
+  await writeFile(new URL('llms-full.txt', outputDirectory), full);
 }
 
 const today = new Date().toISOString().slice(0, 10);

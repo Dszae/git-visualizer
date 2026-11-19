@@ -1,0 +1,18 @@
+{
+  // Cloudflare Workers static-assets deployment for git-visualizer.dipeshsapkota7.com.np.
+  // Build first (npm run build), then: npx wrangler deploy
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "git-visualizer",
+  "compatibility_date": "2026-11-12",
+  "assets": {
+    "directory": "./dist",
+    // Unknown paths get dist/404.html with a real 404 status, instead of the app's
+    // index.html with 200. Every app route has its own prerendered index.html.
+    "not_found_handling": "404-page",
+    // /lessons -> /lessons/ (matches the canonical URLs)
+    "html_handling": "auto-trailing-slash"
+  },
+  "routes": [
+    { "pattern": "git-visualizer.dipeshsapkota7.com.np", "custom_domain": true }
+  ]
+}
